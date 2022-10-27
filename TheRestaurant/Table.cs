@@ -11,17 +11,27 @@ namespace TheRestaurant
         private int NumberOfGuestsAtTable { get; set; }
         private bool Occupied { get; set; }
         private int QualityLevel { get; set; }
+        private int TypeOfTable { get; set; }
 
         private List<Food> Menu;
 
-        public Table(int numberOfGuestsAtTable)
+        public Table(int typeOfTable)
         {
-            NumberOfGuestsAtTable = numberOfGuestsAtTable;
+            TypeOfTable = typeOfTable;
+             NumberOfGuestsAtTable = 0;
+            Occupied = false;
+            Menu = new List<Food>();
+            QualityLevel = 0;
+        }
+
+        public void SetTable()
+        {
+        
         }
 
         private void DrawTable()
         {
-
+         
         }
     }
 }

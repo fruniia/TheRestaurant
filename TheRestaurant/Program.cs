@@ -14,6 +14,11 @@
                 Table bigTable = new Table(restaurant.TableForFour);
                 tables.Add(bigTable);
             }
+
+            foreach (var table in tables)
+            { 
+            Console.WriteLine(table.GetType().Name);
+            }
         }
     }
 }

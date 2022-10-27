@@ -12,5 +12,12 @@ namespace TheRestaurant
         private bool Satisfaction { get; set; }
         private int Money { get; set; }
         private int Company { get; set; }
+
+        Random random = new Random();
+
+        public Guest()
+        { 
+            Company = random.Next(4);
+        }
     }
 }
