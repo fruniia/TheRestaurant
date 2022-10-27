@@ -13,7 +13,7 @@ namespace TheRestaurant
         protected int Price { get; set; }
         protected bool Allergen { get; set; }
 
-        protected Food()
+        public Food()
         {
 
         }

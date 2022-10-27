@@ -12,6 +12,16 @@ namespace TheRestaurant
         private bool Occupied { get; set; }
         private int QualityLevel { get; set; }
 
-        private List<Food> Menu; 
+        private List<Food> Menu;
+
+        public Table(int numberOfGuestsAtTable)
+        {
+            NumberOfGuestsAtTable = numberOfGuestsAtTable;
+        }
+
+        private void DrawTable()
+        {
+
+        }
     }
 }
