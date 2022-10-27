@@ -9,5 +9,9 @@ namespace TheRestaurant
     internal class Chef : Person
     {
         private int Experience { get; set; }
+        public Chef()
+        {
+            Name = GetRandomName();
+        }
     }
 }

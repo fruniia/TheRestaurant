@@ -8,7 +8,21 @@ namespace TheRestaurant
 {
     internal class Person
     {
-        protected string Name { get; set; }
+        Random random = new Random();
+        public string Name { get; set; }
         protected int TimeEstimate { get; set; }
+
+        public string GetRandomName()
+        {
+            string[] allNamnes = File.ReadAllLines("name.txt");
+            int rnd = random.Next(0, allNamnes.Length);
+            return allNamnes[rnd];
+        }
+
+        public Person()
+        {
+            Name = GetRandomName();
+            TimeEstimate = 0;
+        }
     }
 }

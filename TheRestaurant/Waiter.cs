@@ -9,5 +9,10 @@ namespace TheRestaurant
     internal class Waiter : Person
     {
         private int ServiceLevel { get; set; }
+
+        public Waiter()
+        {
+            Name = GetRandomName();
+        }
     }
 }
