@@ -12,7 +12,7 @@ namespace TheRestaurant
 
         public Waiter()
         {
-            Name = GetRandomName();
+            //Name = GetRandomName();
         }
     }
 }

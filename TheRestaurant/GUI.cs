@@ -8,7 +8,6 @@ namespace TheRestaurant
 {
     internal class GUI
     {
-
         Random random = new Random();
         Restaurant restaurant = new Restaurant();
         List<Restaurant> emptyTables = new List<Restaurant>();

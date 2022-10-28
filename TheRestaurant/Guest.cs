@@ -12,11 +12,11 @@ namespace TheRestaurant
         private bool Allergic { get; set; }
         private bool Satisfaction { get; set; }
         private int Money { get; set; }
-        public int Company { get; set; }
+        internal int Company { get; set; }
 
         public Guest()
         {
-            Name = GetRandomName(); //Gästen
+            //Name = GetRandomName(); //Gästen
             TimeEstimate = 20;
             Company = random.Next(4); //Antal kompisar
         }

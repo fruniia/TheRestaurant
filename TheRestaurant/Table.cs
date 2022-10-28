@@ -18,7 +18,7 @@ namespace TheRestaurant
         public Table(int typeOfTable)
         {
             TypeOfTable = typeOfTable;
-             NumberOfGuestsAtTable = 0;
+            NumberOfGuestsAtTable = 0;
             Occupied = false;
             Menu = new List<Food>();
             QualityLevel = 0;
@@ -26,12 +26,12 @@ namespace TheRestaurant
 
         public void SetTable()
         {
-        
+
         }
 
         private void DrawTable()
         {
-         
+
         }
     }
 }

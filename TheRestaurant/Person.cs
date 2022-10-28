@@ -9,7 +9,7 @@ namespace TheRestaurant
     internal class Person
     {
         Random random = new Random();
-        public string Name { get; set; }
+        internal string Name { get; set; }
         protected int TimeEstimate { get; set; }
 
         public string GetRandomName()
