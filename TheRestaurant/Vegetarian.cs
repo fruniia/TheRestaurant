@@ -8,7 +8,10 @@ namespace TheRestaurant
 {
     internal class Vegetarian : Food
     {
+        public Vegetarian(string name, int price) : base(name, price)
+        {
 
+        }
     }
     
 }

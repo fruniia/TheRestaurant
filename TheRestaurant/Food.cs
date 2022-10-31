@@ -12,9 +12,10 @@ namespace TheRestaurant
         protected string FoodName { get; set; }
         protected int Price { get; set; }
 
-        public Food()
+        public Food(string foodName, int price)
         {
-
+            FoodName = foodName;
+            Price = price;
         }
     }
 }
