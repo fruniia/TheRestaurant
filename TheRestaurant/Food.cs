@@ -11,7 +11,6 @@ namespace TheRestaurant
     {
         protected string FoodName { get; set; }
         protected int Price { get; set; }
-        protected bool Allergen { get; set; }
 
         public Food()
         {

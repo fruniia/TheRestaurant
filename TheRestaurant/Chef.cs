@@ -11,7 +11,7 @@ namespace TheRestaurant
         private int Experience { get; set; }
         public Chef()
         {
-            //Name = GetRandomName();
+
         }
     }
 }
