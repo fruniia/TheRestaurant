@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 
 namespace TheRestaurant
 {
+  
     internal class Table : Restaurant
     {
+        Random random = new Random();
+        //enum Level
+        //{ 
+        //    Low = 0-5,
+        //    Medium = 6-10,
+        //    High = 11-15
+        //}
         protected int MaxNumberOfGuestsAtTable { get; set; }
         public bool Occupied { get; set; }
         private int QualityLevel { get; set; }
-
         private List<Food> Menu;
-
         public Group groupInTable = new Group();
 
         public Table()
