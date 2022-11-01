@@ -4,14 +4,8 @@
     {
         static void Main(string[] args)
         {
-
             Restaurant restaurant = new();
             Entrance entrance = new();
-
-
-
         }
-        
-
     }
 }

@@ -8,10 +8,8 @@ namespace TheRestaurant
 {
     internal class GUI
     {
-
         public static void Draw(string header, int fromLeft, int fromTop, string[] graphics)
         {
-
             int width = 0;
             for (int i = 0; i < graphics.Length; i++)
             {

@@ -9,18 +9,31 @@ namespace TheRestaurant
     internal class Restaurant
     {
         protected int maxNumberOfGuests = 80;
+        int startTop = 5;
+        int startLeft =5; 
+        List<Table> tables = new();
         //protected string? FacilityName { get; set; }
 
         public Restaurant()
         {
             Menu();
-            //CreateTable();
+            CreateTable();
+            for (int i = 0; i < tables.Count; i++)
+            {
+                DrawTables<Table>("Table", startTop, startLeft, tables);
+                startLeft+=20;
+                if (startLeft > 90)
+                {
+                    startTop += 10;
+                    startLeft = 5;
+                }
+            }
             ////Entrance entrance = new();
-            
+
             //Kitchen kitchen = new();
             //List<Waiter> waiters = new();
             //CreateWaiter(waiters);
-            
+
         }
 
         public void Menu()
@@ -39,7 +52,6 @@ namespace TheRestaurant
 
         private void CreateTable()
         {
-            List<Table> tables = new();
             for (int i = 0; i < 5; i++)
             {
                 TableForTwo smallTable = new();
@@ -58,8 +70,23 @@ namespace TheRestaurant
             }
         }
 
+        public void DrawTables<T>(string header, int fromLeft, int fromTop, List<T> anyList)
+        {
+            string[] graphics = new string[anyList.Count];
 
+            for (int i = 0; i < anyList.Count; i++)
+            {
+                if (anyList[i] is Group)
+                {
+                    var groups = (anyList[i] as Group).guests;
+                    foreach (var g in groups)
+                    {
+                        graphics[i] = $"{groups.Count}  {g.Name}";
+                    }
+                }
+            }
+            GUI.Draw(header, fromLeft, fromTop, graphics);
+        }
     }
-
 }
 
