@@ -8,22 +8,19 @@ namespace TheRestaurant
 {
     internal class Restaurant
     {
-        protected int maxNumberOfGuests = 30;
-        protected string? FacilityName { get; set; }
+        protected int maxNumberOfGuests = 80;
+        //protected string? FacilityName { get; set; }
 
         public Restaurant()
         {
             Menu();
             CreateTable();
-
-            List<Group> waitingList = new();
-            CreateGroup(waitingList);
-
-            List<Chef> chefs = new();
-            CreateChef(chefs);
-
+            Entrance entrance = new();
+            
+            Kitchen kitchen = new();
             List<Waiter> waiters = new();
             CreateWaiter(waiters);
+            
         }
 
         public void Menu()
@@ -40,7 +37,7 @@ namespace TheRestaurant
             menu.Add(new Vegetarian("Just beans", 129));
         }
 
-        public void CreateTable()
+        private void CreateTable()
         {
             List<Table> tables = new();
             for (int i = 0; i < 5; i++)
@@ -51,15 +48,8 @@ namespace TheRestaurant
                 tables.Add(bigTable);
             }
         }
-        public void CreateChef(List<Chef> chefList)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                Chef chef = new Chef();
-                chefList.Add(chef);
-            }
-        }
-        public void CreateWaiter(List<Waiter> waiterList)
+
+        private void CreateWaiter(List<Waiter> waiterList)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -67,15 +57,7 @@ namespace TheRestaurant
                 waiterList.Add(waiter);
             }
         }
-        public void CreateGroup(List<Group> waitingList)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                Group group = new Group();
-                group.CreateGuest();
-                waitingList.Add(group);
-            }
-        }
+
 
     }
 
