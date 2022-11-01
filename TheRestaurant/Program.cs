@@ -5,11 +5,30 @@
         static void Main(string[] args)
         {
 
-            Restaurant restaurant = new Restaurant();
-            List<Restaurant> emptyTables = new List<Restaurant>();
-            List<Group> waitingList = new List<Group>();
-            List<Chef> chefs = new List<Chef>();
-            List<Waiter> waiters = new List<Waiter>();
+            Restaurant restaurant = new();
+
+            List<Restaurant> emptyTables = new();
+            List<Group> waitingList = new();
+            List<Chef> chefs = new();
+            List<Waiter> waiters = new();
+
+            List<Food> menu = new();
+
+            menu.Add(new Fish("Fish and pasta", 199));
+            menu.Add(new Fish("Fish and chips", 259));
+            menu.Add(new Fish("Fish and rice", 219));
+            menu.Add(new Meat("Meat and pasta", 299));
+            menu.Add(new Meat("Meat and chips", 179));
+            menu.Add(new Meat("Meat and rice", 329));
+            menu.Add(new Vegetarian("Beans and pasta", 179));
+            menu.Add(new Vegetarian("Beans and greens", 199));
+            menu.Add(new Vegetarian("Just beans", 129));
+
+            foreach (Food food in menu)
+            {
+                Console.WriteLine(food.FoodName + " kostar " + food.Price + " sek");
+            }
+            Console.WriteLine();
 
             for (int i = 0; i < 5; i++)
             {
@@ -23,7 +42,7 @@
 
                 foreach(var guest in wl.guests)
                 {
-                    Console.WriteLine(guest.Name + " " + guest.Money + " Sek");
+                    Console.WriteLine(guest.Name + " " + guest.Money + " sek");
                 }
 
                 Console.WriteLine();

@@ -9,8 +9,8 @@ namespace TheRestaurant
 {
     internal class Food
     {
-        protected string FoodName { get; set; }
-        protected int Price { get; set; }
+        public string FoodName { get; set; }
+        public int Price { get; set; }
 
         public Food(string foodName, int price)
         {
