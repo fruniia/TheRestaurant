@@ -40,7 +40,7 @@
             foreach (var wl in waitingList)
             {
 
-                foreach(var guest in wl.guests)
+                foreach (var guest in wl.guests)
                 {
                     Console.WriteLine(guest.Name + " " + guest.Money + " sek");
                 }
@@ -93,6 +93,7 @@
                 Console.WriteLine($"{w.GetType().Name} {w.Name}");
             }
         }
+
         public void CheckForEmptyTable(List<Table> tables, List<Group> waitingList)
         {
             for (int i = 0; i < tables.Count; i++)
@@ -103,27 +104,26 @@
                     {
                         if (tables[i] is TableForTwo && waitingList[j].guests.Count <= 2)
                         {
-                            tables[i].Occupied = true;
-                            tables[i].groupInTable.guests = waitingList[j].guests;
-                            waitingList.Remove(waitingList[j]);
+                            HandleWaitingList(tables, waitingList, i, j);
+                            RemoveFromWaitingList(waitingList, j);
                         }
-
                         else if (tables[i] is TableForFour && waitingList[j].guests.Count <= 4)
                         {
-                            tables[i].Occupied = true;
-                            tables[i].groupInTable.guests = waitingList[j].guests;
-                            waitingList.Remove(waitingList[j]);
+                            HandleWaitingList(tables, waitingList, i, j);
+                            RemoveFromWaitingList(waitingList, j);  
                         }
-
-
-                        //
-                        //kolla hur många gäster det är i gruppen på index 0
-                        //kolla om det finns lämpligt bord att placera gruppen på
                     }
-                } 
+                }
             }
-
-
+        }
+        public void HandleWaitingList(List<Table> tables, List<Group> waitingList, int tableIndex, int wlIndex)
+        {
+            tables[tableIndex].Occupied = true;
+            tables[tableIndex].groupInTable.guests = waitingList[wlIndex].guests;
+        }
+        public void RemoveFromWaitingList(List<Group> waitingList, int index)
+        {
+            waitingList.Remove(waitingList[index]);
         }
     }
 }
