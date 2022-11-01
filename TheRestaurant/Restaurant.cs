@@ -8,10 +8,9 @@ namespace TheRestaurant
 {
     internal class Restaurant
     {
-        protected int MaxNumberOfGuests = 30;
-        public int TableForTwo = 2;
-        public int TableForFour = 4;
-        protected string FacilityName { get; set; }
+        protected int maxNumberOfGuests = 30;
+
+        protected string? FacilityName { get; set; }
 
     }
 }

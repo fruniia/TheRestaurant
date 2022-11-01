@@ -7,7 +7,7 @@
 
             Restaurant restaurant = new();
 
-            List<Restaurant> emptyTables = new();
+            List<Restaurant> tables = new();
             List<Group> waitingList = new();
             List<Chef> chefs = new();
             List<Waiter> waiters = new();
@@ -51,13 +51,13 @@
 
         }
 
-        public void CreateTable(List<Restaurant> emptyTables, Restaurant restaurant)
+        public void CreateTable(List<Table> emptyTables, Restaurant restaurant)
         {
             for (int i = 0; i < 5; i++)
             {
-                Table smallTable = new Table(restaurant.TableForTwo);
+                TableForTwo smallTable = new();
                 emptyTables.Add(smallTable);
-                Table bigTable = new Table(restaurant.TableForFour);
+                TableForFour bigTable = new();
                 emptyTables.Add(bigTable);
             }
 
@@ -66,13 +66,6 @@
                 Console.WriteLine(table.GetType().Name);
             }
         }
-
-
-        //Create Company()
-        //Skapa lista
-        //Random mnellan 1-4
-        //Loopa igenom random antal gånger för att skapa gäster
-        //Lägga alla dessa i watingList.add
 
 
         public void CreateChef(List<Chef> chefList)
@@ -99,6 +92,38 @@
             {
                 Console.WriteLine($"{w.GetType().Name} {w.Name}");
             }
+        }
+        public void CheckForEmptyTable(List<Table> tables, List<Group> waitingList)
+        {
+            for (int i = 0; i < tables.Count; i++)
+            {
+                if (tables[i].Occupied == false && waitingList is not null)
+                {
+                    for (int j = 0; j < waitingList.Count; j++)
+                    {
+                        if (tables[i] is TableForTwo && waitingList[j].guests.Count <= 2)
+                        {
+                            tables[i].Occupied = true;
+                            tables[i].groupInTable.guests = waitingList[j].guests;
+                            waitingList.Remove(waitingList[j]);
+                        }
+
+                        else if (tables[i] is TableForFour && waitingList[j].guests.Count <= 4)
+                        {
+                            tables[i].Occupied = true;
+                            tables[i].groupInTable.guests = waitingList[j].guests;
+                            waitingList.Remove(waitingList[j]);
+                        }
+
+
+                        //
+                        //kolla hur många gäster det är i gruppen på index 0
+                        //kolla om det finns lämpligt bord att placera gruppen på
+                    }
+                } 
+            }
+
+
         }
     }
 }

@@ -8,17 +8,17 @@ namespace TheRestaurant
 {
     internal class Table : Restaurant
     {
-        private int NumberOfGuestsAtTable { get; set; }
-        private bool Occupied { get; set; }
+        protected int MaxNumberOfGuestsAtTable { get; set; }
+        public bool Occupied { get; set; }
         private int QualityLevel { get; set; }
-        private int TypeOfTable { get; set; }
 
         private List<Food> Menu;
 
-        public Table(int typeOfTable)
+        public Group groupInTable = new Group();
+
+        public Table()
         {
-            TypeOfTable = typeOfTable;
-            NumberOfGuestsAtTable = 0;
+            MaxNumberOfGuestsAtTable = 0;
             Occupied = false;
             Menu = new List<Food>();
             QualityLevel = 0;
@@ -32,6 +32,21 @@ namespace TheRestaurant
         private void DrawTable()
         {
 
+        }
+    }
+    internal class TableForTwo : Table
+    {
+        public TableForTwo() : base()
+        {
+            MaxNumberOfGuestsAtTable = 2;
+        }
+
+    }
+    internal class TableForFour : Table
+    {
+        public TableForFour() : base()
+        {
+            MaxNumberOfGuestsAtTable = 4;
         }
     }
 }
