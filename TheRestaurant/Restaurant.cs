@@ -14,12 +14,12 @@ namespace TheRestaurant
         public Restaurant()
         {
             Menu();
-            CreateTable();
-            Entrance entrance = new();
+            //CreateTable();
+            ////Entrance entrance = new();
             
-            Kitchen kitchen = new();
-            List<Waiter> waiters = new();
-            CreateWaiter(waiters);
+            //Kitchen kitchen = new();
+            //List<Waiter> waiters = new();
+            //CreateWaiter(waiters);
             
         }
 

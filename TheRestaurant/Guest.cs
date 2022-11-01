@@ -18,7 +18,5 @@ namespace TheRestaurant
             TimeEstimate = 20;
             Money = random.Next(500, 1000);
         }
-
-
     }
 }

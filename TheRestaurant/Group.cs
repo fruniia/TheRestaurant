@@ -22,6 +22,5 @@ namespace TheRestaurant
             }
             return guests;
         }
-
     }
 }

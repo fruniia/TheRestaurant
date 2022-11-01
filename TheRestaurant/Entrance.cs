@@ -12,7 +12,28 @@ namespace TheRestaurant
         {
             List<Waiter> waiters = new();
             List<Group> waitingList = new();
-            CreateGroup(waitingList);
+            for (int i = 0; i < 6; i++)
+            {
+                CreateGroup(waitingList);
+            }
+            DrawWaitingList<Group>("Waitinglist", 100, 1, waitingList);
+        }
+        public void DrawWaitingList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
+        {
+            string[] graphics = new string[anyList.Count];
+
+            for (int i = 0; i < anyList.Count; i++)
+            {
+                if (anyList[i] is Group)
+                {
+                    var groups = (anyList[i] as Group).guests;
+                    foreach (var g in groups)
+                    {
+                        graphics[i] = $"{groups.Count}  {g.Name}";
+                    }
+                }
+            }
+            GUI.Draw(header, fromLeft, fromTop, graphics);
         }
         public void CreateGroup(List<Group> waitingList)
         {
