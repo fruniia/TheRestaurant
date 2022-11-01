@@ -20,7 +20,6 @@ namespace TheRestaurant
                 Guest guest = new Guest();
                 guests.Add(guest);
             }
-
             return guests;
         }
 
