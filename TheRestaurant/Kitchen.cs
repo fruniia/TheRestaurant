@@ -11,7 +11,7 @@ namespace TheRestaurant
         private int NumberOfChefs { get => 5; }
         public Kitchen()
         {
-            CreateChef();
+
         }
         public void CreateChef()
         {

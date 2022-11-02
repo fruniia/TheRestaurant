@@ -10,10 +10,12 @@ namespace TheRestaurant
     {
         internal List<Guest> guests = new List<Guest>();
         private Random random = new Random();
+        private int minNumberOfGuests = 1;
+        private int maxNumberOfGuests = 4;
 
         public List<Guest> CreateGuest()
         {
-            int number = random.Next(1, 5);
+            int number = random.Next(minNumberOfGuests, (maxNumberOfGuests + 1));
 
             for (int i = 0; i < number; i++)
             {
