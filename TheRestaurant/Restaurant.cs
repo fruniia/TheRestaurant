@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace TheRestaurant
@@ -10,31 +11,35 @@ namespace TheRestaurant
     {
         protected int maxNumberOfGuests = 80;
         int startTop = 5;
-        int startLeft =5; 
+        int startLeft = 5;
         List<Table> tables = new();
         //protected string? FacilityName { get; set; }
 
         public Restaurant()
         {
-            Menu();
-            CreateTable();
-            for (int i = 0; i < tables.Count; i++)
-            {
-                DrawTables<Table>("Table", startTop, startLeft, tables);
-                startLeft+=20;
-                if (startLeft > 90)
-                {
-                    startTop += 10;
-                    startLeft = 5;
-                }
-            }
             ////Entrance entrance = new();
 
             //Kitchen kitchen = new();
             //List<Waiter> waiters = new();
             //CreateWaiter(waiters);
-
         }
+
+        public void Start()
+        {
+            Menu();
+            CreateTable();
+            for (int i = 0; i < tables.Count; i++)
+            {
+                DrawTables<Table>($"Table {i+1}", startLeft, startTop, tables);
+                startLeft += 20;
+                if (startLeft > 90)
+                {
+                    startTop += 15;
+                    startLeft = 5;
+                }
+            }
+        }
+
 
         public void Menu()
         {
@@ -76,13 +81,9 @@ namespace TheRestaurant
 
             for (int i = 0; i < anyList.Count; i++)
             {
-                if (anyList[i] is Group)
+                if (anyList[i] is Table)
                 {
-                    var groups = (anyList[i] as Group).guests;
-                    foreach (var g in groups)
-                    {
-                        graphics[i] = $"{groups.Count}  {g.Name}";
-                    }
+                    graphics[i] = $"{tables.Count}";
                 }
             }
             GUI.Draw(header, fromLeft, fromTop, graphics);

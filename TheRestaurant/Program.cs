@@ -5,7 +5,8 @@
         static void Main(string[] args)
         {
             Restaurant restaurant = new();
-            Entrance entrance = new();
+            restaurant.Start();
+            //Entrance entrance = new();
         }
     }
 }

@@ -8,10 +8,10 @@ namespace TheRestaurant
 {
     internal class Entrance : Restaurant
     {
+        List<Waiter> waiters = new();
+        List<Group> waitingList = new();
         public Entrance() : base()
         {
-            List<Waiter> waiters = new();
-            List<Group> waitingList = new();
             for (int i = 0; i < 6; i++)
             {
                 CreateGroup(waitingList);
