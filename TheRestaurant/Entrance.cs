@@ -12,6 +12,14 @@ namespace TheRestaurant
         List<Group> waitingList = new();
         public Entrance() : base()
         {
+            //for (int i = 0; i < 6; i++)
+            //{
+            //    CreateGroup(waitingList);
+            //}
+        }
+
+        public void CreateWaitingList()
+        {
             for (int i = 0; i < 6; i++)
             {
                 CreateGroup(waitingList);

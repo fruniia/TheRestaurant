@@ -15,7 +15,8 @@ namespace TheRestaurant
         List<Table> tables = new();
         //protected string? FacilityName { get; set; }
         List<Waiter> waiters = new();
-        List<Chef> chefs = new();
+        List<Group> groups = new();
+        
 
 
         public Restaurant()
@@ -27,14 +28,18 @@ namespace TheRestaurant
 
         public void Start()
         {
+            Entrance entrance = new Entrance();
+            Kitchen kitchen = new Kitchen();
             Menu();
             CreateTable();
             CreateWaiter(waiters);
-            CreateChef(chefs);
+            kitchen.CreateChef();
+            entrance.CreateGroup(groups);
+            entrance.CreateWaitingList();
             
             for (int i = 0; i < tables.Count; i++)
             {
-                DrawTables<Table>($"Table {i+1}", startLeft, startTop, tables);
+                DrawTables<Group>($"Table {i+1}", startLeft, startTop, groups);
                 startLeft += 20;
                 if (startLeft > 90)
                 {
@@ -79,25 +84,31 @@ namespace TheRestaurant
             }
         }
 
-        public void CreateChef(List<Chef> chefs)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                Chef chef = new Chef();
-                chefs.Add(chef);
-            }
-        }
 
         public void DrawTables<T>(string header, int fromLeft, int fromTop, List<T> anyList)
         {
+            //string[] graphics = new string[anyList.Count];
             string[] graphics = new string[anyList.Count];
 
             for (int i = 0; i < anyList.Count; i++)
             {
-                if (anyList[i] is Table)
+
+                if (anyList[i] is Group)
                 {
-                    graphics[i] = $"{tables.Count}";
+                    var groups = (anyList[i] as Group).guests;
+                    foreach (var g in groups)
+                    {
+                        graphics[i] = $"{groups.Count}  {g.Name}";
+                    }
                 }
+                //if (anyList[i] is TableForTwo)
+                //{
+                //    graphics[i] = $"Två";
+                //}
+                //else if (anyList[i] is TableForFour)
+                //{
+                //    graphics[i] = $"Fyra";
+                //}
             }
             GUI.Draw(header, fromLeft, fromTop, graphics);
         }
