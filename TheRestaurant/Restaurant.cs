@@ -87,19 +87,21 @@ namespace TheRestaurant
 
         public void DrawTables<T>(string header, int fromLeft, int fromTop, List<T> anyList)
         {
-            //string[] graphics = new string[anyList.Count];
-            string[] graphics = new string[anyList.Count];
-
+            // string[] graphics = new string[anyList.Count];
+            
             for (int i = 0; i < anyList.Count; i++)
             {
-
                 if (anyList[i] is Group)
                 {
                     var groups = (anyList[i] as Group).guests;
+                    string[] graphics = new string[groups.Count];
+                    int count = 0;
                     foreach (var g in groups)
                     {
-                        graphics[i] = $"{groups.Count}  {g.Name}";
+                        graphics[count] = $"{groups.Count}  {g.Name}";
+                        count++;
                     }
+                    GUI.Draw(header, fromLeft, fromTop, graphics);
                 }
                 //if (anyList[i] is TableForTwo)
                 //{
@@ -110,7 +112,7 @@ namespace TheRestaurant
                 //    graphics[i] = $"Fyra";
                 //}
             }
-            GUI.Draw(header, fromLeft, fromTop, graphics);
+            //GUI.Draw(header, fromLeft, fromTop, graphics);
         }
     }
 }

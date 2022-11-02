@@ -35,9 +35,10 @@ namespace TheRestaurant
                 if (anyList[i] is Group)
                 {
                     var groups = (anyList[i] as Group).guests;
-                    foreach (var g in groups)
+                   foreach (var g in groups)
                     {
-                        graphics[i] = $"{groups.Count}  {g.Name}";
+                        graphics[i] = (g as Guest).Name;
+                       // graphics[i] = $"{groups.Count}  {g.Name}";
                     }
                 }
             }
