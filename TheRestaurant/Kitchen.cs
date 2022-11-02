@@ -8,20 +8,11 @@ namespace TheRestaurant
 {
     internal class Kitchen : Restaurant
     {
-        private int NumberOfChefs { get => 5; }
-        public Kitchen()
+        internal int NumberOfChefs { get => 5; }
+        public Kitchen():base()
         {
-
+            
         }
-        public void CreateChef()
-        {
-            List<Chef> chefs = new();
-
-            for (int i = 0; i < NumberOfChefs; i++)
-            {
-                Chef chef = new Chef();
-                chefs.Add(chef);
-            }
-        }
+        
     }
 }

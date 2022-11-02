@@ -14,13 +14,14 @@ namespace TheRestaurant
         int startLeft = 5;
         List<Table> tables = new();
         //protected string? FacilityName { get; set; }
+        List<Waiter> waiters = new();
+        List<Chef> chefs = new();
+
 
         public Restaurant()
         {
             ////Entrance entrance = new();
 
-            //Kitchen kitchen = new();
-            //List<Waiter> waiters = new();
             //CreateWaiter(waiters);
         }
 
@@ -28,6 +29,9 @@ namespace TheRestaurant
         {
             Menu();
             CreateTable();
+            CreateWaiter(waiters);
+            CreateChef(chefs);
+            
             for (int i = 0; i < tables.Count; i++)
             {
                 DrawTables<Table>($"Table {i+1}", startLeft, startTop, tables);
@@ -66,12 +70,21 @@ namespace TheRestaurant
             }
         }
 
-        private void CreateWaiter(List<Waiter> waiterList)
+        private void CreateWaiter(List<Waiter> waiters)
         {
             for (int i = 0; i < 3; i++)
             {
                 Waiter waiter = new Waiter();
-                waiterList.Add(waiter);
+                waiters.Add(waiter);
+            }
+        }
+
+        public void CreateChef(List<Chef> chefs)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Chef chef = new Chef();
+                chefs.Add(chef);
             }
         }
 
