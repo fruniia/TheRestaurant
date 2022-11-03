@@ -8,23 +8,17 @@ namespace TheRestaurant
 {
     internal class Entrance : Restaurant
     {
-        List<Waiter> waiters = new();
-        List<Group> waitingList = new();
         public Entrance() : base()
         {
-            //for (int i = 0; i < 6; i++)
-            //{
-            //    CreateGroup(waitingList);
-            //}
+
         }
 
-        public void CreateWaitingList()
+        public void CreateWaitingList(List<Group> waitingList)
         {
             for (int i = 0; i < 6; i++)
             {
                 CreateGroup(waitingList);
             }
-            DrawWaitingList<Group>("Waitinglist", 100, 1, waitingList);
         }
         public void DrawWaitingList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
         {
@@ -37,8 +31,8 @@ namespace TheRestaurant
                     var groups = (anyList[i] as Group).guests;
                    foreach (var g in groups)
                     {
-                        graphics[i] = (g as Guest).Name;
-                       // graphics[i] = $"{groups.Count}  {g.Name}";
+                        //graphics[i] = (g as Guest).Name;
+                        graphics[i] = $"{groups.Count}  {g.Name}";
                     }
                 }
             }
@@ -76,12 +70,12 @@ namespace TheRestaurant
                 {
                     for (int j = 0; j < waitingList.Count; j++)
                     {
-                        if (tables[i] is TableForTwo && waitingList[j].guests.Count <= 2)
+                        if (tables[i] is TableForTwo && waitingList[j].guests.Count <= 2 && tables[i].Occupied == false)
                         {
                             HandleWaitingList(tables, waitingList, i, j);
                             RemoveFromWaitingList(waitingList, j);
                         }
-                        else if (tables[i] is TableForFour && waitingList[j].guests.Count <= 4)
+                        else if (tables[i] is TableForFour && waitingList[j].guests.Count <= 4 && tables[i].Occupied == false)
                         {
                             HandleWaitingList(tables, waitingList, i, j);
                             RemoveFromWaitingList(waitingList, j);

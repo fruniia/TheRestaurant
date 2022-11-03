@@ -16,7 +16,9 @@ namespace TheRestaurant
         //protected string? FacilityName { get; set; }
         List<Waiter> waiters = new();
         List<Group> groups = new();
-        
+        List<Group> waitingList = new();
+
+
 
 
         public Restaurant()
@@ -28,24 +30,35 @@ namespace TheRestaurant
 
         public void Start()
         {
+            Restaurant restaurant = new Restaurant();
             Entrance entrance = new Entrance();
             Kitchen kitchen = new Kitchen();
             Menu();
             CreateTable();
             CreateWaiter(waiters);
             kitchen.CreateChef();
-            entrance.CreateGroup(groups);
-            entrance.CreateWaitingList();
-            
-            for (int i = 0; i < tables.Count; i++)
+            entrance.CreateWaitingList(waitingList);
+
+            while (true)
             {
-                DrawTables<Group>($"Table {i+1}", startLeft, startTop, groups);
-                startLeft += 20;
-                if (startLeft > 90)
+                if (waitingList.Count < 2)
                 {
-                    startTop += 15;
-                    startLeft = 5;
+                    entrance.CreateGroup(groups);
                 }
+                entrance.AvailableWaiter(waiters, tables, waitingList);
+                for (int i = 0; i < tables.Count; i++)
+                {
+                    DrawTables<Table>($"Table {i+1}", startLeft, startTop, tables);
+                    startLeft += 20;
+                    if (startLeft > 90)
+                    {
+                        startTop += 15;
+                        startLeft = 5;
+                    }
+                }
+                entrance.DrawWaitingList<Group>("Waitinglist", 100, 1, waitingList);
+                Console.ReadKey();
+                Console.Clear();
             }
         }
 
@@ -70,6 +83,9 @@ namespace TheRestaurant
             {
                 TableForTwo smallTable = new();
                 tables.Add(smallTable);
+            }
+            for (int i = 0; i < 5; i++)
+            {
                 TableForFour bigTable = new();
                 tables.Add(bigTable);
             }
@@ -88,29 +104,21 @@ namespace TheRestaurant
         public void DrawTables<T>(string header, int fromLeft, int fromTop, List<T> anyList)
         {
             // string[] graphics = new string[anyList.Count];
-            
+
             for (int i = 0; i < anyList.Count; i++)
             {
-                if (anyList[i] is Group)
+                if (anyList[i] is Table)
                 {
-                    var groups = (anyList[i] as Group).guests;
+                    var groups = (anyList[i] as Table).groupInTable.guests;
                     string[] graphics = new string[groups.Count];
                     int count = 0;
                     foreach (var g in groups)
                     {
-                        graphics[count] = $"{groups.Count}  {g.Name}";
+                        graphics[count] = $"{g.Name}";
                         count++;
                     }
                     GUI.Draw(header, fromLeft, fromTop, graphics);
                 }
-                //if (anyList[i] is TableForTwo)
-                //{
-                //    graphics[i] = $"Två";
-                //}
-                //else if (anyList[i] is TableForFour)
-                //{
-                //    graphics[i] = $"Fyra";
-                //}
             }
             //GUI.Draw(header, fromLeft, fromTop, graphics);
         }
