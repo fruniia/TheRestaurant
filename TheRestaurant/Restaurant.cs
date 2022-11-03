@@ -13,7 +13,7 @@ namespace TheRestaurant
         int startTop = 5;
         int startLeft = 5;
         List<Table> tables = new();
-        //protected string? FacilityName { get; set; }
+
         List<Waiter> waiters = new();
         List<Group> groups = new();
         List<Group> waitingList = new();
@@ -23,9 +23,7 @@ namespace TheRestaurant
 
         public Restaurant()
         {
-            ////Entrance entrance = new();
 
-            //CreateWaiter(waiters);
         }
 
         public void Start()
@@ -48,11 +46,10 @@ namespace TheRestaurant
                 entrance.AvailableWaiter(waiters, tables, waitingList);
                 DrawTables<Table>(startLeft, startTop, tables);
 
-                entrance.DrawWaitingList<Group>("Waitinglist", 100, 1, waitingList);
+                entrance.DrawWaitingList<Group>("Waitinglist", 120, 1, waitingList);
                 Console.ReadKey();
                 Console.Clear();
 
-                
             }
         }
 
@@ -101,7 +98,11 @@ namespace TheRestaurant
             {
                 if (anyList[i] is Table)
                 {
-                    header = $"Table {i + 1}";
+                    header = $"TableTwo {i + 1}";
+                    if(i > 4)
+                    {
+                        header = $"TableFour {i + 1}";
+                    }
                     var groups = (anyList[i] as Table).groupInTable.guests;
                     string[] graphics = new string[groups.Count];
                     int count = 0;
@@ -110,7 +111,6 @@ namespace TheRestaurant
                         graphics[count] = $"{g.Name}";
                         count++;
                     }
-
                     GUI.Draw(header, fromLeft, fromTop, graphics);
                 }
                 fromLeft += 20;
@@ -119,43 +119,8 @@ namespace TheRestaurant
                     fromTop += 15;
                     fromLeft = 5;
                 }
-
-
-
             }
         }
-        //public void DrawTables<T>(string header, int fromLeft, int fromTop, List<T> anyList)
-        //{
-        //    // string[] graphics = new string[anyList.Count];
-
-        //    for (int i = 0; i < anyList.Count; i++)
-        //    {
-        //        if (anyList is Table)
-        //        {
-        //            var groups = (anyList as Table).groups;
-        //            string[] graphics = new string[groups.Count];
-        //            int count = 0;
-        //            foreach (var g in groups)
-        //            {
-        //                graphics[count] = $"{g.guests}";
-        //                count++;
-        //            }
-        //            GUI.Draw(header, fromLeft, fromTop, graphics);
-        //        }
-        //        //if (anyList is Table)
-        //        //{
-        //        //    var groups = (anyList as Table).groupInTable.guests;
-        //        //    graphics = new string[groups.Count];
-        //        //    int count = 0;
-        //        //    foreach (var g in groups)
-        //        //    {
-        //        //        graphics[count] = $"{g.Name}";
-        //        //        count++;
-        //        //    }
-        //        //    GUI.Draw(header, fromLeft, fromTop, graphics);
-        //        //}
-        //    }
-        //}
     }
 }
 
