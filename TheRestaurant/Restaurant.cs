@@ -41,24 +41,18 @@ namespace TheRestaurant
 
             while (true)
             {
-                if (waitingList.Count < 2)
+                if (waitingList.Count < 10)
                 {
-                    entrance.CreateGroup(groups);
+                    entrance.CreateGroup(waitingList);
                 }
                 entrance.AvailableWaiter(waiters, tables, waitingList);
-                for (int i = 0; i < tables.Count; i++)
-                {
-                    DrawTables<Table>($"Table {i+1}", startLeft, startTop, tables);
-                    startLeft += 20;
-                    if (startLeft > 90)
-                    {
-                        startTop += 15;
-                        startLeft = 5;
-                    }
-                }
+                DrawTables<Table>(startLeft, startTop, tables);
+
                 entrance.DrawWaitingList<Group>("Waitinglist", 100, 1, waitingList);
                 Console.ReadKey();
                 Console.Clear();
+
+                
             }
         }
 
@@ -100,15 +94,14 @@ namespace TheRestaurant
             }
         }
 
-
-        public void DrawTables<T>(string header, int fromLeft, int fromTop, List<T> anyList)
+        public void DrawTables<T>(int fromLeft, int fromTop, List<T> anyList)
         {
-            // string[] graphics = new string[anyList.Count];
-
+            string header = "";
             for (int i = 0; i < anyList.Count; i++)
             {
                 if (anyList[i] is Table)
                 {
+                    header = $"Table {i + 1}";
                     var groups = (anyList[i] as Table).groupInTable.guests;
                     string[] graphics = new string[groups.Count];
                     int count = 0;
@@ -117,11 +110,52 @@ namespace TheRestaurant
                         graphics[count] = $"{g.Name}";
                         count++;
                     }
+
                     GUI.Draw(header, fromLeft, fromTop, graphics);
                 }
+                fromLeft += 20;
+                if (fromLeft > 90)
+                {
+                    fromTop += 15;
+                    fromLeft = 5;
+                }
+
+
+
             }
-            //GUI.Draw(header, fromLeft, fromTop, graphics);
         }
+        //public void DrawTables<T>(string header, int fromLeft, int fromTop, List<T> anyList)
+        //{
+        //    // string[] graphics = new string[anyList.Count];
+
+        //    for (int i = 0; i < anyList.Count; i++)
+        //    {
+        //        if (anyList is Table)
+        //        {
+        //            var groups = (anyList as Table).groups;
+        //            string[] graphics = new string[groups.Count];
+        //            int count = 0;
+        //            foreach (var g in groups)
+        //            {
+        //                graphics[count] = $"{g.guests}";
+        //                count++;
+        //            }
+        //            GUI.Draw(header, fromLeft, fromTop, graphics);
+        //        }
+        //        //if (anyList is Table)
+        //        //{
+        //        //    var groups = (anyList as Table).groupInTable.guests;
+        //        //    graphics = new string[groups.Count];
+        //        //    int count = 0;
+        //        //    foreach (var g in groups)
+        //        //    {
+        //        //        graphics[count] = $"{g.Name}";
+        //        //        count++;
+        //        //    }
+        //        //    GUI.Draw(header, fromLeft, fromTop, graphics);
+        //        //}
+        //    }
+        //}
     }
 }
 

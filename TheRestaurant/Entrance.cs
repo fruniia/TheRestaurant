@@ -8,6 +8,7 @@ namespace TheRestaurant
 {
     internal class Entrance : Restaurant
     {
+        Dictionary<Table, Waiter> WaiterAtTable = new Dictionary<Table, Waiter>();
         public Entrance() : base()
         {
 
@@ -52,8 +53,8 @@ namespace TheRestaurant
                 {
                     if (waitingList is not null)
                     {
-                        waiters[i].Available = false;
-                        CheckForEmptyTable(tables, waitingList);
+                        //waiters[i].Available = false;
+                        CheckForEmptyTable(tables, waitingList, waiters[i]);
                     }
                     else
                     {
@@ -62,32 +63,43 @@ namespace TheRestaurant
                 }
             }
         }
-        public void CheckForEmptyTable(List<Table> tables, List<Group> waitingList)
+        public void CheckForEmptyTable(List<Table> tables, List<Group> waitingList, Waiter waiter)
         {
             for (int i = 0; i < tables.Count; i++)
             {
-                if (tables[i].Occupied == false)
+                if (tables[i].Occupied == false && waiter.Available == true)
                 {
                     for (int j = 0; j < waitingList.Count; j++)
                     {
                         if (tables[i] is TableForTwo && waitingList[j].guests.Count <= 2 && tables[i].Occupied == false)
                         {
-                            HandleWaitingList(tables, waitingList, i, j);
+                            HandleWaitingList(tables, waitingList, i, j, waiter);
                             RemoveFromWaitingList(waitingList, j);
+                            break;
                         }
                         else if (tables[i] is TableForFour && waitingList[j].guests.Count <= 4 && tables[i].Occupied == false)
                         {
-                            HandleWaitingList(tables, waitingList, i, j);
+                            HandleWaitingList(tables, waitingList, i, j, waiter);
                             RemoveFromWaitingList(waitingList, j);
+                            break;
                         }
                     }
                 }
             }
         }
-        public void HandleWaitingList(List<Table> tables, List<Group> waitingList, int tableIndex, int wlIndex)
+        public void HandleWaitingList(List<Table> tables, List<Group> waitingList, int tableIndex, int wlIndex, Waiter waiter)
         {
+            waiter.Available = false;
             tables[tableIndex].Occupied = true;
             tables[tableIndex].groupInTable.guests = waitingList[wlIndex].guests;
+            WaiterAtTable.Add(tables[tableIndex], waiter);
+            string p = "";
+            for (int i = 0; i < tables[tableIndex].groupInTable.guests.Count; i++)
+            {
+                p += tables[tableIndex].groupInTable.guests[i].Name + " ";
+            }
+            Console.WriteLine("Vid bord nummer: " + (tableIndex+1) + " sitter " + p + " serveras av " + waiter.Name);
+
         }
         public void RemoveFromWaitingList(List<Group> waitingList, int index)
         {

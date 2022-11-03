@@ -22,6 +22,7 @@ namespace TheRestaurant
         private List<Food> Menu;
         public Group groupInTable = new Group();
 
+
         public Table()
         {
             MaxNumberOfGuestsAtTable = 0;
