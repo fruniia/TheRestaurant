@@ -21,6 +21,7 @@ namespace TheRestaurant
         private int QualityLevel { get; set; }
         private List<Food> Menu;
         public Group groupInTable = new Group();
+        List<Table> tables = new();
 
 
         public Table()
@@ -29,16 +30,6 @@ namespace TheRestaurant
             Occupied = false;
             Menu = new List<Food>();
             QualityLevel = 0;
-        }
-
-        public void SetTable()
-        {
-
-        }
-
-        private void DrawTable()
-        {
-
         }
     }
     internal class TableForTwo : Table

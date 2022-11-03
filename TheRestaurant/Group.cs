@@ -9,6 +9,7 @@ namespace TheRestaurant
     internal class Group
     {
         internal List<Guest> guests = new List<Guest>();
+        internal List<Food> foods = new List<Food>();
         private Random random = new Random();
         private int minNumberOfGuests = 1;
         private int maxNumberOfGuests = 4;

@@ -11,6 +11,7 @@ namespace TheRestaurant
         Random random = new Random();
         internal string Name { get; set; }
         protected int TimeEstimate { get; set; }
+        public Food TypeOfFood { get; set; }
 
         public string GetRandomName()
         {
@@ -18,11 +19,11 @@ namespace TheRestaurant
             int rnd = random.Next(0, allNamnes.Length);
             return allNamnes[rnd];
         }
-
         public Person()
         {
             Name = GetRandomName();
             TimeEstimate = 0;
+   
         }
     }
 }

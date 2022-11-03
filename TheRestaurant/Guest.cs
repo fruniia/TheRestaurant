@@ -9,14 +9,21 @@ namespace TheRestaurant
     internal class Guest : Person
     {
         Random random = new Random();
+        Menu menu = new Menu();
         private bool Satisfaction { get; set; }
         internal int Money { get; set; }
-
+        public Food TypeOfFood { get; set; }
 
         public Guest()
         {
             TimeEstimate = 20;
             Money = random.Next(500, 1000);
+        }
+
+        public Food OrderFood()
+        {
+            TypeOfFood = menu.RandomFood();
+            return TypeOfFood;
         }
     }
 }

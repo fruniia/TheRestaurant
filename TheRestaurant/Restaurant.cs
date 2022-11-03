@@ -10,15 +10,16 @@ namespace TheRestaurant
     internal class Restaurant
     {
         protected int maxNumberOfGuests = 80;
+        Random random = new Random();
         int startTop = 5;
         int startLeft = 5;
         List<Table> tables = new();
-
         List<Waiter> waiters = new();
-        List<Group> groups = new();
         List<Group> waitingList = new();
+        //Food[] foods = new Food[3];
+        //Dictionary<Table, List<Food>> order = new();
 
-
+        // Nyckeln bordet - Lista med gäst + maträtt
 
 
         public Restaurant()
@@ -31,7 +32,7 @@ namespace TheRestaurant
             Restaurant restaurant = new Restaurant();
             Entrance entrance = new Entrance();
             Kitchen kitchen = new Kitchen();
-            Menu();
+            Menu menu = new Menu();
             CreateTable();
             CreateWaiter(waiters);
             kitchen.CreateChef();
@@ -44,28 +45,21 @@ namespace TheRestaurant
                     entrance.CreateGroup(waitingList);
                 }
                 entrance.AvailableWaiter(waiters, tables, waitingList);
+                foreach (var w in tables)
+                {
+                    foreach (var a in w.groupInTable.guests)
+                    { 
+                    a.TypeOfFood = a.OrderFood();
+                    Console.WriteLine($"{a.Name} har beställt {a.TypeOfFood.FoodName} som kostar {a.TypeOfFood.Price}");
+                    }
+                }
+                //guest.OrderFood();
                 DrawTables<Table>(startLeft, startTop, tables);
-
+                
                 entrance.DrawWaitingList<Group>("Waitinglist", 120, 1, waitingList);
                 Console.ReadKey();
                 Console.Clear();
-
             }
-        }
-
-
-        public void Menu()
-        {
-            List<Food> menu = new();
-            menu.Add(new Fish("Fish and pasta", 199));
-            menu.Add(new Fish("Fish and chips", 259));
-            menu.Add(new Fish("Fish and rice", 219));
-            menu.Add(new Meat("Meat and pasta", 299));
-            menu.Add(new Meat("Meat and chips", 179));
-            menu.Add(new Meat("Meat and rice", 329));
-            menu.Add(new Vegetarian("Beans and pasta", 179));
-            menu.Add(new Vegetarian("Beans and greens", 199));
-            menu.Add(new Vegetarian("Just beans", 129));
         }
 
         private void CreateTable()
@@ -99,7 +93,7 @@ namespace TheRestaurant
                 if (anyList[i] is Table)
                 {
                     header = $"TableTwo {i + 1}";
-                    if(i > 4)
+                    if (i > 4)
                     {
                         header = $"TableFour {i + 1}";
                     }

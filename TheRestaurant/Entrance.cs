@@ -30,7 +30,7 @@ namespace TheRestaurant
                 if (anyList[i] is Group)
                 {
                     var groups = (anyList[i] as Group).guests;
-                   foreach (var g in groups)
+                    foreach (var g in groups)
                     {
                         //graphics[i] = (g as Guest).Name;
                         graphics[i] = $"{groups.Count}  {g.Name}";
@@ -93,12 +93,13 @@ namespace TheRestaurant
             tables[tableIndex].Occupied = true;
             tables[tableIndex].groupInTable.guests = waitingList[wlIndex].guests;
             WaiterAtTable.Add(tables[tableIndex], waiter);
+            //Testar så att det fungerar
             string p = "";
             for (int i = 0; i < tables[tableIndex].groupInTable.guests.Count; i++)
             {
                 p += tables[tableIndex].groupInTable.guests[i].Name + " ";
             }
-            Console.WriteLine("Vid bord nummer: " + (tableIndex+1) + " sitter " + p + " serveras av " + waiter.Name);
+            Console.WriteLine("Vid bord nummer: " + (tableIndex + 1) + " sitter " + p + " serveras av " + waiter.Name);
 
         }
         public void RemoveFromWaitingList(List<Group> waitingList, int index)
