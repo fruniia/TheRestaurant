@@ -55,8 +55,8 @@ namespace TheRestaurant
                     {
                         tables[i].GroupHasOrderedFood = true;
                         order.Add(tables[i].TableID, tables[i].groupInTable);
-                        if (order.ContainsKey(tables[i].TableID))
-                            waiters[i].OrderToKitchen(order);
+                        //if (order.ContainsKey(tables[i].TableID))
+                        //    waiters[i].OrderToKitchen(order);
                     }
                 }
 
