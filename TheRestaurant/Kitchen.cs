@@ -10,9 +10,29 @@ namespace TheRestaurant
     {
         internal int NumberOfChefs { get => 5; }
         public List<Chef> chefs = new();
+        Queue<Dictionary<string, Group>> bongQueue = new();
         public Kitchen() : base()
         {
             CreateChef();
+        }
+        public void CreateChef()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Chef chef = new Chef();
+                chefs.Add(chef);
+            }
+        }
+
+        public void CookingFood()
+        {
+            foreach (Chef chef in chefs)
+            {
+                if (chef.Available == true)
+                {
+                   
+                }
+            }
         }
         public void DrawKitchen<T>(string header, int fromLeft, int fromTop, List<T> anyList)
         {
@@ -26,14 +46,6 @@ namespace TheRestaurant
                 }
             }
             GUI.Draw(header, fromLeft, fromTop, graphics);
-        }
-        public void CreateChef()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                Chef chef = new Chef();
-                chefs.Add(chef);
-            }
         }
     }
 }

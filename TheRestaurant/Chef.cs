@@ -10,9 +10,10 @@ namespace TheRestaurant
     {
         private int Experience { get; set; }
         public bool Available { get; set; }
-        public Chef()
+        public Chef(): base()
         {
             Available = true;
+            TimeEstimate = 10;
         }
     }
 }

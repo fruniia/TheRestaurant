@@ -10,10 +10,8 @@ namespace TheRestaurant
     {
         Random random = new Random();
         internal string Name { get; set; }
-        protected int TimeEstimate { get; set; }
+        public int TimeEstimate { get; set; }
         public Food TypeOfFood { get; set; }
-
-
         public string GetRandomName()
         {
             string[] allNamnes = File.ReadAllLines("name.txt");
@@ -24,7 +22,6 @@ namespace TheRestaurant
         {
             Name = GetRandomName();
             TimeEstimate = 0;
-   
         }
     }
 }

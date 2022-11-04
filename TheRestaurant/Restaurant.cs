@@ -16,7 +16,7 @@ namespace TheRestaurant
         List<Table> tables = new();
         List<Waiter> waiters = new();
         List<Group> waitingList = new();
-        Dictionary<string, Group> order = new();
+        Dictionary<int, Group> order = new();
 
 
         public Restaurant()
@@ -35,7 +35,7 @@ namespace TheRestaurant
 
             while (true)
             {
-                if (waitingList.Count < 4)
+                if (waitingList.Count < 2)
                 {
                     entrance.CreateGroup(waitingList);
                 }
@@ -48,23 +48,18 @@ namespace TheRestaurant
                         if (a.OrderedFood == false)
                         {
                             a.TypeOfFood = a.OrderFood();
-
                             Console.WriteLine($"{a.Name} har beställt {a.TypeOfFood.FoodName} som kostar {a.TypeOfFood.Price}");
-                            
                         }
                     }
                     if (tables[i].Occupied == true && tables[i].GroupHasOrderedFood == false)
                     {
                         tables[i].GroupHasOrderedFood = true;
-                        order.Add(tables[i].TableID.ToString(), tables[i].groupInTable);
+                        order.Add(tables[i].TableID, tables[i].groupInTable);
+                        if (order.ContainsKey(tables[i].TableID))
+                            waiters[i].OrderToKitchen(order);
                     }
                 }
 
-                //foreach(var c in kitchen.chefs)
-                //{
-                //    Console.WriteLine(c.Name);
-                //}
-                //guest.OrderFood();
                 DrawTables<Table>(startLeft, startTop, tables);
                 kitchen.DrawKitchen("Kitchen", 50, 30, kitchen.chefs);
                 entrance.DrawWaitingList<Group>("Waitinglist", 110, 1, waitingList);
@@ -73,6 +68,7 @@ namespace TheRestaurant
             }
         }
 
+
         private void CreateTable()
         {
             for (int i = 0; i < 10; i++)
@@ -80,13 +76,13 @@ namespace TheRestaurant
                 if (i < 5)
                 {
                     TableForTwo smallTable = new();
-                    smallTable.TableID = i+1;
+                    smallTable.TableID = i + 1;
                     tables.Add(smallTable);
                 }
                 else
                 {
                     TableForFour bigTable = new();
-                    bigTable.TableID = i+1;
+                    bigTable.TableID = i + 1;
                     tables.Add(bigTable);
                 }
 

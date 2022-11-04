@@ -12,6 +12,7 @@ namespace TheRestaurant
     {
         private int ServiceLevel { get; set; }
         public bool Available { get; set; }
+        public Dictionary<int, Group> OrderOnTheGo { get; set; }
 
 
         // Servitör går med beställningen till kocken
@@ -26,9 +27,23 @@ namespace TheRestaurant
         // Antingen går gästen eller så får hen diska
         // Servitör dukar av bordet(tar 3 I “tid”)
 
-        public Waiter()
+        public Waiter() : base()
         {
             Available = true;
+            TimeEstimate = 3;
+            OrderOnTheGo = new Dictionary<int, Group>();
+        }
+
+        public void OrderToKitchen(Dictionary<int, Group> foodorder)
+        {
+            OrderOnTheGo = foodorder;
+            foreach (KeyValuePair<int, Group> kvp in foodorder)
+            {
+                foreach (var group in kvp.Value.guests)
+                {
+                    Console.WriteLine($"{kvp.Key} + {group.TypeOfFood.FoodName}");
+                }
+            }
         }
     }
 }
