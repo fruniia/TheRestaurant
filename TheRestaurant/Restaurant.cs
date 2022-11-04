@@ -29,18 +29,16 @@ namespace TheRestaurant
 
         public void Start()
         {
-            Restaurant restaurant = new Restaurant();
             Entrance entrance = new Entrance();
             Kitchen kitchen = new Kitchen();
             Menu menu = new Menu();
             CreateTable();
             CreateWaiter(waiters);
-            kitchen.CreateChef();
             entrance.CreateWaitingList(waitingList);
 
             while (true)
             {
-                if (waitingList.Count < 10)
+                if (waitingList.Count < 4)
                 {
                     entrance.CreateGroup(waitingList);
                 }
@@ -56,6 +54,10 @@ namespace TheRestaurant
                         }
                     }
                 }
+                //foreach(var c in kitchen.chefs)
+                //{
+                //    Console.WriteLine(c.Name);
+                //}
                 //guest.OrderFood();
                 DrawTables<Table>(startLeft, startTop, tables);
 

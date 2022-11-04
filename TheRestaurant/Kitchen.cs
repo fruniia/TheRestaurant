@@ -9,10 +9,10 @@ namespace TheRestaurant
     internal class Kitchen : Restaurant
     {
         internal int NumberOfChefs { get => 5; }
-        List<Chef> chefs = new();
+        public List<Chef> chefs = new();
         public Kitchen():base()
         {
-            
+            CreateChef();
         }
         public void CreateChef()
         {

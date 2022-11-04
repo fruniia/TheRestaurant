@@ -19,16 +19,16 @@ namespace TheRestaurant
         protected int MaxNumberOfGuestsAtTable { get; set; }
         public bool Occupied { get; set; }
         private int QualityLevel { get; set; }
-        private List<Food> Menu;
+        //private List<Food> Menu;
         public Group groupInTable = new Group();
-        List<Table> tables = new();
+        //List<Table> tables = new();
 
 
         public Table()
         {
             MaxNumberOfGuestsAtTable = 0;
             Occupied = false;
-            Menu = new List<Food>();
+            //Menu = new List<Food>();
             QualityLevel = 0;
         }
     }

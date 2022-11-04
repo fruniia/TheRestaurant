@@ -32,7 +32,6 @@ namespace TheRestaurant
                     var groups = (anyList[i] as Group).guests;
                     foreach (var g in groups)
                     {
-                        //graphics[i] = (g as Guest).Name;
                         graphics[i] = $"{groups.Count}  {g.Name}";
                     }
                 }
@@ -53,8 +52,8 @@ namespace TheRestaurant
                 {
                     if (waitingList is not null)
                     {
-                        //waiters[i].Available = false;
                         CheckForEmptyTable(tables, waitingList, waiters[i]);
+                        break;
                     }
                     else
                     {
@@ -75,13 +74,11 @@ namespace TheRestaurant
                         {
                             HandleWaitingList(tables, waitingList, i, j, waiter);
                             RemoveFromWaitingList(waitingList, j);
-                            break;
                         }
                         else if (tables[i] is TableForFour && waitingList[j].guests.Count <= 4 && tables[i].Occupied == false)
                         {
                             HandleWaitingList(tables, waitingList, i, j, waiter);
                             RemoveFromWaitingList(waitingList, j);
-                            break;
                         }
                     }
                 }
@@ -94,12 +91,12 @@ namespace TheRestaurant
             tables[tableIndex].groupInTable.guests = waitingList[wlIndex].guests;
             WaiterAtTable.Add(tables[tableIndex], waiter);
             //Testar så att det fungerar
-            string p = "";
-            for (int i = 0; i < tables[tableIndex].groupInTable.guests.Count; i++)
-            {
-                p += tables[tableIndex].groupInTable.guests[i].Name + " ";
-            }
-            Console.WriteLine("Vid bord nummer: " + (tableIndex + 1) + " sitter " + p + " serveras av " + waiter.Name);
+            //string p = "";
+            //for (int i = 0; i < tables[tableIndex].groupInTable.guests.Count; i++)
+            //{
+            //    p += tables[tableIndex].groupInTable.guests[i].Name + " ";
+            //}
+            //Console.WriteLine("Vid bord nummer: " + (tableIndex + 1) + " sitter " + p + " serveras av " + waiter.Name);
 
         }
         public void RemoveFromWaitingList(List<Group> waitingList, int index)
