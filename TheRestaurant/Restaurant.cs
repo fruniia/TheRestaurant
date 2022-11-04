@@ -42,7 +42,7 @@ namespace TheRestaurant
                 {
                     entrance.CreateGroup(waitingList);
                 }
-                entrance.AvailableWaiter(waiters, tables, waitingList);
+                entrance.CheckForAvailableWaiter(waiters, tables, waitingList);
                 foreach (var w in tables)
                 {
                     foreach (var a in w.groupInTable.guests)
@@ -60,7 +60,7 @@ namespace TheRestaurant
                 //}
                 //guest.OrderFood();
                 DrawTables<Table>(startLeft, startTop, tables);
-
+                kitchen.DrawKitchen("Kitchen", 120, 20, kitchen.chefs);
                 entrance.DrawWaitingList<Group>("Waitinglist", 120, 1, waitingList);
                 Console.ReadKey();
                 Console.Clear();

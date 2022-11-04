@@ -44,7 +44,7 @@ namespace TheRestaurant
             group.CreateGuest();
             waitingList.Add(group);
         }
-        public void AvailableWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList)
+        public void CheckForAvailableWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList)
         {
             for (int i = 0; i < waiters.Count; i++)
             {
@@ -70,15 +70,13 @@ namespace TheRestaurant
                 {
                     for (int j = 0; j < waitingList.Count; j++)
                     {
-                        if (tables[i] is TableForTwo && waitingList[j].guests.Count <= 2 && tables[i].Occupied == false)
+                        if (tables[i] is TableForTwo && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
                             HandleWaitingList(tables, waitingList, i, j, waiter);
-                            RemoveFromWaitingList(waitingList, j);
                         }
-                        else if (tables[i] is TableForFour && waitingList[j].guests.Count <= 4 && tables[i].Occupied == false)
+                        else if (tables[i] is TableForFour && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
                             HandleWaitingList(tables, waitingList, i, j, waiter);
-                            RemoveFromWaitingList(waitingList, j);
                         }
                     }
                 }
@@ -90,6 +88,8 @@ namespace TheRestaurant
             tables[tableIndex].Occupied = true;
             tables[tableIndex].groupInTable.guests = waitingList[wlIndex].guests;
             WaiterAtTable.Add(tables[tableIndex], waiter);
+            RemoveFromWaitingList(waitingList, wlIndex);
+
             //Testar så att det fungerar
             //string p = "";
             //for (int i = 0; i < tables[tableIndex].groupInTable.guests.Count; i++)
