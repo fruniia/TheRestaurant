@@ -16,8 +16,8 @@ namespace TheRestaurant
         List<Table> tables = new();
         List<Waiter> waiters = new();
         List<Group> waitingList = new();
-        //Food[] foods = new Food[3];
-        //Dictionary<Table, List<Food>> order = new();
+        Dictionary<string, Group> order = new();
+        //"Table1", gruppen vid table1
 
         // Nyckeln bordet - Lista med gäst + maträtt
 
@@ -50,7 +50,8 @@ namespace TheRestaurant
                         if (a.OrderedFood == false)
                         {
                             a.TypeOfFood = a.OrderFood();
-                            //Console.WriteLine($"{a.Name} har beställt {a.TypeOfFood.FoodName} som kostar {a.TypeOfFood.Price}");
+
+                            Console.WriteLine($"{a.Name} har beställt {a.TypeOfFood.FoodName} som kostar {a.TypeOfFood.Price}");
                         }
                     }
                 }
@@ -60,8 +61,8 @@ namespace TheRestaurant
                 //}
                 //guest.OrderFood();
                 DrawTables<Table>(startLeft, startTop, tables);
-                kitchen.DrawKitchen("Kitchen", 120, 20, kitchen.chefs);
-                entrance.DrawWaitingList<Group>("Waitinglist", 120, 1, waitingList);
+                kitchen.DrawKitchen("Kitchen", 50, 30, kitchen.chefs);
+                entrance.DrawWaitingList<Group>("Waitinglist", 110, 1, waitingList);
                 Console.ReadKey();
                 Console.Clear();
             }

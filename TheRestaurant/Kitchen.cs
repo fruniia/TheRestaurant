@@ -13,7 +13,6 @@ namespace TheRestaurant
         public Kitchen() : base()
         {
             CreateChef();
-            //DrawKitchen<Chef>("Kitchen", 120, 20, chefs);
         }
         public void DrawKitchen<T>(string header, int fromLeft, int fromTop, List<T> anyList)
         {
@@ -21,9 +20,9 @@ namespace TheRestaurant
 
             for (int i = 0; i < anyList.Count; i++)
             {
-                if (anyList[i] is Chef)
+                if (anyList[i] is Chef chef)
                 {
-                    graphics[i] = (anyList[i] as Chef).Name;
+                    graphics[i] = $"{chef.Name} {chef.Available}";
                 }
             }
             GUI.Draw(header, fromLeft, fromTop, graphics);
@@ -36,6 +35,5 @@ namespace TheRestaurant
                 chefs.Add(chef);
             }
         }
-
     }
 }
