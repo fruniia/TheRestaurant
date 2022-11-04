@@ -29,7 +29,7 @@ namespace TheRestaurant
             Waiter waiter = new Waiter();
             Entrance entrance = new Entrance();
             Kitchen kitchen = new Kitchen();
-            _ = new Menu();
+            Menu menu = new Menu();
             CreateTable();
             CreateWaiter(waiters);
             entrance.CreateWaitingList(waitingList);
@@ -72,9 +72,12 @@ namespace TheRestaurant
                     }
                 }
 
-                DrawTables<Table>(startLeft, startTop, tables);
-                kitchen.DrawKitchen("Kitchen", 65, 0, kitchen.chefs);
-                entrance.DrawWaitingList<Group>("Waitinglist", 110, 1, waitingList);
+                //DrawTables<Table>(startLeft, startTop, tables);
+                Draw.DrawingT("Table", startLeft, startTop, tables);
+                Draw.Drawing("Kitchen", 65, 0, kitchen.chefs);
+                Draw.Drawing<Group>("Waitinglist", 110, 1, waitingList);
+                //entrance.DrawWaitingList<Group>("Waitinglist", 110, 1, waitingList);
+                Draw.Drawing("Menu", 5, 30, menu.menu);
                 Console.ReadKey();
                 Console.Clear();
             }

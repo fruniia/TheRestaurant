@@ -4,9 +4,10 @@
     {
         static void Main(string[] args)
         {
+            Console.Title = "The Restaurant";
+            Console.CursorVisible = false;
             Restaurant restaurant = new();
             restaurant.Start();
-            //Entrance entrance = new();
         }
     }
 }

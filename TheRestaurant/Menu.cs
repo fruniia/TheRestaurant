@@ -9,7 +9,7 @@ namespace TheRestaurant
     internal class Menu
     {
         Random random = new Random();
-        List<Food> menu = new();
+        internal List<Food> menu = new();
         public Menu()
         {
             CreateMenu();

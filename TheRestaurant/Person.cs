@@ -8,7 +8,7 @@ namespace TheRestaurant
 {
     internal class Person
     {
-        Random random = new Random();
+        internal Random random = new Random();
         internal string Name { get; set; }
         public int TimeEstimate { get; set; }
         public Food TypeOfFood { get; set; }
