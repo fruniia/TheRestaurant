@@ -11,7 +11,7 @@ namespace TheRestaurant
     {
         protected int maxNumberOfGuests = 80;
         Random random = new Random();
-        int startTop = 5;
+        int startTop = 10;
         int startLeft = 5;
         List<Table> tables = new();
         List<Waiter> waiters = new();
@@ -26,9 +26,10 @@ namespace TheRestaurant
 
         public void Start()
         {
+            Waiter waiter = new Waiter();
             Entrance entrance = new Entrance();
             Kitchen kitchen = new Kitchen();
-            Menu menu = new Menu();
+            _ = new Menu();
             CreateTable();
             CreateWaiter(waiters);
             entrance.CreateWaitingList(waitingList);
@@ -55,13 +56,24 @@ namespace TheRestaurant
                     {
                         tables[i].GroupHasOrderedFood = true;
                         order.Add(tables[i].TableID, tables[i].groupInTable);
-                        //if (order.ContainsKey(tables[i].TableID))
-                        //    waiters[i].OrderToKitchen(order);
+                        foreach (KeyValuePair<int, Waiter> kvp in entrance.WaiterAtTable) // loopar igenom dectionaryn WaiterAtTable
+                        {
+                            //Kollar om det är samma nyckel på order som waiterattable
+                            if (order.ContainsKey(tables[i].TableID) == entrance.WaiterAtTable.ContainsKey(tables[i].TableID))
+                            {
+                                Console.WriteLine($"Table number {kvp.Key} is served by {kvp.Value.Name}");
+                                // tar med order samt waiter, alltså value i waiterAtTable
+                                waiter.OrderToKitchen(order, kvp.Value);
+                                order.Remove(tables[i].TableID); // tar bort beställningen från order som vi gett vidare
+
+                            }
+                        }
+
                     }
                 }
 
                 DrawTables<Table>(startLeft, startTop, tables);
-                kitchen.DrawKitchen("Kitchen", 50, 30, kitchen.chefs);
+                kitchen.DrawKitchen("Kitchen", 65, 0, kitchen.chefs);
                 entrance.DrawWaitingList<Group>("Waitinglist", 110, 1, waitingList);
                 Console.ReadKey();
                 Console.Clear();
@@ -89,7 +101,7 @@ namespace TheRestaurant
             }
         }
 
-        private void CreateWaiter(List<Waiter> waiters)
+        internal void CreateWaiter(List<Waiter> waiters)
         {
             for (int i = 0; i < 3; i++)
             {

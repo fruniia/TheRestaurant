@@ -8,7 +8,7 @@ namespace TheRestaurant
 {
     internal class Entrance : Restaurant
     {
-        Dictionary<Table, Waiter> WaiterAtTable = new Dictionary<Table, Waiter>();
+        internal Dictionary<int, Waiter> WaiterAtTable = new Dictionary<int, Waiter>();
         public Entrance() : base()
         {
 
@@ -27,7 +27,7 @@ namespace TheRestaurant
             group.CreateGuest();
             waitingList.Add(group);
         }
-        public void CheckForAvailableWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList)
+        internal void CheckForAvailableWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList)
         {
             for (int i = 0; i < waiters.Count; i++)
             {
@@ -38,7 +38,7 @@ namespace TheRestaurant
                 }
             }
         }
-        public void CheckForEmptyTable(List<Table> tables, List<Group> waitingList, Waiter waiter)
+        private void CheckForEmptyTable(List<Table> tables, List<Group> waitingList, Waiter waiter)
         {
             for (int i = 0; i < tables.Count; i++)
             {
@@ -58,13 +58,13 @@ namespace TheRestaurant
                 }
             }
         }
-        public void HandleWaitingList(List<Table> tables, List<Group> waitingList, int tableIndex, int wlIndex, Waiter waiter)
+        private void HandleWaitingList(List<Table> tables, List<Group> waitingList, int tIndex, int wIndex, Waiter waiter)
         {
             waiter.Available = false;
-            tables[tableIndex].Occupied = true;
-            tables[tableIndex].groupInTable.guests = waitingList[wlIndex].guests;
-            WaiterAtTable.Add(tables[tableIndex], waiter);
-            RemoveFromWaitingList(waitingList, wlIndex);
+            tables[tIndex].Occupied = true;
+            tables[tIndex].groupInTable.guests = waitingList[wIndex].guests;
+            WaiterAtTable.Add(tables[tIndex].TableID, waiter);
+            RemoveFromWaitingList(waitingList, wIndex);
 
             //Utskriftsversion som visar när servitör tar emot gäster
             //string p = "";
@@ -74,7 +74,7 @@ namespace TheRestaurant
             //}
             //Console.WriteLine("Vid bord nummer: " + (tableIndex + 1) + " sitter " + p + " serveras av " + waiter.Name);
         }
-        public void RemoveFromWaitingList(List<Group> waitingList, int index)
+        private static void RemoveFromWaitingList(List<Group> waitingList, int index)
         {
             waitingList.Remove(waitingList[index]);
         }

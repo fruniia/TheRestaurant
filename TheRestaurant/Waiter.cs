@@ -34,14 +34,23 @@ namespace TheRestaurant
             OrderOnTheGo = new Dictionary<int, Group>();
         }
 
-        public void OrderToKitchen(Dictionary<int, Group> foodorder)
+        public void OrderToKitchen(Dictionary<int, Group> foodorder, Waiter waiter)
         {
-            OrderOnTheGo = foodorder;
-            foreach (KeyValuePair<int, Group> kvp in foodorder)
+            waiter.OrderOnTheGo = foodorder; 
+
+            foreach (KeyValuePair<int, Group> kvp in waiter.OrderOnTheGo) // loopar igenom OrderOnTheGo för att se vad som finns i den
             {
                 foreach (var group in kvp.Value.guests)
                 {
-                    Console.WriteLine($"{kvp.Key} + {group.TypeOfFood.FoodName}");
+                    Console.WriteLine($"On table number {kvp.Key} sitts {group.Name}, {group.TypeOfFood.FoodName}");
+                }
+            }
+
+            foreach (KeyValuePair<int, Group> kvp in foodorder) // loopar igenom foodorder för att se att man få samma info
+            {
+                foreach (var group in kvp.Value.guests)
+                {
+                    Console.WriteLine($"{group.TypeOfFood.FoodName} is ordered by table number {kvp.Key}, {group.Name}");
                 }
             }
         }
