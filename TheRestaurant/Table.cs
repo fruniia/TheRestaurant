@@ -21,11 +21,14 @@ namespace TheRestaurant
         private int QualityLevel { get; set; }
         //private List<Food> Menu;
         public Group groupInTable = new Group();
+        public bool GroupHasOrderedFood { get; set; }
         //List<Table> tables = new();
+        public int TableID { get; set; }
 
 
         public Table()
         {
+            GroupHasOrderedFood = false;
             MaxNumberOfGuestsAtTable = 0;
             Occupied = false;
             //Menu = new List<Food>();

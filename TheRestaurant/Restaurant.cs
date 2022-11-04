@@ -17,9 +17,6 @@ namespace TheRestaurant
         List<Waiter> waiters = new();
         List<Group> waitingList = new();
         Dictionary<string, Group> order = new();
-        //"Table1", gruppen vid table1
-
-        // Nyckeln bordet - Lista med gäst + maträtt
 
 
         public Restaurant()
@@ -43,18 +40,26 @@ namespace TheRestaurant
                     entrance.CreateGroup(waitingList);
                 }
                 entrance.CheckForAvailableWaiter(waiters, tables, waitingList);
-                foreach (var w in tables)
+
+                for (int i = 0; i < tables.Count; i++)
                 {
-                    foreach (var a in w.groupInTable.guests)
+                    foreach (var a in tables[i].groupInTable.guests)
                     {
                         if (a.OrderedFood == false)
                         {
                             a.TypeOfFood = a.OrderFood();
 
                             Console.WriteLine($"{a.Name} har beställt {a.TypeOfFood.FoodName} som kostar {a.TypeOfFood.Price}");
+                            
                         }
                     }
+                    if (tables[i].Occupied == true && tables[i].GroupHasOrderedFood == false)
+                    {
+                        tables[i].GroupHasOrderedFood = true;
+                        order.Add(tables[i].TableID.ToString(), tables[i].groupInTable);
+                    }
                 }
+
                 //foreach(var c in kitchen.chefs)
                 //{
                 //    Console.WriteLine(c.Name);
@@ -70,15 +75,21 @@ namespace TheRestaurant
 
         private void CreateTable()
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 10; i++)
             {
-                TableForTwo smallTable = new();
-                tables.Add(smallTable);
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                TableForFour bigTable = new();
-                tables.Add(bigTable);
+                if (i < 5)
+                {
+                    TableForTwo smallTable = new();
+                    smallTable.TableID = i+1;
+                    tables.Add(smallTable);
+                }
+                else
+                {
+                    TableForFour bigTable = new();
+                    bigTable.TableID = i+1;
+                    tables.Add(bigTable);
+                }
+
             }
         }
 
