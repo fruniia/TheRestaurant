@@ -14,9 +14,6 @@ namespace TheRestaurant
         public bool Available { get; set; }
 
 
-        // Gäst anländer till restaurangen
-        // Servitör tar emot och visar till ledigt bord
-        // Gäst beställer från menyn
         // Servitör går med beställningen till kocken
         // Kocken tar emot beställningen
         // Kocken lagar maten(tar 10 i “tid”)

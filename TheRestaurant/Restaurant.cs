@@ -48,14 +48,17 @@ namespace TheRestaurant
                 foreach (var w in tables)
                 {
                     foreach (var a in w.groupInTable.guests)
-                    { 
-                    a.TypeOfFood = a.OrderFood();
-                    Console.WriteLine($"{a.Name} har beställt {a.TypeOfFood.FoodName} som kostar {a.TypeOfFood.Price}");
+                    {
+                        if (a.OrderedFood == false)
+                        {
+                            a.TypeOfFood = a.OrderFood();
+                            //Console.WriteLine($"{a.Name} har beställt {a.TypeOfFood.FoodName} som kostar {a.TypeOfFood.Price}");
+                        }
                     }
                 }
                 //guest.OrderFood();
                 DrawTables<Table>(startLeft, startTop, tables);
-                
+
                 entrance.DrawWaitingList<Group>("Waitinglist", 120, 1, waitingList);
                 Console.ReadKey();
                 Console.Clear();

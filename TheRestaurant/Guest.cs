@@ -13,6 +13,8 @@ namespace TheRestaurant
         private bool Satisfaction { get; set; }
         internal int Money { get; set; }
         public Food TypeOfFood { get; set; }
+        public bool OrderedFood { get; set; }
+
 
         public Guest()
         {
@@ -23,6 +25,7 @@ namespace TheRestaurant
         public Food OrderFood()
         {
             TypeOfFood = menu.RandomFood();
+            OrderedFood = true;
             return TypeOfFood;
         }
     }

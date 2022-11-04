@@ -9,9 +9,10 @@ namespace TheRestaurant
     internal class Chef : Person
     {
         private int Experience { get; set; }
+        public bool Available { get; set; }
         public Chef()
         {
-
+            Available = true;
         }
     }
 }
