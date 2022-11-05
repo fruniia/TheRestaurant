@@ -8,11 +8,10 @@ namespace TheRestaurant
 {
     internal class Guest : Person
     {
-        Random random = new Random();
+
         Menu menu = new Menu();
         private bool Satisfaction { get; set; }
         internal int Money { get; set; }
-        public Food TypeOfFood { get; set; }
         public bool OrderedFood { get; set; }
 
 

@@ -8,7 +8,7 @@ namespace TheRestaurant
 {
     internal class Entrance : Restaurant
     {
-        internal Dictionary<int, Waiter> WaiterAtTable = new Dictionary<int, Waiter>();
+        internal Dictionary<int, Waiter> WaiterAtTable = new();
         public Entrance() : base()
         {
 
@@ -23,7 +23,7 @@ namespace TheRestaurant
         }
         public void CreateGroup(List<Group> waitingList)
         {
-            Group group = new Group();
+            Group group = new();
             group.CreateGuest();
             waitingList.Add(group);
         }
@@ -46,6 +46,7 @@ namespace TheRestaurant
                 {
                     for (int j = 0; j < waitingList.Count; j++)
                     {
+
                         if (tables[i] is TableForTwo && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
                             HandleWaitingList(tables, waitingList, i, j, waiter);

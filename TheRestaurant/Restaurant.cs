@@ -11,7 +11,7 @@ namespace TheRestaurant
     {
         protected int maxNumberOfGuests = 80;
         Random random = new Random();
-        int startTop = 10;
+        int startTop = 12;
         int startLeft = 5;
         List<Table> tables = new();
         List<Waiter> waiters = new();
@@ -34,15 +34,22 @@ namespace TheRestaurant
             CreateWaiter(waiters);
             entrance.CreateWaitingList(waitingList);
 
-            while (true)
+            while (true) //ändrat lite ordning så vi ritar ut tom restaurang först
             {
-                waiter.LeaveOrder(kitchen.bongQueue, waiters);
-                if (waitingList.Count < 2)
+                //DrawTables<Table>(startLeft, startTop, tables);
+                Draw.DrawingT("Table", startLeft, startTop, tables);
+                Draw.Drawing("Kitchen", 40, 0, kitchen.chefs);
+                Draw.Drawing<Group>("Waitinglist", 70, 0, waitingList);
+                //entrance.DrawWaitingList<Group>("Waitinglist", 110, 1, waitingList);
+                Draw.Drawing("Menu", 5, 0, menu.menu);
+                Console.ReadKey();
+                Console.Clear();
+                Console.SetCursorPosition(0, 33);
+                if (waitingList.Count < 4)
                 {
                     entrance.CreateGroup(waitingList);
                 }
-                entrance.CheckForAvailableWaiter(waiters, tables, waitingList);
-
+                waiter.LeaveOrder(kitchen.bongQueue, waiters); //ny metod för att lämna order till kök
                 for (int i = 0; i < tables.Count; i++)
                 {
                     foreach (var a in tables[i].groupInTable.guests)
@@ -50,7 +57,7 @@ namespace TheRestaurant
                         if (a.OrderedFood == false)
                         {
                             a.TypeOfFood = a.OrderFood();
-                            Console.WriteLine($"{a.Name} har beställt {a.TypeOfFood.FoodName} som kostar {a.TypeOfFood.Price}");
+                            Console.WriteLine($"{a.Name} has ordered {a.TypeOfFood.FoodName} for {a.TypeOfFood.Price} SEK");
                         }
                     }
                     if (tables[i].Occupied == true && tables[i].GroupHasOrderedFood == false)
@@ -72,15 +79,9 @@ namespace TheRestaurant
 
                     }
                 }
+                entrance.CheckForAvailableWaiter(waiters, tables, waitingList);
 
-                //DrawTables<Table>(startLeft, startTop, tables);
-                Draw.DrawingT("Table", startLeft, startTop, tables);
-                Draw.Drawing("Kitchen", 65, 0, kitchen.chefs);
-                Draw.Drawing<Group>("Waitinglist", 110, 1, waitingList);
-                //entrance.DrawWaitingList<Group>("Waitinglist", 110, 1, waitingList);
-                Draw.Drawing("Menu", 5, 30, menu.menu);
-                Console.ReadKey();
-                Console.Clear();
+
             }
         }
 

@@ -44,18 +44,25 @@ namespace TheRestaurant
                 {
                     bongQueue.Enqueue(waiters[i].OrderOnTheGo);
                     waiters[i].HasOrderToKitchen = false;
+                    waiters[i].Available = true; //sätter man true här fyller man alla bord, men servitör nr 1 gör nästan allt
+
+
                     //waiters[i].OrderOnTheGo.Clear(); //verkar som om man tar bort dictionaryn på ett ställe försvinner den överallt
+
                     foreach (Dictionary<int, Group> o in bongQueue)
                     {
-                        foreach(KeyValuePair<int, Group> kvp in o)
+                        foreach (KeyValuePair<int, Group> kvp in o)
                         {
-                            foreach (var group in kvp.Value.guests)
+                            Console.WriteLine("The kitchen has received the order from table " + kvp.Key + ": ");
+                            foreach(var group in kvp.Value.guests)
                             {
-                                Console.WriteLine("Order: Table nr" + kvp.Key + ". " + group.TypeOfFood.FoodName + " to " + group.Name);
-
+                                Console.WriteLine(group.TypeOfFood.FoodName + " is ordered by " + group.Name);
                             }
+                            Console.WriteLine();
                         }
+                        break;
                     }
+                
                 }
             }
         }
