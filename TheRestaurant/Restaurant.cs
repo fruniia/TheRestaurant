@@ -36,6 +36,7 @@ namespace TheRestaurant
 
             while (true)
             {
+                waiter.LeaveOrder(kitchen.bongQueue, waiters);
                 if (waitingList.Count < 2)
                 {
                     entrance.CreateGroup(waitingList);
@@ -64,7 +65,7 @@ namespace TheRestaurant
                                 Console.WriteLine($"Table number {kvp.Key} is served by {kvp.Value.Name}");
                                 // tar med order samt waiter, alltså value i waiterAtTable
                                 waiter.OrderToKitchen(order, kvp.Value);
-                                order.Remove(tables[i].TableID); // tar bort beställningen från order som vi gett vidare
+                                //order.Remove(tables[i].TableID); // //verkar som om man tar bort dictionaryn på ett ställe försvinner den överallt
 
                             }
                         }

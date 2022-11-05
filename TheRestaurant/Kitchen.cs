@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,12 @@ namespace TheRestaurant
     {
         internal int NumberOfChefs { get => 5; }
         public List<Chef> chefs = new();
-        Queue<Dictionary<string, Group>> bongQueue = new();
+        public Queue bongQueue = new();
         public Kitchen() : base()
         {
             CreateChef();
         }
+        
         public void CreateChef()
         {
             for (int i = 0; i < 5; i++)
