@@ -57,7 +57,7 @@ namespace TheRestaurant
                         if (a.OrderedFood == false)
                         {
                             a.TypeOfFood = a.OrderFood();
-                            Console.WriteLine($"{a.Name} has ordered {a.TypeOfFood.FoodName} for {a.TypeOfFood.Price} SEK");
+                            a.DrawOrderFood(); //Gjorde en metod DrawOrderFood i Guest för utskriften av maten
                         }
                     }
                     if (tables[i].Occupied == true && tables[i].GroupHasOrderedFood == false)
@@ -112,37 +112,6 @@ namespace TheRestaurant
             {
                 Waiter waiter = new Waiter();
                 waiters.Add(waiter);
-            }
-        }
-
-        public void DrawTables<T>(int fromLeft, int fromTop, List<T> anyList)
-        {
-            string header = "";
-            for (int i = 0; i < anyList.Count; i++)
-            {
-                if (anyList[i] is Table)
-                {
-                    header = $"TableTwo {i + 1}";
-                    if (i > 4)
-                    {
-                        header = $"TableFour {i + 1}";
-                    }
-                    var groups = (anyList[i] as Table).groupInTable.guests;
-                    string[] graphics = new string[groups.Count];
-                    int count = 0;
-                    foreach (var g in groups)
-                    {
-                        graphics[count] = $"{g.Name}";
-                        count++;
-                    }
-                    GUI.Draw(header, fromLeft, fromTop, graphics);
-                }
-                fromLeft += 20;
-                if (fromLeft > 90)
-                {
-                    fromTop += 15;
-                    fromLeft = 5;
-                }
             }
         }
     }

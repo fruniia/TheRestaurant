@@ -36,18 +36,5 @@ namespace TheRestaurant
                 }
             }
         }
-        public void DrawKitchen<T>(string header, int fromLeft, int fromTop, List<T> anyList)
-        {
-            string[] graphics = new string[anyList.Count];
-
-            for (int i = 0; i < anyList.Count; i++)
-            {
-                if (anyList[i] is Chef chef)
-                {
-                    graphics[i] = $"{chef.Name} {chef.Available}";
-                }
-            }
-            GUI.Draw(header, fromLeft, fromTop, graphics);
-        }
     }
 }

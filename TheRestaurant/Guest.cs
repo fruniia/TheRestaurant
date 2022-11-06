@@ -27,5 +27,10 @@ namespace TheRestaurant
             OrderedFood = true;
             return TypeOfFood;
         }
+
+        public void DrawOrderFood()
+        {
+            Console.WriteLine($"{this.Name} has ordered {TypeOfFood.FoodName} for {this.TypeOfFood.Price} SEK");
+        }
     }
 }

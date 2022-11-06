@@ -56,7 +56,8 @@ namespace TheRestaurant
                             Console.WriteLine("The kitchen has received the order from table " + kvp.Key + ": ");
                             foreach(var group in kvp.Value.guests)
                             {
-                                Console.WriteLine(group.TypeOfFood.FoodName + " is ordered by " + group.Name);
+                                group.DrawOrderFood(); //Använder metoden DrawOrderFood i Guest
+                                //Console.WriteLine(group.TypeOfFood.FoodName + " is ordered by " + group.Name);
                             }
                             Console.WriteLine();
                         }

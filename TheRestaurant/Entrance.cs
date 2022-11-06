@@ -79,22 +79,5 @@ namespace TheRestaurant
         {
             waitingList.Remove(waitingList[index]);
         }
-        public void DrawWaitingList<T>(string header, int fromLeft, int fromTop, List<T> anyList)
-        {
-            string[] graphics = new string[anyList.Count];
-
-            for (int i = 0; i < anyList.Count; i++)
-            {
-                if (anyList[i] is Group)
-                {
-                    var groups = (anyList[i] as Group).guests;
-                    foreach (var g in groups)
-                    {
-                        graphics[i] = $"{groups.Count}  {g.Name}";
-                    }
-                }
-            }
-            GUI.Draw(header, fromLeft, fromTop, graphics);
-        }
     }
 }
