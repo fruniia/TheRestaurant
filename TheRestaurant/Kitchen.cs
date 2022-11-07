@@ -16,7 +16,7 @@ namespace TheRestaurant
         {
             CreateChef();
         }
-        
+
         public void CreateChef()
         {
             for (int i = 0; i < 5; i++)
@@ -26,23 +26,38 @@ namespace TheRestaurant
             }
         }
 
-        public void CookingFood()
+        public void CookingFood(Chef chef)
         {
-            foreach (Chef chef in chefs)
+
+            foreach (var b in bongQueue)
+            {
+                foreach (var kvp in b)
+                {
+                    chef.PreparingFood.Add(kvp.Key, kvp.Value);
+                    b.Remove(kvp.Key);
+                    chef.Available = false;
+                    break;
+                }
+                break;
+            }
+
+        }
+        public void HandlingChef()
+        {
+            foreach (var chef in chefs)
             {
                 if (chef.Available == true)
                 {
-                    foreach (var b in bongQueue)
+                    CookingFood(chef);
+                }
+                else
+                {
+                    chef.TimeEstimate--;
+                    if (chef.TimeEstimate == 0)
                     {
-                        foreach (var kvp in b)
-                        {
-                            chef.PreparingFood.Add(kvp.Key, kvp.Value);
-                            b.Remove(kvp.Key);
-                            chef.Available = false;
-                            break;
-                        }
-                        break;
-                    }                
+                        chef.TimeEstimate = 10;
+                        chef.Available = true;
+                    }
                 }
             }
         }

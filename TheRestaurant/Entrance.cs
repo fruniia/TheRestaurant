@@ -27,11 +27,11 @@ namespace TheRestaurant
             group.CreateGuest();
             waitingList.Add(group);
         }
-        internal void CheckForAvailableWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList)
+        internal void HandleWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList)
         {
             for (int i = 0; i < waiters.Count; i++)
             {
-                if (waiters[i].Available == true)
+                if (waiters[i].Available == true && waiters[i].HasOrderToKitchen == false)
                 {
                     CheckForEmptyTable(tables, waitingList, waiters[i]);
                     break;
@@ -42,7 +42,7 @@ namespace TheRestaurant
         {
             for (int i = 0; i < tables.Count; i++)
             {
-                if (tables[i].Occupied == false && waiter.Available == true)
+                if (tables[i].Occupied == false && waiter.Available == true && waiter.HasOrderToKitchen == false)
                 {
                     for (int j = 0; j < waitingList.Count; j++)
                     {

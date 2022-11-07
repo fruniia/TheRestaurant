@@ -84,7 +84,7 @@ namespace TheRestaurant
         {
             waiter.OrderOnTheGo = foodorder;
             waiter.HasOrderToKitchen = true;
-
+            waiter.Available = false;
             //foreach (KeyValuePair<int, Group> kvp in waiter.OrderOnTheGo) // loopar igenom OrderOnTheGo för att se vad som finns i den
             //{
             //    foreach (var group in kvp.Value.guests)
