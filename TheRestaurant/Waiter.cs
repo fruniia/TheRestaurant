@@ -17,7 +17,6 @@ namespace TheRestaurant
         public bool HasOrderToKitchen { get; set; }
 
 
-        // Servitör går med beställningen till kocken
         // Kocken tar emot beställningen
         // Kocken lagar maten(tar 10 i “tid”)
         // Servitören hämtar maten
@@ -36,34 +35,47 @@ namespace TheRestaurant
             OrderOnTheGo = new Dictionary<int, Group>();
             HasOrderToKitchen = false;
         }
-        public void LeaveOrder(Queue bongQueue, List<Waiter> waiters)
+        public void LeaveOrder(List<Dictionary<int, Group>> bongQueue, List<Waiter> waiters)
         {
             for (int i = 0; i < waiters.Count; i++)
             {
                 if (waiters[i].HasOrderToKitchen == true)
                 {
-                    bongQueue.Enqueue(waiters[i].OrderOnTheGo);
+                    bongQueue.Add(waiters[i].OrderOnTheGo);
                     waiters[i].HasOrderToKitchen = false;
                     waiters[i].Available = true; //sätter man true här fyller man alla bord, men servitör nr 1 gör nästan allt
 
 
                     //waiters[i].OrderOnTheGo.Clear(); //verkar som om man tar bort dictionaryn på ett ställe försvinner den överallt
-
-                    foreach (Dictionary<int, Group> o in bongQueue)
+                    foreach (var o in bongQueue)
                     {
                         foreach (KeyValuePair<int, Group> kvp in o)
                         {
                             Console.WriteLine("The kitchen has received the order from table " + kvp.Key + ": ");
-                            foreach(var group in kvp.Value.guests)
+                            foreach (var group in kvp.Value.guests)
                             {
                                 group.DrawOrderFood(); //Använder metoden DrawOrderFood i Guest
                                 //Console.WriteLine(group.TypeOfFood.FoodName + " is ordered by " + group.Name);
                             }
                             Console.WriteLine();
-                        }
-                        break;
                     }
-                
+                    break;
+                    }
+                    //foreach (Dictionary<int, Group> o in bongQueue)
+                    //{
+                    //    foreach (KeyValuePair<int, Group> kvp in o)
+                    //    {
+                    //        Console.WriteLine("The kitchen has received the order from table " + kvp.Key + ": ");
+                    //        foreach(var group in kvp.Value.guests)
+                    //        {
+                    //            group.DrawOrderFood(); //Använder metoden DrawOrderFood i Guest
+                    //            //Console.WriteLine(group.TypeOfFood.FoodName + " is ordered by " + group.Name);
+                    //        }
+                    //        Console.WriteLine();
+                    //    }
+                    //    break;
+                    //}
+
                 }
             }
         }

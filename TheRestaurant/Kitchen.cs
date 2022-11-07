@@ -10,8 +10,8 @@ namespace TheRestaurant
     internal class Kitchen : Restaurant
     {
         internal int NumberOfChefs { get => 5; }
-        public List<Chef> chefs = new();
-        public Queue bongQueue = new();
+        internal List<Chef> chefs = new();
+        internal List<Dictionary<int, Group>> bongQueue = new();
         public Kitchen() : base()
         {
             CreateChef();
@@ -32,7 +32,17 @@ namespace TheRestaurant
             {
                 if (chef.Available == true)
                 {
-                   
+                    foreach (var b in bongQueue)
+                    {
+                        foreach (var kvp in b)
+                        {
+                            chef.PreparingFood.Add(kvp.Key, kvp.Value);
+                            b.Remove(kvp.Key);
+                            chef.Available = false;
+                            break;
+                        }
+                        break;
+                    }                
                 }
             }
         }

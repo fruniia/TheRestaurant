@@ -11,10 +11,14 @@ namespace TheRestaurant
         private int Experience { get; set; }
         public bool Available { get; set; }
         private string[] chefInAction = { "Cooking food", "Smoking", "Washing hands", "Chitchatting" };
+        internal Dictionary<int, Group> PreparingFood { get; set; }
+
         public Chef() : base()
         {
             Available = true;
             TimeEstimate = 10;
+            PreparingFood = new Dictionary<int, Group>();
+
         }
 
         public string ChefInAction()
