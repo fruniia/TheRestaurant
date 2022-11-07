@@ -36,11 +36,9 @@ namespace TheRestaurant
 
             while (true) //ändrat lite ordning så vi ritar ut tom restaurang först
             {
-                //DrawTables<Table>(startLeft, startTop, tables);
                 Draw.DrawingT("Table", startLeft, startTop, tables);
                 Draw.Drawing("Kitchen", 40, 0, kitchen.chefs);
                 Draw.Drawing<Group>("Waitinglist", 70, 0, waitingList);
-                //entrance.DrawWaitingList<Group>("Waitinglist", 110, 1, waitingList);
                 Draw.Drawing("Menu", 5, 0, menu.menu);
                 Console.ReadKey();
                 Console.Clear();
@@ -49,7 +47,24 @@ namespace TheRestaurant
                 {
                     entrance.CreateGroup(waitingList);
                 }
-                entrance.CheckForAvailableWaiter(waiters, tables, waitingList);
+                foreach (var chef in kitchen.chefs)
+                {
+                    if (chef.Available == true)
+                    {
+
+                    }
+                    else
+                    {
+                        chef.TimeEstimate--;
+                        if(chef.TimeEstimate == 0)
+                        {
+                            chef.TimeEstimate = 10;
+                            chef.Available = true;
+                        }
+                    }
+                }
+                kitchen.CookingFood();
+                waiter.LeaveOrder(kitchen.bongQueue, waiters); //ny metod för att lämna order till kök
                 for (int i = 0; i < tables.Count; i++)
                 {
                     foreach (var a in tables[i].groupInTable.guests)
@@ -73,8 +88,7 @@ namespace TheRestaurant
 
                     }
                 } //beställ mat
-                waiter.LeaveOrder(kitchen.bongQueue, waiters); //ny metod för att lämna order till kök
-                kitchen.CookingFood();
+                entrance.CheckForAvailableWaiter(waiters, tables, waitingList);
 
 
             }
