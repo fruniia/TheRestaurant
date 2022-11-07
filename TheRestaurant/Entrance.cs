@@ -61,19 +61,24 @@ namespace TheRestaurant
         }
         private void HandleWaitingList(List<Table> tables, List<Group> waitingList, int tIndex, int wIndex, Waiter waiter)
         {
+            waiter.AtEntrance = false;
+            waiter.AtTable = true;
             waiter.Available = false;
             tables[tIndex].Occupied = true;
             tables[tIndex].groupInTable.guests = waitingList[wIndex].guests;
+            foreach (Table table in tables)
+            {
+                foreach (var a in table.groupInTable.guests)
+                {
+                    if (a.OrderedFood == false)
+                    {
+                        a.TypeOfFood = a.OrderFood();
+                        a.DrawOrderFood(); //Gjorde en metod DrawOrderFood i Guest för utskriften av maten
+                    }
+                }
+            }
             WaiterAtTable.Add(tables[tIndex].TableID, waiter);
             RemoveFromWaitingList(waitingList, wIndex);
-
-            //Utskriftsversion som visar när servitör tar emot gäster
-            //string p = "";
-            //for (int i = 0; i < tables[tableIndex].groupInTable.guests.Count; i++)
-            //{
-            //    p += tables[tableIndex].groupInTable.guests[i].Name + " ";
-            //}
-            //Console.WriteLine("Vid bord nummer: " + (tableIndex + 1) + " sitter " + p + " serveras av " + waiter.Name);
         }
         private static void RemoveFromWaitingList(List<Group> waitingList, int index)
         {

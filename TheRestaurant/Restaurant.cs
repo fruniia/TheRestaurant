@@ -48,18 +48,10 @@ namespace TheRestaurant
                 {
                     entrance.CreateGroup(waitingList);
                 }
-                waiter.LeaveOrder(kitchen.bongQueue, waiters); //ny metod för att lämna order till kök
-                kitchen.HandlingChef();
+                waiter.LeaveOrder(waiters); //ny metod för att lämna order till kök
+                kitchen.HandlingChef(order.Orderlist);
                 for (int i = 0; i < tables.Count; i++)
                 {
-                    foreach (var a in tables[i].groupInTable.guests)
-                    {
-                        if (a.OrderedFood == false)
-                        {
-                            a.TypeOfFood = a.OrderFood();
-                            a.DrawOrderFood(); //Gjorde en metod DrawOrderFood i Guest för utskriften av maten
-                        }
-                    }
                     if (tables[i].Occupied == true && tables[i].GroupHasOrderedFood == false)
                     {
                         tables[i].GroupHasOrderedFood = true;
@@ -72,7 +64,7 @@ namespace TheRestaurant
                             {
                                 Console.WriteLine($"Table number {kvp.Key} is served by {kvp.Value.Name}");
                                 // tar med order samt waiter, alltså value i waiterAtTable
-                                waiter.OrderToKitchen(order.Orderlist, kvp.Value);
+                                waiter.OrderToKitchen(kvp.Value);
                                 //order.Remove(tables[i].TableID); // //verkar som om man tar bort dictionaryn på ett ställe försvinner den överallt
                             }
                         }

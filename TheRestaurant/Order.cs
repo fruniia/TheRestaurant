@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TheRestaurant
 {
-    internal class Order
+    internal class Order : Kitchen
     {
         public Dictionary<int, Group> Orderlist { get; set; }
 
-        public Order()
+        public Order() : base()
         {
             Orderlist = new();
         }

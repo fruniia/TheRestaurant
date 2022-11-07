@@ -13,8 +13,11 @@ namespace TheRestaurant
     {
         private int ServiceLevel { get; set; }
         public bool Available { get; set; }
-        public Dictionary<int, Group> OrderOnTheGo { get; set; }
+        //public Dictionary<int, Group> OrderOnTheGo { get; set; }
         public bool HasOrderToKitchen { get; set; }
+        public bool AtKitchen { get; set; }
+        public bool AtEntrance { get; set; }
+        public bool AtTable { get; set; }
 
 
         // Kocken tar emot beställningen
@@ -32,74 +35,48 @@ namespace TheRestaurant
         {
             Available = true;
             TimeEstimate = 3;
-            OrderOnTheGo = new Dictionary<int, Group>();
+            //OrderOnTheGo = new Dictionary<int, Group>();
             HasOrderToKitchen = false;
+            AtKitchen = false;
+            AtEntrance = true;
+            AtTable = false;
         }
-        public void LeaveOrder(List<Dictionary<int, Group>> bongQueue, List<Waiter> waiters)
+        public void LeaveOrder(List<Waiter> waiters)
         {
             for (int i = 0; i < waiters.Count; i++)
             {
-                if (waiters[i].HasOrderToKitchen == true)
+                if (waiters[i].HasOrderToKitchen == true && waiters[i].AtKitchen == true)
                 {
-                    bongQueue.Add(waiters[i].OrderOnTheGo);
+                    //bongQueue.Add(waiters[i].OrderOnTheGo);
                     waiters[i].HasOrderToKitchen = false;
                     waiters[i].Available = true; //sätter man true här fyller man alla bord, men servitör nr 1 gör nästan allt
-
+                    break;
 
                     //waiters[i].OrderOnTheGo.Clear(); //verkar som om man tar bort dictionaryn på ett ställe försvinner den överallt
-                    foreach (var o in bongQueue)
-                    {
-                        foreach (KeyValuePair<int, Group> kvp in o)
-                        {
-                            Console.WriteLine("The kitchen has received the order from table " + kvp.Key + ": ");
-                            foreach (var group in kvp.Value.guests)
-                            {
-                                group.DrawOrderFood(); //Använder metoden DrawOrderFood i Guest
-                                //Console.WriteLine(group.TypeOfFood.FoodName + " is ordered by " + group.Name);
-                            }
-                            Console.WriteLine();
-                    }
-                    break;
-                    }
-                    //foreach (Dictionary<int, Group> o in bongQueue)
+                    //foreach (var o in bongQueue)
                     //{
                     //    foreach (KeyValuePair<int, Group> kvp in o)
                     //    {
                     //        Console.WriteLine("The kitchen has received the order from table " + kvp.Key + ": ");
-                    //        foreach(var group in kvp.Value.guests)
+                    //        foreach (var group in kvp.Value.guests)
                     //        {
                     //            group.DrawOrderFood(); //Använder metoden DrawOrderFood i Guest
-                    //            //Console.WriteLine(group.TypeOfFood.FoodName + " is ordered by " + group.Name);
                     //        }
                     //        Console.WriteLine();
-                    //    }
-                    //    break;
                     //}
-
+                    //break;
+                    //}
                 }
             }
         }
 
-        public void OrderToKitchen(Dictionary<int, Group> foodorder, Waiter waiter)
+        public void OrderToKitchen(Waiter waiter)
         {
-            waiter.OrderOnTheGo = foodorder;
+            //waiter.OrderOnTheGo = foodorder;
             waiter.HasOrderToKitchen = true;
+            waiter.AtTable = false;
+            waiter.AtKitchen = true;
             waiter.Available = false;
-            //foreach (KeyValuePair<int, Group> kvp in waiter.OrderOnTheGo) // loopar igenom OrderOnTheGo för att se vad som finns i den
-            //{
-            //    foreach (var group in kvp.Value.guests)
-            //    {
-            //        Console.WriteLine($"ORDERONTHEGO On table number {kvp.Key} sitts {group.Name}, {group.TypeOfFood.FoodName}");
-            //    }
-            //}
-
-            //foreach (KeyValuePair<int, Group> kvp in foodorder) // loopar igenom foodorder för att se att man få samma info
-            //{
-            //    foreach (var group in kvp.Value.guests)
-            //    {
-            //        Console.WriteLine($"{group.TypeOfFood.FoodName} is ordered by table number {kvp.Key}, {group.Name}");
-            //    }
-            //}
         }
     }
 }
