@@ -18,7 +18,6 @@ namespace TheRestaurant
         List<Group> waitingList = new();
         //Dictionary<int, Group> order = new();
 
-
         public Restaurant()
         {
 
@@ -44,12 +43,15 @@ namespace TheRestaurant
                 Console.ReadKey();
                 Console.Clear();
                 Console.SetCursorPosition(0, 33);
+
                 if (waitingList.Count < 4)
                 {
                     entrance.CreateGroup(waitingList);
                 }
+
                 waiter.LeaveOrder(waiters); //ny metod för att lämna order till kök
                 kitchen.HandlingChef(order.Orderlist);
+
                 for (int i = 0; i < tables.Count; i++)
                 {
                     if (tables[i].Occupied == true && tables[i].GroupHasOrderedFood == false)
@@ -59,7 +61,6 @@ namespace TheRestaurant
                         order.Orderlist.Add(tables[i].TableID, tables[i].groupInTable);
                         foreach (KeyValuePair<int, Waiter> kvp in entrance.WaiterAtTable) // loopar igenom dictionaryn WaiterAtTable
                         {
-
                             if (order.Orderlist.ContainsKey(tables[i].TableID) == entrance.WaiterAtTable.ContainsKey(tables[i].TableID))
                             {
                                 Console.WriteLine($"Table number {kvp.Key} is served by {kvp.Value.Name}");
@@ -73,7 +74,6 @@ namespace TheRestaurant
                 entrance.HandleWaiter(waiters, tables, waitingList);
             }
         }
-
 
         private void CreateTable()
         {

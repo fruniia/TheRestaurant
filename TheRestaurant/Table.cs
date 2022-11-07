@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace TheRestaurant
 {
-  
     internal class Table : Restaurant
     {
         Random random = new Random();
@@ -25,7 +24,6 @@ namespace TheRestaurant
         //List<Table> tables = new();
         public int TableID { get; set; }
 
-
         public Table()
         {
             GroupHasOrderedFood = false;
@@ -35,14 +33,15 @@ namespace TheRestaurant
             QualityLevel = 0;
         }
     }
+
     internal class TableForTwo : Table
     {
         public TableForTwo() : base()
         {
             MaxNumberOfGuestsAtTable = 2;
         }
-
     }
+
     internal class TableForFour : Table
     {
         public TableForFour() : base()
