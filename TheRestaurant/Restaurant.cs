@@ -65,9 +65,14 @@ namespace TheRestaurant
                         order.Add(tables[i].TableID, tables[i].groupInTable);
                         foreach (KeyValuePair<int, Waiter> kvp in entrance.WaiterAtTable) // loopar igenom dictionaryn WaiterAtTable
                         {
-                            Console.WriteLine($"Table number {kvp.Key} is served by {kvp.Value.Name}");
-                            // tar med order samt waiter, alltså value i waiterAtTable
-                            waiter.OrderToKitchen(order, kvp.Value);
+
+                            if (order.ContainsKey(tables[i].TableID) == entrance.WaiterAtTable.ContainsKey(tables[i].TableID))
+                            {
+                                Console.WriteLine($"Table number {kvp.Key} is served by {kvp.Value.Name}");
+                                // tar med order samt waiter, alltså value i waiterAtTable
+                                waiter.OrderToKitchen(order, kvp.Value);
+                                //order.Remove(tables[i].TableID); // //verkar som om man tar bort dictionaryn på ett ställe försvinner den överallt
+                            }
                         }
 
                     }
