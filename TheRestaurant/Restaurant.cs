@@ -16,7 +16,7 @@ namespace TheRestaurant
         List<Table> tables = new();
         List<Waiter> waiters = new();
         List<Group> waitingList = new();
-        Dictionary<int, Group> order = new();
+        //Dictionary<int, Group> order = new();
 
 
         public Restaurant()
@@ -30,6 +30,7 @@ namespace TheRestaurant
             Entrance entrance = new Entrance();
             Kitchen kitchen = new Kitchen();
             Menu menu = new Menu();
+            Order order = new Order();
             CreateTable();
             CreateWaiter(waiters);
             entrance.CreateWaitingList(waitingList);
@@ -62,24 +63,22 @@ namespace TheRestaurant
                     if (tables[i].Occupied == true && tables[i].GroupHasOrderedFood == false)
                     {
                         tables[i].GroupHasOrderedFood = true;
-                        order.Add(tables[i].TableID, tables[i].groupInTable);
+
+                        order.Orderlist.Add(tables[i].TableID, tables[i].groupInTable);
                         foreach (KeyValuePair<int, Waiter> kvp in entrance.WaiterAtTable) // loopar igenom dictionaryn WaiterAtTable
                         {
 
-                            if (order.ContainsKey(tables[i].TableID) == entrance.WaiterAtTable.ContainsKey(tables[i].TableID))
+                            if (order.Orderlist.ContainsKey(tables[i].TableID) == entrance.WaiterAtTable.ContainsKey(tables[i].TableID))
                             {
                                 Console.WriteLine($"Table number {kvp.Key} is served by {kvp.Value.Name}");
                                 // tar med order samt waiter, alltså value i waiterAtTable
-                                waiter.OrderToKitchen(order, kvp.Value);
+                                waiter.OrderToKitchen(order.Orderlist, kvp.Value);
                                 //order.Remove(tables[i].TableID); // //verkar som om man tar bort dictionaryn på ett ställe försvinner den överallt
                             }
                         }
-
                     }
                 } //beställ mat
                 entrance.HandleWaiter(waiters, tables, waitingList);
-
-
             }
         }
 
@@ -100,7 +99,6 @@ namespace TheRestaurant
                     bigTable.TableID = i + 1;
                     tables.Add(bigTable);
                 }
-
             }
         }
 
