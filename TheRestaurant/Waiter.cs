@@ -19,7 +19,6 @@ namespace TheRestaurant
         public bool AtEntrance { get; set; }
         public bool AtTable { get; set; }
 
-
         // Kocken tar emot beställningen
         // Kocken lagar maten(tar 10 i “tid”)
         // Servitören hämtar maten

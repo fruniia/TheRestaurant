@@ -10,11 +10,13 @@ namespace TheRestaurant
     {
         Random random = new Random();
         internal List<Food> menu = new();
+
         public Menu()
         {
             CreateMenu();
             Food food = RandomFood();
         }
+
         public void CreateMenu()
         {
             menu.Add(new Fish("Fish and pasta", 199));
