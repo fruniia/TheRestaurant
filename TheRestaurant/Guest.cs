@@ -9,7 +9,7 @@ namespace TheRestaurant
     internal class Guest : Person
     {
 
-        Menu menu = new Menu();
+        Menu menu = new();
         private int Satisfaction { get; set; }
         internal int Money { get; set; }
         internal bool OrderedFood { get; set; }

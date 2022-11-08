@@ -11,7 +11,7 @@ namespace TheRestaurant
         internal Random random = new Random();
         internal string Name { get; set; }
         internal int TimeEstimate { get; set; }
-        internal Food TypeOfFood { get; set; }
+        internal Food? TypeOfFood { get; set; }
         internal Person()
         {
             Name = GetRandomName();

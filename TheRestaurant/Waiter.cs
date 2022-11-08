@@ -47,6 +47,7 @@ namespace TheRestaurant
             waiter.HoldsFood = false;
             waiter.Available = false;
             foreach (Chef chef in chefs)
+            
             {
                 if (chef.FoodDone == true)
                 {
@@ -64,12 +65,14 @@ namespace TheRestaurant
                             {
                                 table.GroupHasGotFood = true;
                                 chef.PreparingFood.Remove(kvp.Key); //Spara mat och pris i en variabel - Gör en nota.
+                                break;
                             }
                         }
                     chef.FoodDone = false;
                     break;
                     }
                 }
+                break;
             }
         }
         internal void GetFoodFromHatch(Waiter waiter, List<Chef> chefs, List<Table> tables)

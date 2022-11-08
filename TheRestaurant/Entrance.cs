@@ -40,8 +40,8 @@ namespace TheRestaurant
             {
                 if (kitchen.FoodInTheHatch == true)
                 {
-                    kitchen.FoodInTheHatch = false;
                     waiter.GetFoodFromHatch(waiter, kitchen.chefs, tables);
+                    kitchen.FoodInTheHatch = false;
                 }
                 else if (waiter.AtKitchen == true && waiter.HoldsFood == true)
                 {
