@@ -34,16 +34,20 @@ namespace TheRestaurant
             group.CreateGuest();
             waitingList.Add(group);
         }
-        internal void HandleWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList, List<Chef> chefs)
+        internal void HandleWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList, Kitchen kitchen)
         {
             foreach (Waiter waiter in waiters)
             {
-                if (FoodInTheHatch == true)
+                if (kitchen.FoodInTheHatch == true)
                 {
-                    FoodInTheHatch = false;
-                    waiter.GetFoodFromHatch(waiter, chefs);
+                    kitchen.FoodInTheHatch = false;
+                    waiter.GetFoodFromHatch(waiter, kitchen.chefs);
                 }
-                else if (waiter.Available == true && waiter.AtEntrance == true && waiter.HoldsFood == false && FoodInTheHatch == false)
+                else if (waiter.AtKitchen == true && waiter.HoldsFood == true)
+                {
+                    waiter.ServeFood(waiter, WaiterAtTable, tables);
+                }
+                else if (waiter.Available == true && waiter.AtEntrance == true && waiter.HoldsFood == false)
                 {
                     CheckForEmptyTable(tables, waitingList, waiter);
                     if (TickCounter < 3)
@@ -59,10 +63,6 @@ namespace TheRestaurant
                     waiter.LeaveOrderToKitchen(waiter);
                 }
 
-                else if (waiter.AtKitchen == true && waiter.HoldsFood == true)
-                {
-                    waiter.ServeFood(waiter, WaiterAtTable, tables);
-                }
                 else if (waiter.AtTable == true && waiter.HoldsFood == false && waiter.Available == false)
                 {
                     waiter.AtEntrance = true;

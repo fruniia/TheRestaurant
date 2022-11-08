@@ -16,13 +16,12 @@ namespace TheRestaurant
         List<Table> tables = new();
         List<Waiter> waiters = new();
         List<Group> waitingList = new();
-        internal bool FoodInTheHatch { get; set; }
+        
 
 
         public Restaurant()
         {
             TickCounter = 0;
-            //FoodInTheHatch = false;
         }
 
         public void Start()
@@ -49,7 +48,7 @@ namespace TheRestaurant
                 {
                     Console.SetCursorPosition(100, i);
                     Console.WriteLine($"{w.Name} Entrance:{w.AtEntrance} Kitchen:{w.AtKitchen} Bord:{w.AtTable} Available:{w.Available}" +
-                        $" Holdsfood:{w.HoldsFood} OrdertoKitchen:{w.HasOrderToKitchen} Foodhatch:{FoodInTheHatch}");
+                        $" Holdsfood:{w.HoldsFood} OrdertoKitchen:{w.HasOrderToKitchen} Foodhatch:{kitchen.FoodInTheHatch}");
                     i++;
                 }
                 Console.ReadKey();
@@ -58,7 +57,7 @@ namespace TheRestaurant
                 entrance.CheckWaitingList(waitingList);
                 kitchen.HandlingChef(order.Orderlist);
                 CheckTablesForOrders(order.Orderlist, entrance.WaiterAtTable);
-                entrance.HandleWaiter(waiters, tables, waitingList, kitchen.chefs);
+                entrance.HandleWaiter(waiters, tables, waitingList, kitchen);
                 EatingFood(tables);
                 TickCounter++;
             }

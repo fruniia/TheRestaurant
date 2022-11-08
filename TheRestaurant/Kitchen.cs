@@ -12,7 +12,8 @@ namespace TheRestaurant
         internal int NumberOfChefs { get; set; }
         internal List<Chef> chefs = new();
         internal List<Dictionary<int, Group>> bongQueue = new();
-  
+        internal bool FoodInTheHatch { get; set; }
+
 
         internal Kitchen() : base()
         {
@@ -58,9 +59,9 @@ namespace TheRestaurant
                     if (chef.ChefTimer == 0)
                     {
                         chef.ChefTimer = chef.TimeEstimate;
-                        FoodInTheHatch = true;
                         chef.FoodDone = true;
                         chef.Available = true;
+                        FoodInTheHatch = true;
                     }
                 }
             }

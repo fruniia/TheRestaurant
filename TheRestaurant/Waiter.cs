@@ -74,7 +74,7 @@ namespace TheRestaurant
         {
             foreach (Chef chef in chefs)
             {
-                if (chef.FoodDone == true && waiter.Available == true)
+                if (chef.FoodDone == true)
                 {
                     waiter.AtEntrance = false;
                     waiter.Available = false;
