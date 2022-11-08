@@ -9,10 +9,10 @@ namespace TheRestaurant
 {
     internal class Food
     {
-        public string FoodName { get; set; }
-        public int Price { get; set; }
+        internal string FoodName { get; set; }
+        internal int Price { get; set; }
 
-        public Food(string foodName, int price)
+        internal Food(string foodName, int price)
         {
             FoodName = foodName;
             Price = price;

@@ -12,15 +12,15 @@ namespace TheRestaurant
     internal class Waiter : Person
     {
         private int ServiceLevel { get; set; }
-        public bool Available { get; set; }
-        //public Dictionary<int, Group> OrderOnTheGo { get; set; }
-        public bool HasOrderToKitchen { get; set; }
-        public bool AtKitchen { get; set; }
-        public bool AtEntrance { get; set; }
-        public bool AtTable { get; set; }
+        internal bool Available { get; set; }
+        internal Dictionary<int, Group> ServingToTable { get; set; }
+        internal bool HasOrderToKitchen { get; set; }
+        internal bool AtKitchen { get; set; }
+        internal bool AtEntrance { get; set; }
+        internal bool AtTable { get; set; }
+        internal bool HoldsFood { get; set; }
 
 
-        // Kocken tar emot beställningen
         // Kocken lagar maten(tar 10 i “tid”)
         // Servitören hämtar maten
         // Servitören serverar maten
@@ -31,7 +31,7 @@ namespace TheRestaurant
         // Antingen går gästen eller så får hen diska
         // Servitör dukar av bordet(tar 3 I “tid”)
 
-        public Waiter() : base()
+        internal Waiter() : base()
         {
             Available = true;
             TimeEstimate = 3;
@@ -40,39 +40,60 @@ namespace TheRestaurant
             AtKitchen = false;
             AtEntrance = true;
             AtTable = false;
+            HoldsFood = false;
         }
-        public void LeaveOrder(List<Waiter> waiters)
+        internal void ServeFood(Waiter waiter, Dictionary<int, Waiter> waiterAtTable, List<Table> tables)
         {
-            for (int i = 0; i < waiters.Count; i++)
+            waiter.AtKitchen = false;
+            waiter.AtTable = true;
+            foreach (var kvp in waiter.ServingToTable)
             {
-                if (waiters[i].HasOrderToKitchen == true && waiters[i].AtKitchen == true)
+                foreach (var kvp2 in kvp.Value.guests)
                 {
-                    //bongQueue.Add(waiters[i].OrderOnTheGo);
-                    waiters[i].HasOrderToKitchen = false;
-                    waiters[i].Available = true; //sätter man true här fyller man alla bord, men servitör nr 1 gör nästan allt
-                    break;
+                    kvp2.GotFood = true;
 
-                    //waiters[i].OrderOnTheGo.Clear(); //verkar som om man tar bort dictionaryn på ett ställe försvinner den överallt
-                    //foreach (var o in bongQueue)
-                    //{
-                    //    foreach (KeyValuePair<int, Group> kvp in o)
-                    //    {
-                    //        Console.WriteLine("The kitchen has received the order from table " + kvp.Key + ": ");
-                    //        foreach (var group in kvp.Value.guests)
-                    //        {
-                    //            group.DrawOrderFood(); //Använder metoden DrawOrderFood i Guest
-                    //        }
-                    //        Console.WriteLine();
-                    //}
-                    //break;
-                    //}
+                    Console.WriteLine($"Waiter {waiter.Name} serves {kvp2.TypeOfFood.FoodName} to {kvp2.Name}" +
+                        $" at table {kvp.Key}");
+
+                    foreach (Table table in tables)
+                    {
+                        if (kvp.Key == table.TableID)
+                        {
+                            table.GroupHasGotFood = true;
+                        }
+                    }
+
+
+                }
+                break;
+            }
+            waiter.HoldsFood = false;
+            waiter.Available = true;
+        }
+        internal void GetFoodFromHatch(Waiter waiter, List<Chef> chefs)
+        {
+            foreach (Chef chef in chefs)
+            {
+                if (chef.FoodDone == true && waiter.Available == true)
+                {
+                    waiter.Available = false;
+                    waiter.AtKitchen = true;
+                    waiter.ServingToTable = chef.PreparingFood;
+                    waiter.HoldsFood = true;
+                    chef.FoodDone = false;
                 }
             }
         }
-
-        public void OrderToKitchen(Waiter waiter)
+        internal void LeaveOrderToKitchen(Waiter waiter)
         {
-            //waiter.OrderOnTheGo = foodorder;
+            waiter.HasOrderToKitchen = false;
+            waiter.AtKitchen = false;
+            waiter.AtEntrance = true;
+            waiter.Available = true; //sätter man true här fyller man alla bord, men servitör nr 1 gör nästan allt                  
+        }
+
+        internal void OrderToKitchen(Waiter waiter)
+        {
             waiter.HasOrderToKitchen = true;
             waiter.AtTable = false;
             waiter.AtKitchen = true;

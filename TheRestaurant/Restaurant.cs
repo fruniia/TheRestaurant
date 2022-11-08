@@ -10,9 +10,9 @@ namespace TheRestaurant
     internal class Restaurant
     {
         protected int maxNumberOfGuests = 80;
-        Random random = new Random();
         int startTop = 12;
         int startLeft = 5;
+        protected int TickCounter { get; set; }
         List<Table> tables = new();
         List<Waiter> waiters = new();
         List<Group> waitingList = new();
@@ -21,7 +21,7 @@ namespace TheRestaurant
 
         public Restaurant()
         {
-
+            TickCounter = 0;
         }
 
         public void Start()
@@ -35,45 +35,83 @@ namespace TheRestaurant
             CreateWaiter(waiters);
             entrance.CreateWaitingList(waitingList);
 
-            while (true) //ändrat lite ordning så vi ritar ut tom restaurang först
+            while (true) 
             {
                 Draw.DrawingT("Table", startLeft, startTop, tables);
                 Draw.Drawing("Kitchen", 40, 0, kitchen.chefs);
                 Draw.Drawing<Group>("Waitinglist", 72, 0, waitingList);
                 Draw.Drawing("Menu", 5, 0, menu.menu);
+                Console.SetCursorPosition(0, 33);
+                Console.WriteLine($"Antal snurr: {TickCounter}");
                 Console.ReadKey();
                 Console.Clear();
-                Console.SetCursorPosition(0, 33);
-                if (waitingList.Count < 4)
-                {
-                    entrance.CreateGroup(waitingList);
-                }
-                waiter.LeaveOrder(waiters); //ny metod för att lämna order till kök
+                Console.SetCursorPosition(0, 35);
+                entrance.CheckWaitingList(waitingList);
                 kitchen.HandlingChef(order.Orderlist);
-                for (int i = 0; i < tables.Count; i++)
-                {
-                    if (tables[i].Occupied == true && tables[i].GroupHasOrderedFood == false)
-                    {
-                        tables[i].GroupHasOrderedFood = true;
-
-                        order.Orderlist.Add(tables[i].TableID, tables[i].groupInTable);
-                        foreach (KeyValuePair<int, Waiter> kvp in entrance.WaiterAtTable) // loopar igenom dictionaryn WaiterAtTable
-                        {
-
-                            if (order.Orderlist.ContainsKey(tables[i].TableID) == entrance.WaiterAtTable.ContainsKey(tables[i].TableID))
-                            {
-                                Console.WriteLine($"Table number {kvp.Key} is served by {kvp.Value.Name}");
-                                // tar med order samt waiter, alltså value i waiterAtTable
-                                waiter.OrderToKitchen(kvp.Value);
-                                //order.Remove(tables[i].TableID); // //verkar som om man tar bort dictionaryn på ett ställe försvinner den överallt
-                            }
-                        }
-                    }
-                } //beställ mat
-                entrance.HandleWaiter(waiters, tables, waitingList);
+                CheckTablesForOrders(order.Orderlist, entrance.WaiterAtTable);
+                entrance.HandleWaiter(waiters, tables, waitingList, kitchen.FoodInTheHatch, kitchen.chefs);
+                EatingFood(tables);
+                TickCounter++;
             }
         }
 
+        private void EatingFood(List<Table> tables)
+        {
+            foreach (var table in tables)
+            {
+                foreach (var guest in table.groupInTable.guests)
+                {
+                    if (guest.GotFood == true)
+                    {
+                        guest.TimeEstimate--;
+                        if (guest.TimeEstimate == 0)
+                        
+                        {
+                            guest.GotFood = false;
+                            //table.groupInTable.guests.Remove(guest);
+                            Console.WriteLine($"{guest.Name} har ätit klart");
+
+                        }
+                    }
+                }
+            }
+        }
+
+        internal void GroupDecidesFood(List<Table> tables)
+        {
+            foreach (Table table in tables)
+            {
+                foreach (var a in table.groupInTable.guests)
+                {
+                    if (a.OrderedFood == false)
+                    {
+                        a.TypeOfFood = a.OrderFood();
+                        a.DrawOrderFood(); //Gjorde en metod DrawOrderFood i Guest för utskriften av maten
+                    }
+                }
+            }
+        }
+        private void CheckTablesForOrders(Dictionary<int, Group> orderlist, Dictionary<int, Waiter> waiterAtTable)
+        {
+            foreach (Table table in tables)
+            {
+                if (table.Occupied == true && table.GroupHasOrderedFood == false)
+                {
+                    table.GroupHasOrderedFood = true;
+                    orderlist.Add(table.TableID, table.groupInTable);
+                    foreach (KeyValuePair<int, Waiter> kvp in waiterAtTable) // loopar igenom dictionaryn WaiterAtTable
+                    {
+                        if (orderlist.ContainsKey(table.TableID) == waiterAtTable.ContainsKey(table.TableID))
+                        {
+                            kvp.Value.HasOrderToKitchen = true;
+                            kvp.Value.AtTable = false;
+                            kvp.Value.AtKitchen = true;
+                            kvp.Value.Available = false;
+                        }
+                    }
+                }
+            }
+        }
 
         private void CreateTable()
         {

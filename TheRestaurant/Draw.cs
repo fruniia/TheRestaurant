@@ -9,7 +9,7 @@ namespace TheRestaurant
 {
     internal class Draw
     {
-        public static void Drawing<T>(string header, int fromLeft, int fromTop, List<T> anyList)
+        internal static void Drawing<T>(string header, int fromLeft, int fromTop, List<T> anyList)
         {
             string[] graphics = new string[anyList.Count];
 
@@ -37,7 +37,7 @@ namespace TheRestaurant
 
             GUI.Draw(header, fromLeft, fromTop, graphics);
         }
-        public static void DrawingT<T>(string header, int fromLeft, int fromTop, List<T> anyList)
+        internal static void DrawingT<T>(string header, int fromLeft, int fromTop, List<T> anyList)
         {
             for (int i = 0; i < anyList.Count; i++)
             {

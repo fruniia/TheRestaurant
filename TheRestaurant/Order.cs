@@ -8,9 +8,9 @@ namespace TheRestaurant
 {
     internal class Order : Kitchen
     {
-        public Dictionary<int, Group> Orderlist { get; set; }
+        internal Dictionary<int, Group> Orderlist { get; set; }
 
-        public Order() : base()
+        internal Order() : base()
         {
             Orderlist = new();
         }

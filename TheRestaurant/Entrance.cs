@@ -9,37 +9,63 @@ namespace TheRestaurant
     internal class Entrance : Restaurant
     {
         internal Dictionary<int, Waiter> WaiterAtTable = new();
-        public Entrance() : base()
+        internal Entrance() : base()
         {
 
         }
 
-        public void CreateWaitingList(List<Group> waitingList)
+        internal void CheckWaitingList(List<Group> waitingList)
+        {
+            if (waitingList.Count < 4)
+            {
+                CreateGroup(waitingList);
+            }
+        }
+        internal void CreateWaitingList(List<Group> waitingList)
         {
             for (int i = 0; i < 6; i++)
             {
                 CreateGroup(waitingList);
             }
         }
-        public void CreateGroup(List<Group> waitingList)
+        private void CreateGroup(List<Group> waitingList)
         {
             Group group = new();
             group.CreateGuest();
             waitingList.Add(group);
         }
-        internal void HandleWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList)
+        internal void HandleWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList, bool foodInTheHatch, List<Chef> chefs)
         {
-            for (int i = 0; i < waiters.Count; i++)
+            foreach (Waiter waiter in waiters)
             {
-                if (waiters[i].Available == true && waiters[i].HasOrderToKitchen == false)
+                if (waiter.Available == true && waiter.AtEntrance == true && waiter.HoldsFood == false && foodInTheHatch == false)
                 {
-                    CheckForEmptyTable(tables, waitingList, waiters[i]);
-                    break;
+                    CheckForEmptyTable(tables, waitingList, waiter);
+                    //if (TickCounter < 3)
+                    //    break;
                 }
+                else if (waiter.Available == true && foodInTheHatch == true)
+                {
+                    waiter.GetFoodFromHatch(waiter, chefs);
+                    foodInTheHatch = false;
+                }
+
+                else if (waiter.HasOrderToKitchen == true && waiter.AtKitchen == true)
+                {
+                    waiter.LeaveOrderToKitchen(waiter);
+                }
+
+                else if (waiter.AtKitchen == true && waiter.HoldsFood == true)
+                {
+                    waiter.ServeFood(waiter, WaiterAtTable, tables);
+                }
+
             }
         }
         private void CheckForEmptyTable(List<Table> tables, List<Group> waitingList, Waiter waiter)
         {
+            waiter.AtTable = false;
+            waiter.AtEntrance = true;
             for (int i = 0; i < tables.Count; i++)
             {
                 if (tables[i].Occupied == false && waiter.Available == true && waiter.HasOrderToKitchen == false)
@@ -66,20 +92,14 @@ namespace TheRestaurant
             waiter.Available = false;
             tables[tIndex].Occupied = true;
             tables[tIndex].groupInTable.guests = waitingList[wIndex].guests;
-            foreach (Table table in tables)
-            {
-                foreach (var a in table.groupInTable.guests)
-                {
-                    if (a.OrderedFood == false)
-                    {
-                        a.TypeOfFood = a.OrderFood();
-                        a.DrawOrderFood(); //Gjorde en metod DrawOrderFood i Guest för utskriften av maten
-                    }
-                }
-            }
+
+            //flyttade hit texten så den kommer samtidigt som vi sätter gästerna vid bordet. 
+            Console.WriteLine($"Table number {tIndex + 1} is served by {waiter.Name}");
+            GroupDecidesFood(tables);
             WaiterAtTable.Add(tables[tIndex].TableID, waiter);
             RemoveFromWaitingList(waitingList, wIndex);
         }
+
         private static void RemoveFromWaitingList(List<Group> waitingList, int index)
         {
             waitingList.Remove(waitingList[index]);

@@ -8,7 +8,7 @@ namespace TheRestaurant
 {
     internal class Fish : Food
     {
-        public Fish(string foodName, int price) : base(foodName, price)
+        internal Fish(string foodName, int price) : base(foodName, price)
         {
 
         }

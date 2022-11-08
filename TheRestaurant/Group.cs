@@ -14,11 +14,11 @@ namespace TheRestaurant
         private int minNumberOfGuests = 1;
         private int maxNumberOfGuests = 4;
 
-        public List<Guest> CreateGuest()
+        internal List<Guest> CreateGuest()
         {
-            int number = random.Next(minNumberOfGuests, (maxNumberOfGuests + 1));
+            int rndNumber = random.Next(minNumberOfGuests, (maxNumberOfGuests + 1));
 
-            for (int i = 0; i < number; i++)
+            for (int i = 0; i < rndNumber; i++)
             {
                 Guest guest = new Guest();
                 guests.Add(guest);

@@ -16,22 +16,22 @@ namespace TheRestaurant
         //    Medium = 6-10,
         //    High = 11-15
         //}
-        public int MaxNumberOfGuestsAtTable { get; set; }
-        public bool Occupied { get; set; }
+        internal int MaxNumberOfGuestsAtTable { get; set; }
+        internal bool Occupied { get; set; }
         private int QualityLevel { get; set; }
-        //private List<Food> Menu;
-        public Group groupInTable = new Group();
-        public bool GroupHasOrderedFood { get; set; }
-        //List<Table> tables = new();
-        public int TableID { get; set; }
+
+        internal Group groupInTable = new();
+        internal bool GroupHasOrderedFood { get; set; }
+        internal bool GroupHasGotFood { get; set; }
+        internal int TableID { get; set; }
 
 
         public Table()
         {
+            GroupHasGotFood = false;
             GroupHasOrderedFood = false;
             MaxNumberOfGuestsAtTable = 0;
             Occupied = false;
-            //Menu = new List<Food>();
             QualityLevel = 0;
         }
     }
