@@ -41,8 +41,8 @@ namespace TheRestaurant
                 if (waiter.Available == true && waiter.AtEntrance == true && waiter.HoldsFood == false && foodInTheHatch == false)
                 {
                     CheckForEmptyTable(tables, waitingList, waiter);
-                    //if (TickCounter < 3)
-                    //    break;
+                    if (TickCounter < 3)
+                        break;
                 }
                 else if (waiter.Available == true && foodInTheHatch == true)
                 {
@@ -74,17 +74,17 @@ namespace TheRestaurant
                     {
                         if (tables[i] is TableForTwo && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
-                            HandleWaitingList(tables, waitingList, i, j, waiter);
+                            ShowGuestsToTable(tables, waitingList, i, j, waiter);
                         }
                         else if (tables[i] is TableForFour && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
-                            HandleWaitingList(tables, waitingList, i, j, waiter);
+                            ShowGuestsToTable(tables, waitingList, i, j, waiter);
                         }
                     }
                 }
             }
         }
-        private void HandleWaitingList(List<Table> tables, List<Group> waitingList, int tIndex, int wIndex, Waiter waiter)
+        private void ShowGuestsToTable(List<Table> tables, List<Group> waitingList, int tIndex, int wIndex, Waiter waiter)
         {
             waiter.AtEntrance = false;
             waiter.AtTable = true;

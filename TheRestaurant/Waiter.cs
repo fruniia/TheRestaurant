@@ -99,5 +99,13 @@ namespace TheRestaurant
             waiter.AtKitchen = true;
             waiter.Available = false;
         }
+        internal void BringCheckToTable(Waiter waiter)
+        {
+
+        }
+        internal void CleaningTable(Waiter waiter)
+        {
+            waiter.AtTable = true;
+        }
     }
 }

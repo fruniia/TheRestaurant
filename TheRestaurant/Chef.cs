@@ -12,15 +12,21 @@ namespace TheRestaurant
         private int Experience { get; set; }
         internal bool Available { get; set; }
         internal bool FoodDone { get; set; }
+        public int ChefTimer { get; set; }
 
         private string[] chefInAction = { "Cooking food", "Smoking", "Washing hands", "Chitchatting" };
         internal Dictionary<int, Group> PreparingFood { get; set; }
 
         internal Chef() : base()
         {
-            Experience = random.Next(5);
+            Experience = random.Next(1,6);
+            //1 Låg erfarenhet
+            //2-4 Mellan erfarenhet
+            //5 Hög erfarenhet
+            // TimeEstimate - erfarenhet = lagning av mat.
             Available = true;
-            TimeEstimate = 10;
+            TimeEstimate = 13 - Experience;
+            ChefTimer = TimeEstimate;
             PreparingFood = new Dictionary<int, Group>();
             FoodDone = false;
 

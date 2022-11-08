@@ -54,10 +54,10 @@ namespace TheRestaurant
                 }
                 else if (chef.Available == false)
                 {
-                    chef.TimeEstimate--;
-                    if (chef.TimeEstimate == 0)
+                    chef.ChefTimer--;
+                    if (chef.ChefTimer == 0)
                     {
-                        chef.TimeEstimate = 10;
+                        chef.ChefTimer = chef.TimeEstimate;
                         FoodInTheHatch = true;
                         chef.FoodDone = true;
                         chef.Available = true;
