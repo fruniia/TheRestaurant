@@ -17,7 +17,7 @@ namespace TheRestaurant
         internal Kitchen() : base()
         {
             FoodInTheHatch = false;
-            NumberOfChefs = 5;
+            NumberOfChefs = 1;
             CreateChef();
         }
 

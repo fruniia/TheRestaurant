@@ -94,7 +94,6 @@ namespace TheRestaurant
 
         internal void OrderToKitchen(Waiter waiter)
         {
-            waiter.HasOrderToKitchen = true;
             waiter.AtTable = false;
             waiter.AtKitchen = true;
             waiter.Available = false;
@@ -105,7 +104,9 @@ namespace TheRestaurant
         }
         internal void CleaningTable(Waiter waiter)
         {
-            waiter.AtTable = true;
+
+            //TimeEstimate-- == 0
+            waiter.AtTable = false;
         }
     }
 }

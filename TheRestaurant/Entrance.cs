@@ -49,7 +49,11 @@ namespace TheRestaurant
                     waiter.GetFoodFromHatch(waiter, chefs);
                     foodInTheHatch = false;
                 }
-
+                else if(waiter.HasOrderToKitchen == true && waiter.AtTable == true)
+                {
+                    waiter.OrderToKitchen(waiter);
+                }
+                
                 else if (waiter.HasOrderToKitchen == true && waiter.AtKitchen == true)
                 {
                     waiter.LeaveOrderToKitchen(waiter);
@@ -64,8 +68,6 @@ namespace TheRestaurant
         }
         private void CheckForEmptyTable(List<Table> tables, List<Group> waitingList, Waiter waiter)
         {
-            waiter.AtTable = false;
-            waiter.AtEntrance = true;
             for (int i = 0; i < tables.Count; i++)
             {
                 if (tables[i].Occupied == false && waiter.Available == true && waiter.HasOrderToKitchen == false)
