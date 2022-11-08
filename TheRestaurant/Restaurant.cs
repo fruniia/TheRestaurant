@@ -58,12 +58,12 @@ namespace TheRestaurant
                 kitchen.HandlingChef(order.Orderlist);
                 CheckTablesForOrders(order.Orderlist, entrance.WaiterAtTable);
                 entrance.HandleWaiter(waiters, tables, waitingList, kitchen);
-                EatingFood(tables);
+                EatingFood(tables, entrance.WaiterAtTable);
                 TickCounter++;
             }
         }
 
-        private void EatingFood(List<Table> tables)
+        private void EatingFood(List<Table> tables, Dictionary<int, Waiter> waiterAtTable)
         {
             foreach (var table in tables)
             {
@@ -73,12 +73,13 @@ namespace TheRestaurant
                     {
                         guest.TimeEstimate--;
                         if (guest.TimeEstimate == 0)
-
                         {
                             guest.GotFood = false;
                             Console.WriteLine($"{guest.Name} har ätit klart");
-                            //table.groupInTable.guests.Clear();
-                            //table.Occupied = false;
+                            Console.WriteLine($"Table number {table.TableID} is finished eating");
+                            table.groupInTable.guests.Clear();
+                            waiterAtTable.Remove(table.TableID);
+                            table.Occupied = false;
                             break;
 
                         }
@@ -144,7 +145,7 @@ namespace TheRestaurant
 
         internal List<Waiter> CreateWaiter(List<Waiter> waiters)
         {
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 3; i++)
             {
                 Waiter waiter = new Waiter();
                 waiters.Add(waiter);

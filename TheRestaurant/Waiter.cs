@@ -67,9 +67,9 @@ namespace TheRestaurant
                                 chef.PreparingFood.Remove(kvp.Key); //Spara mat och pris i en variabel - Gör en nota.
                             }
                         }
-                    }
                     chef.FoodDone = false;
                     break;
+                    }
                 }
             }
         }
