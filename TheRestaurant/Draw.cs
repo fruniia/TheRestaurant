@@ -13,6 +13,7 @@ namespace TheRestaurant
         {
             string[] graphics = new string[anyList.Count];
 
+
             for (int i = 0; i < anyList.Count; i++)
             {
                 if (anyList[i] is Chef chef)

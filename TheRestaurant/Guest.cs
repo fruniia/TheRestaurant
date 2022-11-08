@@ -8,10 +8,12 @@ namespace TheRestaurant
 {
     internal class Guest : Person
     {
+
         Menu menu = new Menu();
         private bool Satisfaction { get; set; }
         internal int Money { get; set; }
         public bool OrderedFood { get; set; }
+
 
         public Guest()
         {

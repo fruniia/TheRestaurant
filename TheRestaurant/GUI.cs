@@ -44,6 +44,7 @@ namespace TheRestaurant
             }
             Console.SetCursorPosition(fromLeft, fromTop + maxRows + 2);
             Console.Write('└' + new String('─', width + 2) + '┘');
+
         }
     }
 }
