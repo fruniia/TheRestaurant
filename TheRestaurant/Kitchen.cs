@@ -43,7 +43,6 @@ namespace TheRestaurant
                 chef.Available = false;
                 break;
             }
-
         }
         internal void HandlingChef(Dictionary<int, Group> orderlist)
         {

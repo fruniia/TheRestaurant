@@ -72,7 +72,6 @@ namespace TheRestaurant
                 {
                     for (int j = 0; j < waitingList.Count; j++)
                     {
-
                         if (tables[i] is TableForTwo && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
                             HandleWaitingList(tables, waitingList, i, j, waiter);
