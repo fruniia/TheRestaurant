@@ -46,6 +46,8 @@ namespace TheRestaurant
         {
             waiter.AtKitchen = false;
             waiter.AtTable = true;
+            waiter.HoldsFood = false;
+            waiter.Available = false;
             foreach (var kvp in waiter.ServingToTable)
             {
                 foreach (var kvp2 in kvp.Value.guests)
@@ -67,8 +69,6 @@ namespace TheRestaurant
                 }
                 break;
             }
-            waiter.HoldsFood = false;
-            waiter.Available = true;
         }
         internal void GetFoodFromHatch(Waiter waiter, List<Chef> chefs)
         {
@@ -76,10 +76,11 @@ namespace TheRestaurant
             {
                 if (chef.FoodDone == true && waiter.Available == true)
                 {
+                    waiter.AtEntrance = false;
                     waiter.Available = false;
                     waiter.AtKitchen = true;
                     waiter.ServingToTable = chef.PreparingFood;
-                    waiter.HoldsFood = true;
+                    waiter.HoldsFood = true;                  
                     chef.FoodDone = false;
                 }
             }

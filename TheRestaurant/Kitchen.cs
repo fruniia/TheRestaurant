@@ -12,11 +12,10 @@ namespace TheRestaurant
         internal int NumberOfChefs { get; set; }
         internal List<Chef> chefs = new();
         internal List<Dictionary<int, Group>> bongQueue = new();
-        internal bool FoodInTheHatch { get; set; }
+  
 
         internal Kitchen() : base()
         {
-            FoodInTheHatch = false;
             NumberOfChefs = 1;
             CreateChef();
         }
@@ -27,6 +26,7 @@ namespace TheRestaurant
             {
                 Chef chef = new Chef();
                 chefs.Add(chef);
+                
             }
         }
 

@@ -34,26 +34,26 @@ namespace TheRestaurant
             group.CreateGuest();
             waitingList.Add(group);
         }
-        internal void HandleWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList, bool foodInTheHatch, List<Chef> chefs)
+        internal void HandleWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList, List<Chef> chefs)
         {
             foreach (Waiter waiter in waiters)
             {
-                if (waiter.Available == true && waiter.AtEntrance == true && waiter.HoldsFood == false && foodInTheHatch == false)
+                if (FoodInTheHatch == true)
+                {
+                    FoodInTheHatch = false;
+                    waiter.GetFoodFromHatch(waiter, chefs);
+                }
+                else if (waiter.Available == true && waiter.AtEntrance == true && waiter.HoldsFood == false && FoodInTheHatch == false)
                 {
                     CheckForEmptyTable(tables, waitingList, waiter);
                     if (TickCounter < 3)
                         break;
                 }
-                else if (waiter.Available == true && foodInTheHatch == true)
-                {
-                    waiter.GetFoodFromHatch(waiter, chefs);
-                    foodInTheHatch = false;
-                }
-                else if(waiter.HasOrderToKitchen == true && waiter.AtTable == true)
+                else if (waiter.HasOrderToKitchen == true && waiter.AtTable == true)
                 {
                     waiter.OrderToKitchen(waiter);
                 }
-                
+
                 else if (waiter.HasOrderToKitchen == true && waiter.AtKitchen == true)
                 {
                     waiter.LeaveOrderToKitchen(waiter);
@@ -63,7 +63,12 @@ namespace TheRestaurant
                 {
                     waiter.ServeFood(waiter, WaiterAtTable, tables);
                 }
-
+                else if (waiter.AtTable == true && waiter.HoldsFood == false && waiter.Available == false)
+                {
+                    waiter.AtEntrance = true;
+                    waiter.AtTable = false;
+                    waiter.Available = true;
+                }
             }
         }
         private void CheckForEmptyTable(List<Table> tables, List<Group> waitingList, Waiter waiter)

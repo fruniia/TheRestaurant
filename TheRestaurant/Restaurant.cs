@@ -16,12 +16,13 @@ namespace TheRestaurant
         List<Table> tables = new();
         List<Waiter> waiters = new();
         List<Group> waitingList = new();
-        //Dictionary<int, Group> order = new();
+        internal bool FoodInTheHatch { get; set; }
 
 
         public Restaurant()
         {
             TickCounter = 0;
+            //FoodInTheHatch = false;
         }
 
         public void Start()
@@ -47,7 +48,8 @@ namespace TheRestaurant
                 foreach (Waiter w in waiters)
                 {
                     Console.SetCursorPosition(100, i);
-                    Console.WriteLine($"{w.Name} Entrance:{w.AtEntrance} Kitchen:{w.AtKitchen} Bord{w.AtTable} Available:{w.Available}");
+                    Console.WriteLine($"{w.Name} Entrance:{w.AtEntrance} Kitchen:{w.AtKitchen} Bord:{w.AtTable} Available:{w.Available}" +
+                        $" Holdsfood:{w.HoldsFood} OrdertoKitchen:{w.HasOrderToKitchen} Foodhatch:{FoodInTheHatch}");
                     i++;
                 }
                 Console.ReadKey();
@@ -56,7 +58,7 @@ namespace TheRestaurant
                 entrance.CheckWaitingList(waitingList);
                 kitchen.HandlingChef(order.Orderlist);
                 CheckTablesForOrders(order.Orderlist, entrance.WaiterAtTable);
-                entrance.HandleWaiter(waiters, tables, waitingList, kitchen.FoodInTheHatch, kitchen.chefs);
+                entrance.HandleWaiter(waiters, tables, waitingList, kitchen.chefs);
                 EatingFood(tables);
                 TickCounter++;
             }
@@ -113,8 +115,8 @@ namespace TheRestaurant
                         if (orderlist.ContainsKey(table.TableID) == waiterAtTable.ContainsKey(table.TableID))
                         {
                             kvp.Value.HasOrderToKitchen = true;
-                            kvp.Value.AtTable = false;
-                            kvp.Value.AtKitchen = true;
+                            kvp.Value.AtTable = true;
+                            kvp.Value.AtKitchen = false;
                             kvp.Value.Available = false;
                         }
                     }
