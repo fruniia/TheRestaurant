@@ -75,7 +75,6 @@ namespace TheRestaurant
                         if (guest.TimeEstimate == 0)
                         {
                             guest.GotFood = false;
-                            Console.WriteLine($"{guest.Name} har ätit klart");
                             Console.WriteLine($"Table number {table.TableID} is finished eating");
                             table.groupInTable.guests.Clear();
                             waiterAtTable.Remove(table.TableID);

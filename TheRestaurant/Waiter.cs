@@ -13,7 +13,6 @@ namespace TheRestaurant
     {
         private int ServiceLevel { get; set; }
         internal bool Available { get; set; }
-        internal Dictionary<int, Group> ServingToTable { get; set; }
         internal bool HasOrderToKitchen { get; set; }
         internal bool AtKitchen { get; set; }
         internal bool AtEntrance { get; set; }
