@@ -77,8 +77,8 @@ namespace TheRestaurant
                         {
                             guest.GotFood = false;
                             Console.WriteLine($"{guest.Name} har ätit klart");
-                            table.groupInTable.guests.Clear();
-                            table.Occupied = false;
+                            //table.groupInTable.guests.Clear();
+                            //table.Occupied = false;
                             break;
 
                         }

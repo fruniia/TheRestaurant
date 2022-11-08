@@ -46,6 +46,7 @@ namespace TheRestaurant
                 else if (waiter.AtKitchen == true && waiter.HoldsFood == true)
                 {
                     waiter.ServeFood(waiter, WaiterAtTable, tables);
+
                 }
                 else if (waiter.Available == true && waiter.AtEntrance == true && waiter.HoldsFood == false)
                 {

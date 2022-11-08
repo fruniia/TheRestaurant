@@ -41,6 +41,7 @@ namespace TheRestaurant
                 }
                 chef.PreparingFood.Add(b.Key, b.Value);
                 orderlist.Remove(b.Key);
+                
                 chef.Available = false;
                 break;
             }

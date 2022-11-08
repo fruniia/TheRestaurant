@@ -59,13 +59,12 @@ namespace TheRestaurant
 
                     foreach (Table table in tables)
                     {
-                        if (kvp.Key == table.TableID)
+                        if (kvp.Key == table.TableID) 
                         {
                             table.GroupHasGotFood = true;
+                            waiter.ServingToTable.Remove(kvp.Key);
                         }
                     }
-
-
                 }
                 break;
             }
@@ -80,6 +79,10 @@ namespace TheRestaurant
                     waiter.Available = false;
                     waiter.AtKitchen = true;
                     waiter.ServingToTable = chef.PreparingFood;
+                    //foreach (var a in chef.PreparingFood)
+                    //{
+                    //    chef.PreparingFood.Remove(a.Key);
+                    //}
                     waiter.HoldsFood = true;                  
                     chef.FoodDone = false;
                 }
