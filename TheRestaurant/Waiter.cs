@@ -41,7 +41,6 @@ namespace TheRestaurant
             AtEntrance = true;
             AtTable = false;
         }
-
         public void LeaveOrder(List<Waiter> waiters)
         {
             for (int i = 0; i < waiters.Count; i++)
