@@ -41,11 +41,11 @@ namespace TheRestaurant
                 if (kitchen.FoodInTheHatch == true)
                 {
                     kitchen.FoodInTheHatch = false;
-                    waiter.GetFoodFromHatch(waiter, kitchen.chefs);
+                    waiter.GetFoodFromHatch(waiter, kitchen.chefs, tables);
                 }
                 else if (waiter.AtKitchen == true && waiter.HoldsFood == true)
                 {
-                    waiter.ServeFood(waiter, WaiterAtTable, tables);
+                    waiter.ServeFood(waiter, kitchen.chefs, tables);
 
                 }
                 else if (waiter.Available == true && waiter.AtEntrance == true && waiter.HoldsFood == false)

@@ -35,41 +35,45 @@ namespace TheRestaurant
         {
             Available = true;
             TimeEstimate = 3;
-            //OrderOnTheGo = new Dictionary<int, Group>();
             HasOrderToKitchen = false;
             AtKitchen = false;
             AtEntrance = true;
             AtTable = false;
             HoldsFood = false;
         }
-        internal void ServeFood(Waiter waiter, Dictionary<int, Waiter> waiterAtTable, List<Table> tables)
+        internal void ServeFood(Waiter waiter, List<Chef> chefs, List<Table> tables)
         {
             waiter.AtKitchen = false;
             waiter.AtTable = true;
             waiter.HoldsFood = false;
             waiter.Available = false;
-            foreach (var kvp in waiter.ServingToTable)
+            foreach (Chef chef in chefs)
             {
-                foreach (var kvp2 in kvp.Value.guests)
+                if (chef.FoodDone == true)
                 {
-                    kvp2.GotFood = true;
-
-                    Console.WriteLine($"Waiter {waiter.Name} serves {kvp2.TypeOfFood.FoodName} to {kvp2.Name}" +
-                        $" at table {kvp.Key}");
-
-                    foreach (Table table in tables)
+                    foreach (var kvp in chef.PreparingFood)
                     {
-                        if (kvp.Key == table.TableID) 
+                        foreach (var g in kvp.Value.guests)
                         {
-                            table.GroupHasGotFood = true;
-                            waiter.ServingToTable.Remove(kvp.Key);
+                            Console.WriteLine($"Waiter {waiter.Name} serves {g.TypeOfFood.FoodName} to {g.Name}" +
+                                $" at table {kvp.Key}");
+                            g.GotFood = true;
+                        }
+                        foreach (Table table in tables)
+                        {
+                            if (kvp.Key == table.TableID)
+                            {
+                                table.GroupHasGotFood = true;
+                                chef.PreparingFood.Remove(kvp.Key); //Spara mat och pris i en variabel - Gör en nota.
+                            }
                         }
                     }
+                    chef.FoodDone = false;
+                    break;
                 }
-                break;
             }
         }
-        internal void GetFoodFromHatch(Waiter waiter, List<Chef> chefs)
+        internal void GetFoodFromHatch(Waiter waiter, List<Chef> chefs, List<Table> tables)
         {
             foreach (Chef chef in chefs)
             {
@@ -78,21 +82,16 @@ namespace TheRestaurant
                     waiter.AtEntrance = false;
                     waiter.Available = false;
                     waiter.AtKitchen = true;
-                    waiter.ServingToTable = chef.PreparingFood;
-                    //foreach (var a in chef.PreparingFood)
-                    //{
-                    //    chef.PreparingFood.Remove(a.Key);
-                    //}
-                    waiter.HoldsFood = true;                  
-                    chef.FoodDone = false;
+                    waiter.HoldsFood = true;
+                    //chef.FoodDone = false;
                 }
             }
         }
         internal void LeaveOrderToKitchen(Waiter waiter)
         {
+            waiter.AtEntrance = true;
             waiter.HasOrderToKitchen = false;
             waiter.AtKitchen = false;
-            waiter.AtEntrance = true;
             waiter.Available = true; //sätter man true här fyller man alla bord, men servitör nr 1 gör nästan allt                  
         }
 
