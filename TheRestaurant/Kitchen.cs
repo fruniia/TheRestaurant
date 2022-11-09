@@ -33,7 +33,6 @@ namespace TheRestaurant
 
         internal void CookingFood(Chef chef, Dictionary<int, Group> orderlist)
         {
-
             foreach (var b in orderlist)
             {
                 if (b.Value.FoodIsReady == false)

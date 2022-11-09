@@ -46,9 +46,9 @@ namespace TheRestaurant
             {
                 foreach (Table table in tables)
                 {
-                    foreach (var kvp in o.Value.guests)
+                    if (o.Key == table.TableID && table.GroupHasGotFood == false)
                     {
-                        if (o.Key == table.TableID)
+                        foreach (var kvp in o.Value.guests)
                         {
                             if (kvp.GotFood == false)
                             {
@@ -59,8 +59,8 @@ namespace TheRestaurant
                                 waiter.HoldsFood = false;
                             }
                         }
-                        break;
                     }
+                    break;
                 }
                 break;
             }
@@ -82,8 +82,6 @@ namespace TheRestaurant
                                     waiter.SetWaiterToKitchen(waiter);
                                     waiter.HoldsFood = true;
                                     chef.FoodDone = false;
-                                    table.GroupHasGotFood = true;
-
                                 }
                             }
                         }

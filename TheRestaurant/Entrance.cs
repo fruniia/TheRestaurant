@@ -38,7 +38,6 @@ namespace TheRestaurant
         {
             foreach (Waiter waiter in waiters)
             {
-
                 if (waiter.AtEntrance == true && waiter.HasOrderToKitchen == false)
                 {
                     if (kitchen.FoodInTheHatch == true)
