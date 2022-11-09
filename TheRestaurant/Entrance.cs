@@ -50,7 +50,6 @@ namespace TheRestaurant
                         
                           CheckForEmptyTable(tables, waitingList, waiter);
                         
-
                     }
                 }
 
@@ -91,12 +90,10 @@ namespace TheRestaurant
                         if (tables[i] is TableForTwo && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
                             ShowGuestsToTable(tables, waitingList, i, j, waiter);
-                            break;
                         }
                         else if (tables[i] is TableForFour && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
                             ShowGuestsToTable(tables, waitingList, i, j, waiter);
-                            break;
                         }
                         
                     }

@@ -69,6 +69,7 @@ namespace TheRestaurant
                         chef.ChefTimer = chef.TimeEstimate;
                         chef.FoodDone = true;
                         chef.Available = true;
+                        
                         FoodInTheHatch = true;
                     }
                 }

@@ -59,7 +59,8 @@ namespace TheRestaurant
                         $" Holdsfood:{w.HoldsFood} OrdertoKitchen:{w.HasOrderToKitchen}");
                     i++;
                 }
-                Console.ReadKey();
+                //Console.ReadKey();
+                Thread.Sleep(1000);
                 Console.Clear();
                 Console.SetCursorPosition(0, 35);
                 kitchen.HandlingChef(order.Orderlist);
@@ -84,10 +85,13 @@ namespace TheRestaurant
                         {
                             //guest.GotFood = false;
                             Console.WriteLine($"Table number {table.TableID} is finished eating");
-                            table.Occupied = true;
-                            table.groupInTable.guests.Clear();
+                            table.Occupied = false;
+                            table.GroupHasGotFood = false;
+                            table.GroupHasOrderedFood = false;
+                            table.groupInTable.FoodIsReady = false;
                             orderlist.Remove(table.TableID);
                             waiterAtTable.Remove(table.TableID);
+                            table.groupInTable.guests.Clear();
                             break;
 
                         }
@@ -112,6 +116,7 @@ namespace TheRestaurant
                     }
                     table.GroupHasOrderedFood = true;
                     orderlist.Add(table.TableID, table.groupInTable);
+                    
                     foreach (var w in waiters) // loopar igenom dictionaryn WaiterAtTable
                     {
                         if (w.AtTable == true && w.HasOrderToKitchen == false)
