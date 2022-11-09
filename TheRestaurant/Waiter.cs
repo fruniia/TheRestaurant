@@ -42,7 +42,6 @@ namespace TheRestaurant
         internal void ServeFood(Waiter waiter, List<Chef> chefs, List<Table> tables, Dictionary<int, Group> orderlist)
         {
             waiter.SetWaiterToTable(waiter);
-            waiter.HoldsFood = false;
             foreach (var o in orderlist)
             {
                 foreach (Table table in tables)
@@ -57,6 +56,7 @@ namespace TheRestaurant
                                     $" at table {o.Key}");
                                 kvp.GotFood = true;
                                 table.GroupHasGotFood = true;
+                                waiter.HoldsFood = false;
                             }
                         }
                         break;
@@ -110,20 +110,7 @@ namespace TheRestaurant
             waiter.AtTable = false;
             waiter.AtEntrance = false;
         }
-        internal void LeaveOrderToKitchen(Waiter waiter)
-        {
-            waiter.AtEntrance = true;
-            waiter.HasOrderToKitchen = false;
-            waiter.AtKitchen = false;
-            waiter.Available = true; //sätter man true här fyller man alla bord, men servitör nr 1 gör nästan allt                  
-        }
 
-        internal void OrderToKitchen(Waiter waiter)
-        {
-            waiter.AtTable = false;
-            waiter.AtKitchen = true;
-            waiter.Available = false;
-        }
         internal void BringCheckToTable(Waiter waiter)
         {
 

@@ -26,6 +26,7 @@ namespace TheRestaurant
 
         public void Start()
         {
+            int tablenumber = 0;
             Waiter waiter = new Waiter();
             Entrance entrance = new Entrance();
             Kitchen kitchen = new Kitchen();
@@ -46,9 +47,16 @@ namespace TheRestaurant
                 int i = 33;
                 foreach (Waiter w in waiters)
                 {
+                    foreach (var wat in entrance.WaiterAtTable)
+                    {
+                        if (w.Name == wat.Value.Name)
+                        {
+                            tablenumber = wat.Key;
+                        }
+                    }
                     Console.SetCursorPosition(100, i);
-                    Console.WriteLine($"{w.Name} Entrance:{w.AtEntrance} Kitchen:{w.AtKitchen} Bord:{w.AtTable} Available:{w.Available}" +
-                        $" Holdsfood:{w.HoldsFood} OrdertoKitchen:{w.HasOrderToKitchen} Foodhatch:{kitchen.FoodInTheHatch}");
+                    Console.WriteLine($"{w.Name} E: {w.AtEntrance} K: {w.AtKitchen} T: {w.AtTable} {tablenumber}" +
+                        $" Holdsfood:{w.HoldsFood} OrdertoKitchen:{w.HasOrderToKitchen}");
                     i++;
                 }
                 Console.ReadKey();
@@ -56,7 +64,7 @@ namespace TheRestaurant
                 Console.SetCursorPosition(0, 35);
                 entrance.CheckWaitingList(waitingList);
                 kitchen.HandlingChef(order.Orderlist);
-                CheckTablesForOrders(order.Orderlist, entrance.WaiterAtTable);
+                CheckTablesForOrders(order.Orderlist, waiters);
                 entrance.HandleWaiter(waiters, tables, waitingList, kitchen, order.Orderlist);
                 EatingFood(tables, entrance.WaiterAtTable);
                 TickCounter++;
@@ -87,13 +95,7 @@ namespace TheRestaurant
             }
         }
 
-        internal void GroupDecidesFood(List<Table> tables)
-        {
-            foreach (Table table in tables)
-            {
-            }
-        }
-        private void CheckTablesForOrders(Dictionary<int, Group> orderlist, Dictionary<int, Waiter> waiterAtTable)
+        private void CheckTablesForOrders(Dictionary<int, Group> orderlist, List<Waiter> waiters)
         {
             foreach (Table table in tables)
             {
@@ -109,15 +111,11 @@ namespace TheRestaurant
                     }
                     table.GroupHasOrderedFood = true;
                     orderlist.Add(table.TableID, table.groupInTable);
-                    foreach (KeyValuePair<int, Waiter> kvp in waiterAtTable) // loopar igenom dictionaryn WaiterAtTable
+                    foreach (var w in waiters) // loopar igenom dictionaryn WaiterAtTable
                     {
-                        if (orderlist.ContainsKey(table.TableID) == waiterAtTable.ContainsKey(table.TableID))
+                        if (w.AtTable == true && w.HasOrderToKitchen == false)
                         {
-                            kvp.Value.HasOrderToKitchen = true;
-
-                            kvp.Value.AtTable = true;
-                            kvp.Value.AtKitchen = false;
-                            kvp.Value.Available = false;
+                            w.HasOrderToKitchen = true;
                         }
                     }
                 }

@@ -16,14 +16,14 @@ namespace TheRestaurant
 
         internal void CheckWaitingList(List<Group> waitingList)
         {
-            if (waitingList.Count < 4)
+            if (waitingList.Count < 2)
             {
                 CreateGroup(waitingList);
             }
         }
         internal void CreateWaitingList(List<Group> waitingList)
         {
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 2; i++)
             {
                 CreateGroup(waitingList);
             }
@@ -39,7 +39,7 @@ namespace TheRestaurant
             foreach (Waiter waiter in waiters)
             {
 
-                if (waiter.AtEntrance == true)
+                if (waiter.AtEntrance == true && waiter.HasOrderToKitchen == false)
                 {
                     if (kitchen.FoodInTheHatch == true)
                     {
@@ -49,8 +49,6 @@ namespace TheRestaurant
                     else
                     {
                         CheckForEmptyTable(tables, waitingList, waiter);
-                        if (TickCounter < 3)
-                            break;
 
                     }
                 }
@@ -59,7 +57,7 @@ namespace TheRestaurant
                 {
                     if (waiter.HasOrderToKitchen == true)
                     {
-                        waiter.OrderToKitchen(waiter);
+                        waiter.SetWaiterToKitchen(waiter);
                     }
                     else
                     {
@@ -69,13 +67,14 @@ namespace TheRestaurant
 
                 else if (waiter.AtKitchen == true)
                 {
-                    if (waiter.HoldsFood == true && waiter.HasOrderToKitchen == false)
+                    if (waiter.HoldsFood == true)
                     {
                         waiter.ServeFood(waiter, kitchen.chefs, tables, orderlist);
                     }
                     else
                     {
-                        waiter.LeaveOrderToKitchen(waiter);
+                        waiter.HasOrderToKitchen = false;
+                        waiter.SetWaiterToEntrance(waiter);
                     }
                 }
             }
@@ -84,21 +83,21 @@ namespace TheRestaurant
         {
             for (int i = 0; i < tables.Count; i++)
             {
-                if (tables[i].Occupied == false)
+                if (tables[i].Occupied == false && waiter.HasOrderToKitchen == false && waiter.AtEntrance == true)
                 {
                     for (int j = 0; j < waitingList.Count; j++)
                     {
                         if (tables[i] is TableForTwo && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
                             ShowGuestsToTable(tables, waitingList, i, j, waiter);
-                            
+                            break;
                         }
                         else if (tables[i] is TableForFour && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
                             ShowGuestsToTable(tables, waitingList, i, j, waiter);
-                            
+                            break;
                         }
-                        break;
+                        
                     }
                 }
             }
@@ -109,9 +108,8 @@ namespace TheRestaurant
             tables[tIndex].Occupied = true;
             tables[tIndex].groupInTable.guests = waitingList[wIndex].guests;
 
-            //flyttade hit texten så den kommer samtidigt som vi sätter gästerna vid bordet. 
             Console.WriteLine($"Table number {tIndex + 1} is served by {waiter.Name}");
-            GroupDecidesFood(tables);
+
             WaiterAtTable.Add(tables[tIndex].TableID, waiter);
             RemoveFromWaitingList(waitingList, wIndex);
         }
