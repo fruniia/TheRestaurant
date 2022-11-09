@@ -8,13 +8,7 @@ namespace TheRestaurant
 {
     internal class Table : Restaurant
     {
-        Random random = new Random();
-        //enum Level
-        //{ 
-        //    Low = 0-5,
-        //    Medium = 6-10,
-        //    High = 11-15
-        //}
+        readonly Random random = new();
         internal int MaxNumberOfGuestsAtTable { get; set; }
         internal bool Occupied { get; set; }
         private int QualityLevel { get; set; }

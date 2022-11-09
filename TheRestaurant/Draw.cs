@@ -33,7 +33,6 @@ namespace TheRestaurant
                     graphics[i] = $"~ {food.FoodName} {food.Price} SEK ~";
                 }
             }
-
             GUI.Draw(header, fromLeft, fromTop, graphics);
         }
         internal static void DrawingT<T>(string header, int fromLeft, int fromTop, List<T> anyList)

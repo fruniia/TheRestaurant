@@ -16,14 +16,10 @@ namespace TheRestaurant
         List<Table> tables = new();
         List<Waiter> waiters = new();
         List<Group> waitingList = new();
-
-
-
         public Restaurant()
         {
             TickCounter = 0;
         }
-
         public void Start()
         {
             int tablenumber = 0;
@@ -43,22 +39,7 @@ namespace TheRestaurant
                 Draw.Drawing<Group>("Waitinglist", 72, 0, waitingList);
                 Draw.Drawing("Menu", 5, 0, menu.menu);
                 Console.SetCursorPosition(0, 33);
-                Console.WriteLine($"Antal snurr: {TickCounter}");
-                int i = 33;
-                foreach (Waiter w in waiters)
-                {
-                    foreach (var wat in entrance.WaiterAtTable)
-                    {
-                        if (w.Name == wat.Value.Name)
-                        {
-                            tablenumber = wat.Key;
-                        }
-                    }
-                    Console.SetCursorPosition(100, i);
-                    Console.WriteLine($"{w.Name} E: {w.AtEntrance} K: {w.AtKitchen} T: {w.AtTable} {tablenumber}" +
-                        $" Holdsfood:{w.HoldsFood} OrdertoKitchen:{w.HasOrderToKitchen}");
-                    i++;
-                }
+                CheckPosition(waiters);
                 //Console.ReadKey();
                 Thread.Sleep(1000);
                 Console.Clear();
@@ -71,7 +52,27 @@ namespace TheRestaurant
                 TickCounter++;
             }
         }
-
+        private void CheckPosition(List<Waiter> waiters)
+        {
+            int i = 20;
+            foreach (Waiter waiter in waiters)
+            {
+                Console.SetCursorPosition(30, i);
+                if (waiter.AtEntrance == true)
+                {
+                    Console.WriteLine($"Waiter {waiter.Name} is at the entrance");
+                }
+                else if (waiter.AtKitchen == true)
+                {
+                    Console.WriteLine($"Waiter {waiter.Name} is at the kitchen");
+                }
+                else if (waiter.AtTable == true)
+                {
+                    Console.WriteLine($"Waiter {waiter.Name} is at a table");
+                }
+                i++;
+            }
+        }
         private void EatingFood(List<Table> tables, Dictionary<int, Waiter> waiterAtTable, Dictionary<int, Group> orderlist)
         {
             foreach (var table in tables)
@@ -87,6 +88,7 @@ namespace TheRestaurant
                             table.Occupied = false;
                             table.GroupHasGotFood = false;
                             table.GroupHasOrderedFood = false;
+                            table.groupInTable.TotalPrice = 0;
                             table.groupInTable.FoodIsReady = false;
                             orderlist.Remove(table.TableID);
                             waiterAtTable.Remove(table.TableID);
@@ -115,7 +117,7 @@ namespace TheRestaurant
                     }
                     table.GroupHasOrderedFood = true;
                     orderlist.Add(table.TableID, table.groupInTable);
-                    
+
                     foreach (var w in waiters) // loopar igenom dictionaryn WaiterAtTable
                     {
                         if (w.AtTable == true && w.HasOrderToKitchen == false)

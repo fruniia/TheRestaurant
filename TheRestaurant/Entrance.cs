@@ -13,7 +13,6 @@ namespace TheRestaurant
         {
 
         }
-
         internal void CheckWaitingList(List<Group> waitingList)
         {
             if (waitingList.Count < 2)
@@ -47,12 +46,9 @@ namespace TheRestaurant
                     }
                     else
                     {
-                        
                           CheckForEmptyTable(tables, waitingList, waiter);
-                        
                     }
                 }
-
                 else if (waiter.AtTable == true)
                 {
                     if (waiter.HasOrderToKitchen == true)
@@ -64,7 +60,6 @@ namespace TheRestaurant
                         waiter.SetWaiterToEntrance(waiter);
                     }
                 }
-
                 else if (waiter.AtKitchen == true)
                 {
                     if (waiter.HoldsFood == true)
@@ -94,8 +89,7 @@ namespace TheRestaurant
                         else if (tables[i] is TableForFour && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
                             ShowGuestsToTable(tables, waitingList, i, j, waiter);
-                        }
-                        
+                        }       
                     }
                 }
             }
@@ -111,7 +105,6 @@ namespace TheRestaurant
             WaiterAtTable.Add(tables[tIndex].TableID, waiter);
             RemoveFromWaitingList(waitingList, wIndex);
         }
-
         private static void RemoveFromWaitingList(List<Group> waitingList, int index)
         {
             waitingList.Remove(waitingList[index]);

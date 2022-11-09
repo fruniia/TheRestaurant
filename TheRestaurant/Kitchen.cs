@@ -11,26 +11,20 @@ namespace TheRestaurant
     {
         internal int NumberOfChefs { get; set; }
         internal List<Chef> chefs = new();
-        //internal List<Dictionary<int, Group>> bongQueue = new();
         internal bool FoodInTheHatch { get; set; }
-
-
         internal Kitchen() : base()
         {
             NumberOfChefs = 5;
             CreateChef();
         }
-
         internal void CreateChef()
         {
             for (int i = 0; i < NumberOfChefs; i++)
             {
                 Chef chef = new Chef();
                 chefs.Add(chef);
-
             }
         }
-
         internal void CookingFood(Chef chef, Dictionary<int, Group> orderlist)
         {
             foreach (var b in orderlist)
@@ -44,14 +38,11 @@ namespace TheRestaurant
                             Console.WriteLine($"Kocken {chef.Name} lagar {kvp.TypeOfFood.FoodName} åt {kvp.Name} på bord nummer {b.Key}");
                         }
                     }
-                    //chef.PreparingFood.Add(b.Key, b.Value);
-                    //orderlist.Remove(b.Key);
                     b.Value.FoodIsReady = true;
                     chef.Available = false;
                     break;
                 }
             }
-
         }
         internal void HandlingChef(Dictionary<int, Group> orderlist)
         {
@@ -69,7 +60,6 @@ namespace TheRestaurant
                         chef.ChefTimer = chef.TimeEstimate;
                         chef.FoodDone = true;
                         chef.Available = true;
-                        
                         FoodInTheHatch = true;
                     }
                 }

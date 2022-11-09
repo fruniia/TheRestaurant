@@ -14,29 +14,23 @@ namespace TheRestaurant
         internal bool FoodDone { get; set; }
         public int ChefTimer { get; set; }
 
-        private string[] chefInAction = { "Cooking food", "Smoking", "Washing hands", "Chitchatting" };
+        readonly string[] chefInAction = { "Cooking food", "Smoking", "Washing hands", "Chitchatting" };
         //internal Dictionary<int, Group> PreparingFood { get; set; }
 
         internal Chef() : base()
         {
             Experience = random.Next(1,6);
-            //1 Låg erfarenhet
-            //2-4 Mellan erfarenhet
-            //5 Hög erfarenhet
-            // TimeEstimate - erfarenhet = lagning av mat.
             Available = true;
-            TimeEstimate = 12-Experience;
+            TimeEstimate = 10;
             ChefTimer = TimeEstimate;
             FoodDone = false;
 
         }
-
         internal string ChefInAction()
         {
             string action = Randomize();
             return action;
         }
-
         internal string Randomize()
         {
             for (int i = 0; i < chefInAction.Length; i++)
