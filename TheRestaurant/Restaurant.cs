@@ -83,8 +83,7 @@ namespace TheRestaurant
                         guest.TimeEstimate--;
                         if (guest.TimeEstimate == 0)
                         {
-                            //guest.GotFood = false;
-                            Console.WriteLine($"Table number {table.TableID} is finished eating");
+                            Console.WriteLine($"Table number {table.TableID} is finished eating. {table.groupInTable.TotalPrice}");
                             table.Occupied = false;
                             table.GroupHasGotFood = false;
                             table.GroupHasOrderedFood = false;
@@ -93,7 +92,6 @@ namespace TheRestaurant
                             waiterAtTable.Remove(table.TableID);
                             table.groupInTable.guests.Clear();
                             break;
-
                         }
                     }
                 }
@@ -112,6 +110,7 @@ namespace TheRestaurant
                         {
                             a.TypeOfFood = a.OrderFood();
                             a.DrawOrderFood(); //Gjorde en metod DrawOrderFood i Guest för utskriften av maten
+                            table.groupInTable.TotalPrice += a.TypeOfFood.Price;
                         }
                     }
                     table.GroupHasOrderedFood = true;
