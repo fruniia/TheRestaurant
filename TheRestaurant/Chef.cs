@@ -25,7 +25,7 @@ namespace TheRestaurant
             //5 Hög erfarenhet
             // TimeEstimate - erfarenhet = lagning av mat.
             Available = true;
-            TimeEstimate = 10;
+            TimeEstimate = 12-Experience;
             ChefTimer = TimeEstimate;
             FoodDone = false;
 
