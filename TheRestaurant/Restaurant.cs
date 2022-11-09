@@ -66,12 +66,12 @@ namespace TheRestaurant
                 kitchen.HandlingChef(order.Orderlist);
                 CheckTablesForOrders(order.Orderlist, waiters);
                 entrance.HandleWaiter(waiters, tables, waitingList, kitchen, order.Orderlist);
-                EatingFood(tables, entrance.WaiterAtTable);
+                EatingFood(tables, entrance.WaiterAtTable, order.Orderlist);
                 TickCounter++;
             }
         }
 
-        private void EatingFood(List<Table> tables, Dictionary<int, Waiter> waiterAtTable)
+        private void EatingFood(List<Table> tables, Dictionary<int, Waiter> waiterAtTable, Dictionary<int, Group> orderlist)
         {
             foreach (var table in tables)
             {
@@ -85,6 +85,7 @@ namespace TheRestaurant
                             guest.GotFood = false;
                             Console.WriteLine($"Table number {table.TableID} is finished eating");
                             table.groupInTable.guests.Clear();
+                            orderlist.Remove(table.TableID);
                             waiterAtTable.Remove(table.TableID);
                             table.Occupied = false;
                             break;
