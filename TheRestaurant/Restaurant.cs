@@ -82,7 +82,7 @@ namespace TheRestaurant
                         guest.TimeEstimate--;
                         if (guest.TimeEstimate == 0)
                         {
-                            guest.GotFood = false;
+                            //guest.GotFood = false;
                             Console.WriteLine($"Table number {table.TableID} is finished eating");
                             table.groupInTable.guests.Clear();
                             orderlist.Remove(table.TableID);

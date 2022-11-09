@@ -26,8 +26,6 @@ namespace TheRestaurant
 
         public Table()
         {
-            GroupHasGotFood = false;
-            GroupHasOrderedFood = false;
             MaxNumberOfGuestsAtTable = 0;
             Occupied = false;
             QualityLevel = 0;

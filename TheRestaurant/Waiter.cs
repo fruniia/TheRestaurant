@@ -52,8 +52,7 @@ namespace TheRestaurant
                         {
                             if (kvp.GotFood == false)
                             {
-                                Console.WriteLine($"Waiter {waiter.Name} serves {kvp.TypeOfFood.FoodName} to {kvp.Name}" +
-                                    $" at table {o.Key}");
+                                Console.WriteLine($"Waiter {waiter.Name} serves {kvp.TypeOfFood.FoodName} to {kvp.Name} at table {o.Key}");
                                 kvp.GotFood = true;
                                 table.GroupHasGotFood = true;
                                 waiter.HoldsFood = false;
