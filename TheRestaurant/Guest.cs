@@ -19,7 +19,7 @@ namespace TheRestaurant
         internal Guest()
         {
             GotFood = false;
-            TimeEstimate = 20;
+            TimeEstimate = 5;
             Money = random.Next(500, 1000);
         }
 

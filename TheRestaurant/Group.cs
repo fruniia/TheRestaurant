@@ -13,6 +13,7 @@ namespace TheRestaurant
         private Random random = new Random();
         private int minNumberOfGuests = 1;
         private int maxNumberOfGuests = 4;
+        public bool FoodIsReady { get; set; }
 
         internal List<Guest> CreateGuest()
         {

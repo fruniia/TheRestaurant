@@ -16,7 +16,7 @@ namespace TheRestaurant
         List<Table> tables = new();
         List<Waiter> waiters = new();
         List<Group> waitingList = new();
-        
+
 
 
         public Restaurant()
@@ -57,7 +57,7 @@ namespace TheRestaurant
                 entrance.CheckWaitingList(waitingList);
                 kitchen.HandlingChef(order.Orderlist);
                 CheckTablesForOrders(order.Orderlist, entrance.WaiterAtTable);
-                entrance.HandleWaiter(waiters, tables, waitingList, kitchen);
+                entrance.HandleWaiter(waiters, tables, waitingList, kitchen, order.Orderlist);
                 EatingFood(tables, entrance.WaiterAtTable);
                 TickCounter++;
             }
@@ -91,14 +91,6 @@ namespace TheRestaurant
         {
             foreach (Table table in tables)
             {
-                foreach (var a in table.groupInTable.guests)
-                {
-                    if (a.OrderedFood == false)
-                    {
-                        a.TypeOfFood = a.OrderFood();
-                        a.DrawOrderFood(); //Gjorde en metod DrawOrderFood i Guest för utskriften av maten
-                    }
-                }
             }
         }
         private void CheckTablesForOrders(Dictionary<int, Group> orderlist, Dictionary<int, Waiter> waiterAtTable)
@@ -107,6 +99,14 @@ namespace TheRestaurant
             {
                 if (table.Occupied == true && table.GroupHasOrderedFood == false)
                 {
+                    foreach (var a in table.groupInTable.guests)
+                    {
+                        if (a.OrderedFood == false)
+                        {
+                            a.TypeOfFood = a.OrderFood();
+                            a.DrawOrderFood(); //Gjorde en metod DrawOrderFood i Guest för utskriften av maten
+                        }
+                    }
                     table.GroupHasOrderedFood = true;
                     orderlist.Add(table.TableID, table.groupInTable);
                     foreach (KeyValuePair<int, Waiter> kvp in waiterAtTable) // loopar igenom dictionaryn WaiterAtTable
@@ -114,6 +114,7 @@ namespace TheRestaurant
                         if (orderlist.ContainsKey(table.TableID) == waiterAtTable.ContainsKey(table.TableID))
                         {
                             kvp.Value.HasOrderToKitchen = true;
+
                             kvp.Value.AtTable = true;
                             kvp.Value.AtKitchen = false;
                             kvp.Value.Available = false;

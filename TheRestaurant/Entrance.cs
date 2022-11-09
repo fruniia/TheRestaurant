@@ -34,41 +34,49 @@ namespace TheRestaurant
             group.CreateGuest();
             waitingList.Add(group);
         }
-        internal void HandleWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList, Kitchen kitchen)
+        internal void HandleWaiter(List<Waiter> waiters, List<Table> tables, List<Group> waitingList, Kitchen kitchen, Dictionary<int, Group> orderlist)
         {
             foreach (Waiter waiter in waiters)
             {
-                if (kitchen.FoodInTheHatch == true)
-                {
-                    waiter.GetFoodFromHatch(waiter, kitchen.chefs, tables);
-                    kitchen.FoodInTheHatch = false;
-                }
-                else if (waiter.AtKitchen == true && waiter.HoldsFood == true)
-                {
-                    waiter.ServeFood(waiter, kitchen.chefs, tables);
 
-                }
-                else if (waiter.Available == true && waiter.AtEntrance == true && waiter.HoldsFood == false)
+                if (waiter.AtEntrance == true)
                 {
-                    CheckForEmptyTable(tables, waitingList, waiter);
-                    if (TickCounter < 3)
-                        break;
-                }
-                else if (waiter.HasOrderToKitchen == true && waiter.AtTable == true)
-                {
-                    waiter.OrderToKitchen(waiter);
+                    if (kitchen.FoodInTheHatch == true)
+                    {
+                        waiter.GetFoodFromHatch(waiter, kitchen.chefs, tables, orderlist);
+                        kitchen.FoodInTheHatch = false;
+                    }
+                    else
+                    {
+                        CheckForEmptyTable(tables, waitingList, waiter);
+                        if (TickCounter < 3)
+                            break;
+
+                    }
                 }
 
-                else if (waiter.HasOrderToKitchen == true && waiter.AtKitchen == true)
+                else if (waiter.AtTable == true)
                 {
-                    waiter.LeaveOrderToKitchen(waiter);
+                    if (waiter.HasOrderToKitchen == true)
+                    {
+                        waiter.OrderToKitchen(waiter);
+                    }
+                    else
+                    {
+                        waiter.SetWaiterToEntrance(waiter);
+                    }
                 }
 
-                else if (waiter.AtTable == true && waiter.HoldsFood == false && waiter.Available == false)
+                else if (waiter.AtKitchen == true)
                 {
-                    waiter.AtEntrance = true;
-                    waiter.AtTable = false;
-                    waiter.Available = true;
+                    if (waiter.HoldsFood == true && waiter.HasOrderToKitchen == false)
+                    {
+                        waiter.ServeFood(waiter, kitchen.chefs, tables, orderlist);
+                    }
+                    else
+                    {
+                        waiter.LeaveOrderToKitchen(waiter);
+                    }
                 }
             }
         }
@@ -76,27 +84,28 @@ namespace TheRestaurant
         {
             for (int i = 0; i < tables.Count; i++)
             {
-                if (tables[i].Occupied == false && waiter.Available == true && waiter.HasOrderToKitchen == false)
+                if (tables[i].Occupied == false)
                 {
                     for (int j = 0; j < waitingList.Count; j++)
                     {
                         if (tables[i] is TableForTwo && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
                             ShowGuestsToTable(tables, waitingList, i, j, waiter);
+                            
                         }
                         else if (tables[i] is TableForFour && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
                             ShowGuestsToTable(tables, waitingList, i, j, waiter);
+                            
                         }
+                        break;
                     }
                 }
             }
         }
         private void ShowGuestsToTable(List<Table> tables, List<Group> waitingList, int tIndex, int wIndex, Waiter waiter)
         {
-            waiter.AtEntrance = false;
-            waiter.AtTable = true;
-            waiter.Available = false;
+            waiter.SetWaiterToTable(waiter);
             tables[tIndex].Occupied = true;
             tables[tIndex].groupInTable.guests = waitingList[wIndex].guests;
 

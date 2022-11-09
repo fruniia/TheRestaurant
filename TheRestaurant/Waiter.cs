@@ -32,7 +32,6 @@ namespace TheRestaurant
 
         internal Waiter() : base()
         {
-            Available = true;
             TimeEstimate = 3;
             HasOrderToKitchen = false;
             AtKitchen = false;
@@ -40,54 +39,76 @@ namespace TheRestaurant
             AtTable = false;
             HoldsFood = false;
         }
-        internal void ServeFood(Waiter waiter, List<Chef> chefs, List<Table> tables)
+        internal void ServeFood(Waiter waiter, List<Chef> chefs, List<Table> tables, Dictionary<int, Group> orderlist)
         {
-            waiter.AtKitchen = false;
-            waiter.AtTable = true;
+            waiter.SetWaiterToTable(waiter);
             waiter.HoldsFood = false;
-            waiter.Available = false;
-            foreach (Chef chef in chefs)
-            
+            foreach (var o in orderlist)
             {
-                if (chef.FoodDone == true)
+                foreach (Table table in tables)
                 {
-                    foreach (var kvp in chef.PreparingFood)
+                    foreach (var kvp in o.Value.guests)
                     {
-                        foreach (var g in kvp.Value.guests)
+                        if (o.Key == table.TableID)
                         {
-                            Console.WriteLine($"Waiter {waiter.Name} serves {g.TypeOfFood.FoodName} to {g.Name}" +
-                                $" at table {kvp.Key}");
-                            g.GotFood = true;
-                        }
-                        foreach (Table table in tables)
-                        {
-                            if (kvp.Key == table.TableID)
+                            if (kvp.GotFood == false)
                             {
+                                Console.WriteLine($"Waiter {waiter.Name} serves {kvp.TypeOfFood.FoodName} to {kvp.Name}" +
+                                    $" at table {o.Key}");
+                                kvp.GotFood = true;
                                 table.GroupHasGotFood = true;
-                                chef.PreparingFood.Remove(kvp.Key); //Spara mat och pris i en variabel - Gör en nota.
-                                break;
                             }
                         }
-                    chef.FoodDone = false;
-                    break;
+                        break;
                     }
                 }
                 break;
             }
         }
-        internal void GetFoodFromHatch(Waiter waiter, List<Chef> chefs, List<Table> tables)
+        internal void GetFoodFromHatch(Waiter waiter, List<Chef> chefs, List<Table> tables, Dictionary<int, Group> orderlist)
         {
             foreach (Chef chef in chefs)
             {
                 if (chef.FoodDone == true)
                 {
-                    waiter.AtEntrance = false;
-                    waiter.Available = false;
-                    waiter.AtKitchen = true;
-                    waiter.HoldsFood = true;
+                    foreach (Table table in tables)
+                    {
+                        if (table.GroupHasOrderedFood == true && table.GroupHasGotFood == false)
+                        {
+                            foreach (var kvp in orderlist)
+                            {
+                                if (table.TableID == kvp.Key)
+                                {
+                                    waiter.SetWaiterToKitchen(waiter);
+                                    waiter.HoldsFood = true;
+                                    chef.FoodDone = false;
+                                    table.GroupHasGotFood = true;
+
+                                }
+                            }
+                        }
+                    }
                     //chef.FoodDone = false;
                 }
             }
+        }
+        internal void SetWaiterToTable(Waiter waiter)
+        {
+            waiter.AtTable = true;
+            waiter.AtKitchen = false;
+            waiter.AtEntrance = false;
+        }
+        internal void SetWaiterToEntrance(Waiter waiter)
+        {
+            waiter.AtEntrance = true;
+            waiter.AtTable = false;
+            waiter.AtKitchen = false;
+        }
+        internal void SetWaiterToKitchen(Waiter waiter)
+        {
+            waiter.AtKitchen = true;
+            waiter.AtTable = false;
+            waiter.AtEntrance = false;
         }
         internal void LeaveOrderToKitchen(Waiter waiter)
         {

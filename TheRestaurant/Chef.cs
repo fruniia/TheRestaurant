@@ -15,7 +15,7 @@ namespace TheRestaurant
         public int ChefTimer { get; set; }
 
         private string[] chefInAction = { "Cooking food", "Smoking", "Washing hands", "Chitchatting" };
-        internal Dictionary<int, Group> PreparingFood { get; set; }
+        //internal Dictionary<int, Group> PreparingFood { get; set; }
 
         internal Chef() : base()
         {
@@ -25,9 +25,8 @@ namespace TheRestaurant
             //5 Hög erfarenhet
             // TimeEstimate - erfarenhet = lagning av mat.
             Available = true;
-            TimeEstimate = 13 - Experience;
+            TimeEstimate = 5;
             ChefTimer = TimeEstimate;
-            PreparingFood = new Dictionary<int, Group>();
             FoodDone = false;
 
         }
