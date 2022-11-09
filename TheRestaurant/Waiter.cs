@@ -18,6 +18,8 @@ namespace TheRestaurant
         internal bool AtEntrance { get; set; }
         internal bool AtTable { get; set; }
         internal bool HoldsFood { get; set; }
+        internal bool FoundATable { get; set; }
+        internal bool TakesFoodFromHatch { get; set; }
 
 
         // Kocken lagar maten(tar 10 i “tid”)
@@ -46,7 +48,7 @@ namespace TheRestaurant
             {
                 foreach (Table table in tables)
                 {
-                    if (o.Key == table.TableID && table.GroupHasGotFood == false)
+                    if (o.Key == table.TableID && table.GroupHasGotFood == false && FoundATable == false)
                     {
                         foreach (var kvp in o.Value.guests)
                         {
@@ -56,13 +58,17 @@ namespace TheRestaurant
                                 kvp.GotFood = true;
                                 table.GroupHasGotFood = true;
                                 waiter.HoldsFood = false;
+                                FoundATable = true;
                             }
                         }
                     }
-                    break;
+                    if (FoundATable == true)
+                    {
+                        break;
+                    }
                 }
-                break;
             }
+            FoundATable = false;
         }
         internal void GetFoodFromHatch(Waiter waiter, List<Chef> chefs, List<Table> tables, Dictionary<int, Group> orderlist)
         {
@@ -76,10 +82,11 @@ namespace TheRestaurant
                         {
                             foreach (var kvp in orderlist)
                             {
-                                if (table.TableID == kvp.Key)
+                                if (table.TableID == kvp.Key && waiter.TakesFoodFromHatch == false)
                                 {
                                     waiter.SetWaiterToKitchen(waiter);
                                     waiter.HoldsFood = true;
+                                    waiter.TakesFoodFromHatch = true;
                                     chef.FoodDone = false;
                                 }
                             }
@@ -88,6 +95,7 @@ namespace TheRestaurant
                     //chef.FoodDone = false;
                 }
             }
+            waiter.TakesFoodFromHatch = false;
         }
         internal void SetWaiterToTable(Waiter waiter)
         {

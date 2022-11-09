@@ -62,11 +62,11 @@ namespace TheRestaurant
                 Console.ReadKey();
                 Console.Clear();
                 Console.SetCursorPosition(0, 35);
-                entrance.CheckWaitingList(waitingList);
                 kitchen.HandlingChef(order.Orderlist);
                 CheckTablesForOrders(order.Orderlist, waiters);
                 entrance.HandleWaiter(waiters, tables, waitingList, kitchen, order.Orderlist);
                 EatingFood(tables, entrance.WaiterAtTable, order.Orderlist);
+                entrance.CheckWaitingList(waitingList);
                 TickCounter++;
             }
         }
@@ -84,10 +84,10 @@ namespace TheRestaurant
                         {
                             //guest.GotFood = false;
                             Console.WriteLine($"Table number {table.TableID} is finished eating");
+                            table.Occupied = true;
                             table.groupInTable.guests.Clear();
                             orderlist.Remove(table.TableID);
                             waiterAtTable.Remove(table.TableID);
-                            table.Occupied = false;
                             break;
 
                         }
