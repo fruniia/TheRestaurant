@@ -10,14 +10,15 @@ namespace TheRestaurant
 {
     internal class Restaurant
     {
+        internal Random random = new();
         protected int maxNumberOfGuests = 80;
         private int NumberOfWaiters { get; set; }
-        private int startTop = 12;
-        private int startLeft = 5;
+        readonly private int startTop = 12;
+        readonly private int startLeft = 5;
         protected int TickCounter { get; set; }
-        List<Table> tables = new();
-        List<Waiter> waiters = new();
-        List<Group> waitingList = new();
+        readonly List<Table> tables = new();
+        readonly List<Waiter> waiters = new();
+        readonly List<Group> waitingList = new();
         internal Restaurant()
         {
             TickCounter = 0;
@@ -55,7 +56,17 @@ namespace TheRestaurant
                 entrance.CheckWaitingList(waitingList);
                 TickCounter++;
             }
+            Outro(entrance.TotalGuests, register.TonightsRevenue, register.TonightsTotalTip);
         }
+
+        internal static void Outro(int totalguests, int revenue, int tip)
+        {
+            Console.SetCursorPosition(0, 7);
+            Console.WriteLine($"\tThe Restaurant is closed for the evening and we want to thank all of guests who has visited us. \n" +
+                $"\tTonight we served {totalguests} wonderful guests, who added {tip} SEK in tips to our total revenue of {revenue} SEK\n" +
+                $"\n\tPlease, come again.\n\n\n\n\n\n");
+        }
+
         private static void DisplayResturantsRevenueAndTip(Register register)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;

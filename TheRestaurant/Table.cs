@@ -8,7 +8,6 @@ namespace TheRestaurant
 {
     internal class Table : Restaurant
     {
-        Random random = new();
         internal int MaxNumberOfGuestsAtTable { get; set; }
         internal bool Occupied { get; set; }
         internal int QualityLevel { get; set; }

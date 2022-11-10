@@ -12,7 +12,7 @@ namespace TheRestaurant
     {
         internal Dictionary<int, Waiter> WaiterAtTable = new();
         private bool IsOpened { get; set; }
-        private int TotalGuests { get; set; }
+        internal int TotalGuests { get; set; }
         private int GuestsLeaveCount { get; set; }
         private bool EveryOneHasLeft { get; set; }
         private bool GroupsWentToMcDonalds { get; set; }

@@ -8,7 +8,7 @@ namespace TheRestaurant
 {
     internal class Menu
     {
-        private Random random = new();
+        readonly private Random random = new();
         internal List<Food> menu = new();
         internal Menu()
         {

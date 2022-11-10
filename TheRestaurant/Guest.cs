@@ -8,7 +8,7 @@ namespace TheRestaurant
 {
     internal class Guest : Person
     {
-        Menu menu = new();
+        readonly Menu menu = new();
         protected int Money { get; set; }
         internal bool OrderedFood { get; set; }
         internal bool GotFood { get; set; }

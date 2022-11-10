@@ -10,10 +10,10 @@ namespace TheRestaurant
     {
         internal List<Guest> guests = new();
         protected List<Food> foods = new();
-        private Random random = new();
+        readonly private Random random = new();
         internal int GroupExperience { get; set; }
-        private int minNumberOfGuests = 1;
-        private int maxNumberOfGuests = 4;
+        readonly private int minNumberOfGuests = 1;
+        readonly private int maxNumberOfGuests = 4;
         internal bool FoodIsReady { get; set; }
         internal int TotalPrice { get; set; }
 
