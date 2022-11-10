@@ -9,7 +9,7 @@ namespace TheRestaurant
 {
     internal class Restaurant
     {
-        protected int maxNumberOfGuests = 80;
+        internal int maxNumberOfGuests = 80;
         int startTop = 12;
         int startLeft = 5;
         protected int TickCounter { get; set; }
@@ -40,8 +40,9 @@ namespace TheRestaurant
                 Draw.Drawing("Menu", 5, 0, menu.menu);
                 Console.SetCursorPosition(0, 33);
                 CheckPosition(waiters);
+                entrance.CheckGuestCount();
                 //Console.ReadKey();
-                Thread.Sleep(1000);
+                Thread.Sleep(200);
                 Console.Clear();
                 Console.SetCursorPosition(0, 35);
                 kitchen.HandlingChef(order.Orderlist);

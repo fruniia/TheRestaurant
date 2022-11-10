@@ -9,9 +9,12 @@ namespace TheRestaurant
     internal class Entrance : Restaurant
     {
         internal Dictionary<int, Waiter> WaiterAtTable = new();
+        public bool IsOpened { get; set; }
+        public int TotalGuests { get; set; }
         internal Entrance() : base()
         {
-
+            IsOpened = true;
+            TotalGuests = 0;
         }
         internal void CheckWaitingList(List<Group> waitingList)
         {
@@ -44,7 +47,7 @@ namespace TheRestaurant
                         waiter.GetFoodFromHatch(waiter, kitchen.chefs, tables, orderlist);
                         kitchen.FoodInTheHatch = false;
                     }
-                    else
+                    else if (IsOpened == true)
                     {
                           CheckForEmptyTable(tables, waitingList, waiter);
                     }
@@ -99,6 +102,7 @@ namespace TheRestaurant
             waiter.SetWaiterToTable(waiter);
             tables[tIndex].Occupied = true;
             tables[tIndex].groupInTable.guests = waitingList[wIndex].guests;
+            TotalGuests += tables[tIndex].groupInTable.guests.Count;
 
             Console.WriteLine($"Table number {tIndex + 1} is served by {waiter.Name}");
 
@@ -108,6 +112,20 @@ namespace TheRestaurant
         private static void RemoveFromWaitingList(List<Group> waitingList, int index)
         {
             waitingList.Remove(waitingList[index]);
+        }
+        internal void CheckGuestCount()
+        {
+            Console.SetCursorPosition(30, 18);
+            if (TotalGuests < maxNumberOfGuests)
+            {
+                Console.WriteLine($"{TotalGuests} guests has entered the restaurant tonight");
+            }
+            else
+            {
+                IsOpened = false;
+                Console.WriteLine($"The restaurant has filled tonights seats");
+            }
+
         }
     }
 }
