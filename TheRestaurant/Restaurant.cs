@@ -89,21 +89,7 @@ namespace TheRestaurant
                             Console.WriteLine($"Table number {table.TableID} is finished eating. {table.groupInTable.TotalPrice}");
                             table.Occupied = false;
                             table.groupInTable.GroupExperience += waiterAtTable[table.TableID].ServiceLevel;
-                            else if (table.groupInTable.GroupExperience > 5)
-                            {
-                                register.Tip = table.groupInTable.TotalPrice / 10;
-                                register.RevenuePerGroup = table.groupInTable.TotalPrice + register.Tip;
-                                register.TonightsRevenue += register.RevenuePerGroup;
-                                Console.WriteLine($"Table {table.TableID} tips {register.Tip}SEK for a good service, and pays a total of {register.RevenuePerGroup}SEK");
-                            }
-                            else 
-                            {
-                                Console.WriteLine($"The customers were unhappy with the service and gives no tip. Just pays {table.groupInTable.TotalPrice}");
-                                register.RevenuePerGroup = table.groupInTable.TotalPrice;
-                                register.TonightsRevenue += register.RevenuePerGroup;
-                            }
-
-                            //else{du får ingen dricks}
+                            Console.WriteLine($"Tonights revenue: {CalculateRevenue(table, register)} SEK");
                             table.GroupHasGotFood = false;
                             table.GroupHasOrderedFood = false;
                             table.groupInTable.TotalPrice = 0;
@@ -117,7 +103,35 @@ namespace TheRestaurant
                 }
             }
         }
-
+        private int CalculateRevenue(Table table, Register register)
+        {
+            switch (table.groupInTable.GroupExperience)
+            {
+                case 2:
+                case 3:
+                    register.Tip = 0;
+                    break;
+                case 4:
+                case 5:
+                case 6:
+                    register.Tip = table.groupInTable.TotalPrice / 20;
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    register.Tip = table.groupInTable.TotalPrice / 10;
+                    break;
+                case 10:
+                    register.Tip = table.groupInTable.TotalPrice / 5;
+                    break;
+            }
+            register.RevenuePerGroup = table.groupInTable.TotalPrice + register.Tip;
+            register.TonightsRevenue += register.RevenuePerGroup;
+            Console.WriteLine((table.groupInTable.GroupExperience < 4) ? 
+            $"The customers were unhappy with the service and gives no tip. Just pays {table.groupInTable.TotalPrice}" :
+            $"Table {table.TableID} tips {register.Tip}SEK for a good service, and pays a total of {register.RevenuePerGroup}SEK");
+            return register.TonightsRevenue;
+        }
         private void CheckTablesForOrders(Dictionary<int, Group> orderlist, List<Waiter> waiters)
         {
             foreach (Table table in tables)
