@@ -42,12 +42,12 @@ namespace TheRestaurant
                 Draw.Drawing("Kitchen", 40, 0, kitchen.chefs);
                 Draw.Drawing<Group>("Waitinglist", 72, 0, waitingList);
                 Draw.Drawing("Menu", 5, 0, menu.menu);
-                CheckPosition(waiters);
+                Draw.Drawing("Waiters", 30, 20, waiters);
                 DisplayResturantsRevenueAndTip(register);
                 restaurantLoop = entrance.WentToMcDonalds(restaurantLoop);
                 restaurantLoop = entrance.CheckGuestCount(tables, restaurantLoop);
                 //Console.ReadKey();
-                //Thread.Sleep(200);
+                Thread.Sleep(200);
                 Console.Clear();
                 Console.SetCursorPosition(0, 35);
                 kitchen.HandlingChef(order.Orderlist);
@@ -66,27 +66,6 @@ namespace TheRestaurant
             Console.SetCursorPosition(80, 36);
             Console.WriteLine($"of which {register.TonightsTotalTip} SEK is tip from happy guests.");
             Console.ResetColor();
-        }
-        private void CheckPosition(List<Waiter> waiters)
-        {
-            int i = 20;
-            foreach (Waiter waiter in waiters)
-            {
-                Console.SetCursorPosition(30, i);
-                if (waiter.AtEntrance == true)
-                {
-                    Console.WriteLine($"Waiter {waiter.Name} is at the entrance");
-                }
-                else if (waiter.AtKitchen == true)
-                {
-                    Console.WriteLine($"Waiter {waiter.Name} is at the kitchen");
-                }
-                else if (waiter.AtTable == true)
-                {
-                    Console.WriteLine($"Waiter {waiter.Name} is at a table");
-                }
-                i++;
-            }
         }
         private void EatingFood(List<Table> tables, Dictionary<int, Waiter> waiterAtTable, Dictionary<int, Group> orderlist, Register register)
         {

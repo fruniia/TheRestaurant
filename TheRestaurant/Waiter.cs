@@ -19,6 +19,7 @@ namespace TheRestaurant
         internal bool HoldsFood { get; set; }
         internal bool FoundATable { get; set; }
         internal bool TakesFoodFromHatch { get; set; }
+        internal string[] waiterInAction = { "At table", "At entrance", "At kitchen" };
 
         internal Waiter() : base()
         {
@@ -29,6 +30,31 @@ namespace TheRestaurant
             AtTable = false;
             HoldsFood = false;
             ServiceLevel = 5;
+        }
+
+        internal string WaiterInAction()
+        {
+                string action = WaiterPlace();
+                return action;
+        }
+        private string WaiterPlace()
+        {
+            for (int i = 0; i < waiterInAction.Length; i++)
+            {
+                if (AtTable == true)
+                {
+                    return waiterInAction[0];
+                }
+                if (AtEntrance == true)
+                {
+                    return waiterInAction[1];
+                }
+                if (AtKitchen == true)
+                {
+                    return waiterInAction[2];
+                }
+            }
+            return "";
         }
         internal void ServeFood(Waiter waiter, List<Chef> chefs, List<Table> tables, Dictionary<int, Group> orderlist)
         {

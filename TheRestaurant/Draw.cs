@@ -32,6 +32,10 @@ namespace TheRestaurant
                 {
                     graphics[i] = $"~ {food.FoodName} {food.Price} SEK ~";
                 }
+                if (anyList[i] is Waiter waiter)
+                {
+                    graphics[i] = $"{waiter.Name} is {waiter.WaiterInAction()}";   
+                }
             }
             GUI.Draw(header, fromLeft, fromTop, graphics);
         }
