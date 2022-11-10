@@ -38,9 +38,10 @@ namespace TheRestaurant
                 Draw.Drawing("Kitchen", 40, 0, kitchen.chefs);
                 Draw.Drawing<Group>("Waitinglist", 72, 0, waitingList);
                 Draw.Drawing("Menu", 5, 0, menu.menu);
-                Console.SetCursorPosition(0, 33);
                 CheckPosition(waiters);
                 entrance.CheckGuestCount();
+                Console.SetCursorPosition(80, 35);
+                Console.WriteLine($"Tonights Revenue: {register.TonightsRevenue} SEK"); 
                 //Console.ReadKey();
                 Thread.Sleep(200);
                 Console.Clear();
@@ -51,7 +52,6 @@ namespace TheRestaurant
                 EatingFood(tables, entrance.WaiterAtTable, order.Orderlist, register);
                 entrance.CheckWaitingList(waitingList);
                 TickCounter++;
-
             }
         }
         private void CheckPosition(List<Waiter> waiters)
@@ -86,10 +86,10 @@ namespace TheRestaurant
                         guest.TimeEstimate--;
                         if (guest.TimeEstimate == 0)
                         {
-                            Console.WriteLine($"Table number {table.TableID} is finished eating. {table.groupInTable.TotalPrice}");
+                            Console.WriteLine($"Table number {table.TableID} is finished eating.");
                             table.Occupied = false;
                             table.groupInTable.GroupExperience += waiterAtTable[table.TableID].ServiceLevel;
-                            Console.WriteLine($"Tonights revenue: {CalculateRevenue(table, register)} SEK");
+                            register.CalculateRevenue(table);
                             table.GroupHasGotFood = false;
                             table.GroupHasOrderedFood = false;
                             table.groupInTable.TotalPrice = 0;
@@ -102,35 +102,6 @@ namespace TheRestaurant
                     }
                 }
             }
-        }
-        private int CalculateRevenue(Table table, Register register)
-        {
-            switch (table.groupInTable.GroupExperience)
-            {
-                case 2:
-                case 3:
-                    register.Tip = 0;
-                    break;
-                case 4:
-                case 5:
-                case 6:
-                    register.Tip = table.groupInTable.TotalPrice / 20;
-                    break;
-                case 7:
-                case 8:
-                case 9:
-                    register.Tip = table.groupInTable.TotalPrice / 10;
-                    break;
-                case 10:
-                    register.Tip = table.groupInTable.TotalPrice / 5;
-                    break;
-            }
-            register.RevenuePerGroup = table.groupInTable.TotalPrice + register.Tip;
-            register.TonightsRevenue += register.RevenuePerGroup;
-            Console.WriteLine((table.groupInTable.GroupExperience < 4) ? 
-            $"The customers were unhappy with the service and gives no tip. Just pays {table.groupInTable.TotalPrice}" :
-            $"Table {table.TableID} tips {register.Tip}SEK for a good service, and pays a total of {register.RevenuePerGroup}SEK");
-            return register.TonightsRevenue;
         }
         private void CheckTablesForOrders(Dictionary<int, Group> orderlist, List<Waiter> waiters)
         {
