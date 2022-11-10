@@ -19,7 +19,7 @@ namespace TheRestaurant
         internal bool HoldsFood { get; set; }
         internal bool FoundATable { get; set; }
         internal bool TakesFoodFromHatch { get; set; }
-        internal string[] waiterInAction = { "At table", "At entrance", "At kitchen" };
+        internal string[] waiterInAction = { "at a table", "at the entrance", "in the kitchen" };
 
         internal Waiter() : base()
         {

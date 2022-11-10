@@ -34,7 +34,7 @@ namespace TheRestaurant
                 }
                 if (anyList[i] is Waiter waiter)
                 {
-                    graphics[i] = $"{waiter.Name} is {waiter.WaiterInAction()}";   
+                    graphics[i] = $"{waiter.Name} is {waiter.WaiterInAction()}";
                 }
             }
             GUI.Draw(header, fromLeft, fromTop, graphics);
@@ -55,7 +55,12 @@ namespace TheRestaurant
                     int count = 0;
                     foreach (var g in groups)
                     {
-                        graphics[count] = $"{g.Name}";
+                        graphics[count] = $"{g.Name} ";
+                        //Får inte ut snyggt i GUI
+                        //if (g.TimeEstimate > 0 && g.GotFood == true)
+                        //{
+                        //    graphics[count] += g.TypeOfFood.FoodName;
+                        //}
                         count++;
                     }
                     GUI.Draw(header, fromLeft, fromTop, graphics);
