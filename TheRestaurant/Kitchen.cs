@@ -36,8 +36,10 @@ namespace TheRestaurant
                         if (kvp.GotFood == false)
                         {
                             Console.WriteLine($"Kocken {chef.Name} lagar {kvp.TypeOfFood.FoodName} åt {kvp.Name} på bord nummer {b.Key}");
+                            // chef.Experience += kvp.guest.experience
                         }
                     }
+                    b.Value.GroupExperience += chef.Experience;
                     b.Value.FoodIsReady = true;
                     chef.Available = false;
                     break;

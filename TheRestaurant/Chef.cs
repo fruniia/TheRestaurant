@@ -9,7 +9,7 @@ namespace TheRestaurant
 {
     internal class Chef : Person
     {
-        private int Experience { get; set; }
+        internal int Experience { get; set; }
         internal bool Available { get; set; }
         internal bool FoodDone { get; set; }
         public int ChefTimer { get; set; }

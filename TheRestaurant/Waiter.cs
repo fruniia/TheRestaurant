@@ -11,7 +11,7 @@ namespace TheRestaurant
 {
     internal class Waiter : Person
     {
-        private int ServiceLevel { get; set; }
+        internal int ServiceLevel { get; set; }
         internal bool HasOrderToKitchen { get; set; }
         internal bool AtKitchen { get; set; }
         internal bool AtEntrance { get; set; }
@@ -28,6 +28,7 @@ namespace TheRestaurant
             AtEntrance = true;
             AtTable = false;
             HoldsFood = false;
+            ServiceLevel = 5;
         }
         internal void ServeFood(Waiter waiter, List<Chef> chefs, List<Table> tables, Dictionary<int, Group> orderlist)
         {

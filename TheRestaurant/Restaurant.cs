@@ -22,12 +22,12 @@ namespace TheRestaurant
         }
         public void Start()
         {
-            int tablenumber = 0;
-            Waiter waiter = new Waiter();
-            Entrance entrance = new Entrance();
-            Kitchen kitchen = new Kitchen();
-            Menu menu = new Menu();
-            Order order = new Order();
+            Waiter waiter = new();
+            Entrance entrance = new();
+            Kitchen kitchen = new();
+            Menu menu = new();
+            Order order = new();
+            Register register = new();
             CreateTable();
             CreateWaiter(waiters);
             entrance.CreateWaitingList(waitingList);
@@ -48,9 +48,10 @@ namespace TheRestaurant
                 kitchen.HandlingChef(order.Orderlist);
                 CheckTablesForOrders(order.Orderlist, waiters);
                 entrance.HandleWaiter(waiters, tables, waitingList, kitchen, order.Orderlist);
-                EatingFood(tables, entrance.WaiterAtTable, order.Orderlist);
+                EatingFood(tables, entrance.WaiterAtTable, order.Orderlist, register);
                 entrance.CheckWaitingList(waitingList);
                 TickCounter++;
+
             }
         }
         private void CheckPosition(List<Waiter> waiters)
@@ -74,7 +75,7 @@ namespace TheRestaurant
                 i++;
             }
         }
-        private void EatingFood(List<Table> tables, Dictionary<int, Waiter> waiterAtTable, Dictionary<int, Group> orderlist)
+        private void EatingFood(List<Table> tables, Dictionary<int, Waiter> waiterAtTable, Dictionary<int, Group> orderlist, Register register)
         {
             foreach (var table in tables)
             {
@@ -87,6 +88,22 @@ namespace TheRestaurant
                         {
                             Console.WriteLine($"Table number {table.TableID} is finished eating. {table.groupInTable.TotalPrice}");
                             table.Occupied = false;
+                            table.groupInTable.GroupExperience += waiterAtTable[table.TableID].ServiceLevel;
+                            else if (table.groupInTable.GroupExperience > 5)
+                            {
+                                register.Tip = table.groupInTable.TotalPrice / 10;
+                                register.RevenuePerGroup = table.groupInTable.TotalPrice + register.Tip;
+                                register.TonightsRevenue += register.RevenuePerGroup;
+                                Console.WriteLine($"Table {table.TableID} tips {register.Tip}SEK for a good service, and pays a total of {register.RevenuePerGroup}SEK");
+                            }
+                            else 
+                            {
+                                Console.WriteLine($"The customers were unhappy with the service and gives no tip. Just pays {table.groupInTable.TotalPrice}");
+                                register.RevenuePerGroup = table.groupInTable.TotalPrice;
+                                register.TonightsRevenue += register.RevenuePerGroup;
+                            }
+
+                            //else{du får ingen dricks}
                             table.GroupHasGotFood = false;
                             table.GroupHasOrderedFood = false;
                             table.groupInTable.TotalPrice = 0;

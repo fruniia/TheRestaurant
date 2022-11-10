@@ -11,6 +11,7 @@ namespace TheRestaurant
         internal List<Guest> guests = new List<Guest>();
         internal List<Food> foods = new List<Food>();
         private Random random = new Random();
+        public int GroupExperience { get; set; }
         private int minNumberOfGuests = 1;
         private int maxNumberOfGuests = 4;
         public bool FoodIsReady { get; set; }

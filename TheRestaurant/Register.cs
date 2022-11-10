@@ -8,7 +8,15 @@ namespace TheRestaurant
 {
     internal class Register : Restaurant
     {
-        private int Revenue { get; set; }
-        private int Tip { get; set; }
+        internal int TonightsRevenue { get; set; }
+        internal int Tip { get; set; }
+
+        internal int RevenuePerGroup { get; set; }
+        public Register()
+        {
+            TonightsRevenue += RevenuePerGroup;
+            Tip = 0;
+            RevenuePerGroup = 0;
+        }
     }
 }
