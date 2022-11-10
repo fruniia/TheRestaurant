@@ -104,16 +104,12 @@ namespace TheRestaurant
             waiter.AtTable = false;
             waiter.AtEntrance = false;
         }
-
-        internal void BringCheckToTable(Waiter waiter)
+        internal void CleaningTable(Table table)
         {
-
-        }
-        internal void CleaningTable(Waiter waiter)
-        {
-
-            //TimeEstimate-- == 0
-            waiter.AtTable = false;
+            table.GroupHasGotFood = false;
+            table.GroupHasOrderedFood = false;
+            table.groupInTable.TotalPrice = 0;
+            table.groupInTable.FoodIsReady = false;
         }
     }
 }

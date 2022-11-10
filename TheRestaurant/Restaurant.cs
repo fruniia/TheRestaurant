@@ -90,19 +90,21 @@ namespace TheRestaurant
             {
                 foreach (var guest in table.groupInTable.guests)
                 {
+                    waiterAtTable[table.TableID].CleaningTable(table);
                     if (guest.GotFood == true)
                     {
                         guest.TimeEstimate--;
                         if (guest.TimeEstimate == 0)
                         {
+
                             Console.WriteLine($"Table number {table.TableID} is finished eating.");
                             table.Occupied = false;
                             table.groupInTable.GroupExperience += waiterAtTable[table.TableID].ServiceLevel;
                             register.CalculateRevenue(table);
-                            table.GroupHasGotFood = false;
-                            table.GroupHasOrderedFood = false;
-                            table.groupInTable.TotalPrice = 0;
-                            table.groupInTable.FoodIsReady = false;
+                            //table.GroupHasGotFood = false;
+                            //table.GroupHasOrderedFood = false;
+                            //table.groupInTable.TotalPrice = 0;
+                            //table.groupInTable.FoodIsReady = false;
                             orderlist.Remove(table.TableID);
                             waiterAtTable.Remove(table.TableID);
                             table.groupInTable.guests.Clear();
