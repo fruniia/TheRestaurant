@@ -18,9 +18,13 @@ namespace TheRestaurant
         }
         internal void CheckWaitingList(List<Group> waitingList)
         {
-            if (waitingList.Count < 2)
+            if (waitingList.Count < 2 && IsOpened == true)
             {
                 CreateGroup(waitingList);
+            }
+            else if (waitingList.Count != 0 && IsOpened == false)
+            {
+                waitingList.RemoveAt(0);
             }
         }
         internal void CreateWaitingList(List<Group> waitingList)
