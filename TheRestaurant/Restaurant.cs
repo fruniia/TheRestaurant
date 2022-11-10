@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,8 +41,7 @@ namespace TheRestaurant
                 Draw.Drawing("Menu", 5, 0, menu.menu);
                 CheckPosition(waiters);
                 entrance.CheckGuestCount();
-                Console.SetCursorPosition(80, 35);
-                Console.WriteLine($"Tonights Revenue: {register.TonightsRevenue} SEK"); 
+                DisplayResturantsRevenueAndTip(register);
                 //Console.ReadKey();
                 Thread.Sleep(200);
                 Console.Clear();
@@ -53,6 +53,15 @@ namespace TheRestaurant
                 entrance.CheckWaitingList(waitingList);
                 TickCounter++;
             }
+        }
+        private void DisplayResturantsRevenueAndTip(Register register)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(80, 35);
+            Console.WriteLine($"Tonights Revenue: {register.TonightsRevenue} SEK");
+            Console.SetCursorPosition(80, 36);
+            Console.WriteLine($"of which {register.TonightsTotalTip} SEK is tip from happy guests.");
+            Console.ResetColor();
         }
         private void CheckPosition(List<Waiter> waiters)
         {

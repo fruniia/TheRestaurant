@@ -10,11 +10,13 @@ namespace TheRestaurant
     {
         internal int TonightsRevenue { get; set; }
         internal int Tip { get; set; }
+        internal int TonightsTotalTip { get; set; }
 
         internal int RevenuePerGroup { get; set; }
         public Register()
         {
             TonightsRevenue += RevenuePerGroup;
+            TonightsTotalTip += Tip;
             Tip = 0;
             RevenuePerGroup = 0;
         }
@@ -42,6 +44,7 @@ namespace TheRestaurant
             }
             RevenuePerGroup = table.groupInTable.TotalPrice + Tip;
             TonightsRevenue += RevenuePerGroup;
+            TonightsTotalTip += Tip;
             Console.WriteLine((table.groupInTable.GroupExperience < 4) ?
             $"The customers were unhappy with the service and gives no tip. Just pays {table.groupInTable.TotalPrice}" :
             $"Table {table.TableID} tips {Tip} SEK for a good service, and pays a total of {RevenuePerGroup} SEK");
