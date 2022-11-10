@@ -21,7 +21,7 @@ namespace TheRestaurant
             IsOpened = true;
             TotalGuests = 0;
         }
-        internal void WentToMcDonalds()
+        internal bool WentToMcDonalds(bool restaurantLoop)
         {
             if (EveryOneHasLeft == true)
             {
@@ -30,8 +30,9 @@ namespace TheRestaurant
                 Console.WriteLine($"The guests went to McDonalds instead.");
                 Console.ResetColor();
                 Console.ReadKey();
-                RestaurantLoop = false;
+                restaurantLoop = false;
             }
+            return restaurantLoop;
         }
         internal void CheckWaitingList(List<Group> waitingList)
         {
@@ -136,7 +137,7 @@ namespace TheRestaurant
         {
             waitingList.Remove(waitingList[index]);
         }
-        internal void CheckGuestCount(List<Table> tables)
+        internal bool CheckGuestCount(List<Table> tables, bool restaurantLoop)
         {
             Console.SetCursorPosition(30, 18);
             if (TotalGuests < maxNumberOfGuests)
@@ -175,10 +176,11 @@ namespace TheRestaurant
                         Console.WriteLine("The Restaurant has closed for tonight");
                         Console.ReadKey();
                         Console.ResetColor();
-                        RestaurantLoop = false;
+                        restaurantLoop = false;
                     }
                 }
             }
+            return restaurantLoop;
 
 
         }

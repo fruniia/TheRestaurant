@@ -14,17 +14,18 @@ namespace TheRestaurant
         int startTop = 12;
         int startLeft = 5;
         protected int TickCounter { get; set; }
-        public bool RestaurantLoop { get; set; }
+        //public bool RestaurantLoop { get; set; }
         List<Table> tables = new();
         List<Waiter> waiters = new();
         List<Group> waitingList = new();
         public Restaurant()
         {
             TickCounter = 0;
-            RestaurantLoop = true;
+            //RestaurantLoop = true;
         }
         public void Start()
         {
+            bool restaurantLoop = true;
             Waiter waiter = new();
             Entrance entrance = new();
             Kitchen kitchen = new();
@@ -35,7 +36,7 @@ namespace TheRestaurant
             CreateWaiter(waiters);
             entrance.CreateWaitingList(waitingList);
 
-            while (RestaurantLoop)
+            while (restaurantLoop)
             {
                 Draw.DrawingT("Table", startLeft, startTop, tables);
                 Draw.Drawing("Kitchen", 40, 0, kitchen.chefs);
@@ -43,10 +44,10 @@ namespace TheRestaurant
                 Draw.Drawing("Menu", 5, 0, menu.menu);
                 CheckPosition(waiters);
                 DisplayResturantsRevenueAndTip(register);
-                entrance.WentToMcDonalds();
-                entrance.CheckGuestCount(tables);
+                restaurantLoop = entrance.WentToMcDonalds(restaurantLoop);
+                restaurantLoop = entrance.CheckGuestCount(tables, restaurantLoop);
                 //Console.ReadKey();
-                Thread.Sleep(200);
+                //Thread.Sleep(200);
                 Console.Clear();
                 Console.SetCursorPosition(0, 35);
                 kitchen.HandlingChef(order.Orderlist);
