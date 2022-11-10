@@ -14,6 +14,7 @@ namespace TheRestaurant
         public int TotalGuests { get; set; }
         public int GuestsLeaveCount { get; set; }
         public bool EveryOneHasLeft { get; set; }
+        public bool GroupsWentToMcDonalds { get; set; }
         internal Entrance() : base()
 
         {
@@ -29,6 +30,7 @@ namespace TheRestaurant
                 Console.WriteLine($"The guests went to McDonalds instead.");
                 Console.ResetColor();
                 Console.ReadKey();
+                RestaurantLoop = false;
             }
         }
         internal void CheckWaitingList(List<Group> waitingList)
@@ -153,14 +155,28 @@ namespace TheRestaurant
                 {
                     foreach (var table in tables)
                     {
-                        table.groupInTable.guests.Clear();
+                        if (table.Occupied == true)
+                        {
+                            table.groupInTable.guests.Clear();
+                            Console.SetCursorPosition(0, 35);
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine($"The rest of the table/tables didn't get their food and became angry!!");
+                            Console.ReadKey();
+                            Console.ResetColor();
+                            EveryOneHasLeft = true;
+                            GroupsWentToMcDonalds = true;
+                        }
+
                     }
-                    Console.SetCursorPosition(0, 35);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"The rest of the table/tables didn't get their food and became angry!!");
-                    Console.ReadKey();
-                    Console.ResetColor();
-                    EveryOneHasLeft = true;
+                    if (GroupsWentToMcDonalds == false)
+                    {
+                        Console.SetCursorPosition(0, 35);
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("The Restaurant has closed for tonight");
+                        Console.ReadKey();
+                        Console.ResetColor();
+                        RestaurantLoop = false;
+                    }
                 }
             }
 

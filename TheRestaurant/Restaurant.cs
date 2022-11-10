@@ -14,12 +14,14 @@ namespace TheRestaurant
         int startTop = 12;
         int startLeft = 5;
         protected int TickCounter { get; set; }
+        public bool RestaurantLoop { get; set; }
         List<Table> tables = new();
         List<Waiter> waiters = new();
         List<Group> waitingList = new();
         public Restaurant()
         {
             TickCounter = 0;
+            RestaurantLoop = true;
         }
         public void Start()
         {
@@ -33,7 +35,7 @@ namespace TheRestaurant
             CreateWaiter(waiters);
             entrance.CreateWaitingList(waitingList);
 
-            while (true)
+            while (RestaurantLoop)
             {
                 Draw.DrawingT("Table", startLeft, startTop, tables);
                 Draw.Drawing("Kitchen", 40, 0, kitchen.chefs);
