@@ -17,9 +17,9 @@ namespace TheRestaurant
         internal bool AtEntrance { get; set; }
         internal bool AtTable { get; set; }
         internal bool HoldsFood { get; set; }
-        internal bool FoundATable { get; set; }
-        internal bool TakesFoodFromHatch { get; set; }
-        internal string[] waiterInAction = { "at a table", "at the entrance", "in the kitchen" };
+        private bool FoundATable { get; set; }
+        private bool TakesFoodFromHatch { get; set; }
+        private string[] waiterInAction = { "at a table", "at the entrance", "in the kitchen" };
 
         internal Waiter() : base()
         {
@@ -34,8 +34,8 @@ namespace TheRestaurant
 
         internal string WaiterInAction()
         {
-                string action = WaiterPlace();
-                return action;
+            string action = WaiterPlace();
+            return action;
         }
         private string WaiterPlace()
         {
@@ -56,23 +56,23 @@ namespace TheRestaurant
             }
             return "";
         }
-        internal void ServeFood(Waiter waiter, List<Chef> chefs, List<Table> tables, Dictionary<int, Group> orderlist)
+        internal void ServeFood(Waiter waiter, List<Table> tables, Dictionary<int, Group> orderlist)
         {
-            waiter.SetWaiterToTable(waiter);
-            foreach (var o in orderlist)
+            waiter.SetWaiterToTable();
+            foreach (var kvp in orderlist)
             {
                 foreach (Table table in tables)
                 {
-                    if (o.Key == table.TableID && table.GroupHasGotFood == false && FoundATable == false)
+                    if (kvp.Key == table.TableID && table.GroupHasGotFood == false && FoundATable == false)
                     {
-                        foreach (var kvp in o.Value.guests)
+                        foreach (var guest in kvp.Value.guests)
                         {
-                            if (kvp.GotFood == false)
+                            if (guest.GotFood == false)
                             {
-                                Console.WriteLine($"Waiter {waiter.Name} serves {kvp.TypeOfFood.FoodName} to {kvp.Name} at table {o.Key}");
-                                kvp.GotFood = true;
+                                Console.WriteLine($"Waiter {waiter.Name} serves {guest.TypeOfFood.FoodName} to {guest.Name} at table {kvp.Key}");
+                                guest.GotFood = true;
                                 table.GroupHasGotFood = true;
-                                waiter.HoldsFood = false;
+                                HoldsFood = false;
                                 FoundATable = true;
                             }
                         }
@@ -97,38 +97,37 @@ namespace TheRestaurant
                         {
                             foreach (var kvp in orderlist)
                             {
-                                if (table.TableID == kvp.Key && waiter.TakesFoodFromHatch == false)
+                                if (table.TableID == kvp.Key && TakesFoodFromHatch == false)
                                 {
-                                    waiter.SetWaiterToKitchen(waiter);
-                                    waiter.HoldsFood = true;
-                                    waiter.TakesFoodFromHatch = true;
+                                    waiter.SetWaiterToKitchen();
+                                    HoldsFood = true;
+                                    TakesFoodFromHatch = true;
                                     chef.FoodDone = false;
                                 }
                             }
                         }
                     }
-                    //chef.FoodDone = false;
                 }
             }
-            waiter.TakesFoodFromHatch = false;
+            TakesFoodFromHatch = false;
         }
-        internal void SetWaiterToTable(Waiter waiter)
+        internal void SetWaiterToTable()
         {
-            waiter.AtTable = true;
-            waiter.AtKitchen = false;
-            waiter.AtEntrance = false;
+            AtTable = true;
+            AtKitchen = false;
+            AtEntrance = false;
         }
-        internal void SetWaiterToEntrance(Waiter waiter)
+        internal void SetWaiterToEntrance()
         {
-            waiter.AtEntrance = true;
-            waiter.AtTable = false;
-            waiter.AtKitchen = false;
+            AtEntrance = true;
+            AtTable = false;
+            AtKitchen = false;
         }
-        internal void SetWaiterToKitchen(Waiter waiter)
+        internal void SetWaiterToKitchen()
         {
-            waiter.AtKitchen = true;
-            waiter.AtTable = false;
-            waiter.AtEntrance = false;
+            AtKitchen = true;
+            AtTable = false;
+            AtEntrance = false;
         }
         //internal void CleaningTable(Table table)
         //{

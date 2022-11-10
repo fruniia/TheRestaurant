@@ -9,8 +9,8 @@ namespace TheRestaurant
     internal class Order : Kitchen
     {
         internal Dictionary<int, Group> Orderlist { get; set; }
-        public int TimeEstimate { get; set; }
-        public bool OrderDone { get; set; }
+        internal int TimeEstimate { get; set; }
+        internal bool OrderDone { get; set; }
 
         internal Order() : base()
         {

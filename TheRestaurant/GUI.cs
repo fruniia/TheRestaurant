@@ -19,8 +19,9 @@ namespace TheRestaurant
                 }
             }
             if (width < header.Length + 4)
-            { width = header.Length + 4; };
-
+            { 
+                width = header.Length + 4; 
+            }
             Console.SetCursorPosition(fromLeft, fromTop);
             if (header != "")
             {

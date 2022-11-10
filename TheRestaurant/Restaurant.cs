@@ -10,23 +10,22 @@ namespace TheRestaurant
 {
     internal class Restaurant
     {
-        internal int maxNumberOfGuests = 80;
-        int startTop = 12;
-        int startLeft = 5;
+        protected int maxNumberOfGuests = 80;
+        private int NumberOfWaiters { get; set; }
+        private int startTop = 12;
+        private int startLeft = 5;
         protected int TickCounter { get; set; }
-        //public bool RestaurantLoop { get; set; }
         List<Table> tables = new();
         List<Waiter> waiters = new();
         List<Group> waitingList = new();
-        public Restaurant()
+        internal Restaurant()
         {
             TickCounter = 0;
-            //RestaurantLoop = true;
+            NumberOfWaiters = 3;
         }
         public void Start()
         {
             bool restaurantLoop = true;
-            Waiter waiter = new();
             Entrance entrance = new();
             Kitchen kitchen = new();
             Menu menu = new();
@@ -34,8 +33,7 @@ namespace TheRestaurant
             Register register = new();
             CreateTable();
             CreateWaiter(waiters);
-            entrance.CreateWaitingList(waitingList);
-
+            entrance.CreateGroupForWaitingList(waitingList);
             while (restaurantLoop)
             {
                 Draw.DrawingT("Table", startLeft, startTop, tables);
@@ -46,8 +44,8 @@ namespace TheRestaurant
                 DisplayResturantsRevenueAndTip(register);
                 restaurantLoop = entrance.WentToMcDonalds(restaurantLoop);
                 restaurantLoop = entrance.CheckGuestCount(tables, restaurantLoop);
-                //Console.ReadKey();
-                Thread.Sleep(200);
+                Console.ReadKey();
+                //Thread.Sleep(200);
                 Console.Clear();
                 Console.SetCursorPosition(0, 35);
                 kitchen.HandlingChef(order.Orderlist);
@@ -58,7 +56,7 @@ namespace TheRestaurant
                 TickCounter++;
             }
         }
-        private void DisplayResturantsRevenueAndTip(Register register)
+        private static void DisplayResturantsRevenueAndTip(Register register)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(80, 35);
@@ -67,7 +65,7 @@ namespace TheRestaurant
             Console.WriteLine($"of which {register.TonightsTotalTip} SEK is tip from happy guests.");
             Console.ResetColor();
         }
-        private void EatingFood(List<Table> tables, Dictionary<int, Waiter> waiterAtTable, Dictionary<int, Group> orderlist, Register register)
+        private static void EatingFood(List<Table> tables, Dictionary<int, Waiter> waiterAtTable, Dictionary<int, Group> orderlist, Register register)
         {
             foreach (var table in tables)
             {
@@ -78,7 +76,6 @@ namespace TheRestaurant
                         guest.TimeEstimate--;
                         if (guest.TimeEstimate == 0)
                         {
-
                             Console.WriteLine($"Table number {table.TableID} is finished eating.");
                             table.Occupied = false;
                             table.groupInTable.GroupExperience += waiterAtTable[table.TableID].ServiceLevel;
@@ -103,23 +100,23 @@ namespace TheRestaurant
             {
                 if (table.Occupied == true && table.GroupHasOrderedFood == false)
                 {
-                    foreach (var a in table.groupInTable.guests)
+                    foreach (var guest in table.groupInTable.guests)
                     {
-                        if (a.OrderedFood == false)
+                        if (guest.OrderedFood == false)
                         {
-                            a.TypeOfFood = a.OrderFood();
-                            a.DrawOrderFood(); //Gjorde en metod DrawOrderFood i Guest för utskriften av maten
-                            table.groupInTable.TotalPrice += a.TypeOfFood.Price;
+                            guest.TypeOfFood = guest.OrderFood();
+                            guest.DrawOrderFood(); 
+                            table.groupInTable.TotalPrice += guest.TypeOfFood.Price;
                         }
                     }
                     table.GroupHasOrderedFood = true;
                     orderlist.Add(table.TableID, table.groupInTable);
 
-                    foreach (var w in waiters) // loopar igenom dictionaryn WaiterAtTable
+                    foreach (var waiter in waiters)
                     {
-                        if (w.AtTable == true && w.HasOrderToKitchen == false)
+                        if (waiter.AtTable == true && waiter.HasOrderToKitchen == false)
                         {
-                            w.HasOrderToKitchen = true;
+                            waiter.HasOrderToKitchen = true;
                         }
                     }
                 }
@@ -147,9 +144,9 @@ namespace TheRestaurant
 
         internal List<Waiter> CreateWaiter(List<Waiter> waiters)
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < NumberOfWaiters; i++)
             {
-                Waiter waiter = new Waiter();
+                Waiter waiter = new();
                 waiters.Add(waiter);
             }
             return waiters;

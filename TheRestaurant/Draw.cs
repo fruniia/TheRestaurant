@@ -19,7 +19,6 @@ namespace TheRestaurant
                 {
                     graphics[i] = $"{chef.Name} is {chef.ChefInAction()}";
                 }
-
                 if (anyList[i] is Group)
                 {
                     var groups = (anyList[i] as Group).guests;

@@ -9,42 +9,13 @@ namespace TheRestaurant
 {
     internal class Kitchen : Restaurant
     {
-        internal int NumberOfChefs { get; set; }
+        private int NumberOfChefs { get; set; }
         internal List<Chef> chefs = new();
         internal bool FoodInTheHatch { get; set; }
         internal Kitchen() : base()
         {
             NumberOfChefs = 5;
             CreateChef();
-        }
-        internal void CreateChef()
-        {
-            for (int i = 0; i < NumberOfChefs; i++)
-            {
-                Chef chef = new Chef();
-                chefs.Add(chef);
-            }
-        }
-        internal void CookingFood(Chef chef, Dictionary<int, Group> orderlist)
-        {
-            foreach (var b in orderlist)
-            {
-                if (b.Value.FoodIsReady == false)
-                {
-                    foreach (Guest kvp in b.Value.guests)
-                    {
-                        if (kvp.GotFood == false)
-                        {
-                            Console.WriteLine($"Kocken {chef.Name} lagar {kvp.TypeOfFood.FoodName} åt {kvp.Name} på bord nummer {b.Key}");
-                            // chef.Experience += kvp.guest.experience
-                        }
-                    }
-                    b.Value.GroupExperience += chef.Experience;
-                    b.Value.FoodIsReady = true;
-                    chef.Available = false;
-                    break;
-                }
-            }
         }
         internal void HandlingChef(Dictionary<int, Group> orderlist)
         {
@@ -65,7 +36,34 @@ namespace TheRestaurant
                         FoodInTheHatch = true;
                     }
                 }
-
+            }
+        }
+        private void CreateChef()
+        {
+            for (int i = 0; i < NumberOfChefs; i++)
+            {
+                Chef chef = new();
+                chefs.Add(chef);
+            }
+        }
+        private static void CookingFood(Chef chef, Dictionary<int, Group> orderlist)
+        {
+            foreach (var kvp in orderlist)
+            {
+                if (kvp.Value.FoodIsReady == false)
+                {
+                    foreach (Guest guest in kvp.Value.guests)
+                    {
+                        if (guest.GotFood == false)
+                        {
+                            Console.WriteLine($"Chef {chef.Name} cooks {guest.TypeOfFood.FoodName} for {guest.Name} at table number {kvp.Key}");
+                        }
+                    }
+                    kvp.Value.GroupExperience += chef.Experience;
+                    kvp.Value.FoodIsReady = true;
+                    chef.Available = false;
+                    break;
+                }
             }
         }
     }

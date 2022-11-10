@@ -8,14 +8,19 @@ namespace TheRestaurant
 {
     internal class Menu
     {
-        Random random = new Random();
+        private Random random = new();
         internal List<Food> menu = new();
         internal Menu()
         {
             CreateMenu();
             Food food = RandomFood();
         }
-        internal void CreateMenu()
+        internal Food RandomFood()
+        {
+            Food food = menu[random.Next(menu.Count)];
+            return food;
+        }
+        private void CreateMenu()
         {
             menu.Add(new Fish("Fish and pasta", 199));
             menu.Add(new Fish("Fish and chips", 259));
@@ -26,11 +31,6 @@ namespace TheRestaurant
             menu.Add(new Vegetarian("Beans and pasta", 179));
             menu.Add(new Vegetarian("Beans and greens", 199));
             menu.Add(new Vegetarian("Just beans", 129));
-        }
-        internal Food RandomFood()
-        {
-            Food food = menu[random.Next(menu.Count)];
-            return food;
         }
     }
 }

@@ -9,8 +9,7 @@ namespace TheRestaurant
     internal class Guest : Person
     {
         Menu menu = new();
-        private int Satisfaction { get; set; }
-        internal int Money { get; set; }
+        protected int Money { get; set; }
         internal bool OrderedFood { get; set; }
         internal bool GotFood { get; set; }
         internal Guest()
@@ -27,7 +26,7 @@ namespace TheRestaurant
         }
         internal void DrawOrderFood()
         {
-            Console.WriteLine($"{this.Name} has ordered {TypeOfFood.FoodName} for {this.TypeOfFood.Price} SEK");
+            Console.WriteLine($"{Name} has ordered {TypeOfFood.FoodName} for {TypeOfFood.Price} SEK");
         }
     }
 }

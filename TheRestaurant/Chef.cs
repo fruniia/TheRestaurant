@@ -12,10 +12,9 @@ namespace TheRestaurant
         internal int Experience { get; set; }
         internal bool Available { get; set; }
         internal bool FoodDone { get; set; }
-        public int ChefTimer { get; set; }
+        internal int ChefTimer { get; set; }
 
         readonly string[] chefInAction = { "Cooking food", "Smoking", "Washing hands", "Chitchatting" };
-        //internal Dictionary<int, Group> PreparingFood { get; set; }
 
         internal Chef() : base()
         {
@@ -24,14 +23,13 @@ namespace TheRestaurant
             TimeEstimate = 10;
             ChefTimer = TimeEstimate;
             FoodDone = false;
-
         }
         internal string ChefInAction()
         {
             string action = Randomize();
             return action;
         }
-        internal string Randomize()
+        private string Randomize()
         {
             for (int i = 0; i < chefInAction.Length; i++)
             {

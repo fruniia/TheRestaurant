@@ -8,23 +8,22 @@ namespace TheRestaurant
 {
     internal class Group
     {
-        internal List<Guest> guests = new List<Guest>();
-        internal List<Food> foods = new List<Food>();
-        private Random random = new Random();
-        public int GroupExperience { get; set; }
+        internal List<Guest> guests = new();
+        protected List<Food> foods = new();
+        private Random random = new();
+        internal int GroupExperience { get; set; }
         private int minNumberOfGuests = 1;
         private int maxNumberOfGuests = 4;
-        public bool FoodIsReady { get; set; }
-        public int TotalPrice { get; set; }
+        internal bool FoodIsReady { get; set; }
+        internal int TotalPrice { get; set; }
 
 
         internal List<Guest> CreateGuest()
         {
             int rndNumber = random.Next(minNumberOfGuests, (maxNumberOfGuests + 1));
-
             for (int i = 0; i < rndNumber; i++)
             {
-                Guest guest = new Guest();
+                Guest guest = new();
                 guests.Add(guest);
             }
             return guests;
