@@ -24,21 +24,17 @@ namespace TheRestaurant
         {
             switch (table.groupInTable.GroupExperience)
             {
-                case 2:
-                case 3:
+                case 1:
                     Tip = 0;
                     break;
-                case 4:
-                case 5:
-                case 6:
+                case 2:
                     Tip = table.groupInTable.TotalPrice / 20;
                     break;
-                case 7:
-                case 8:
-                case 9:
+                case 3:
+                case 4:
                     Tip = table.groupInTable.TotalPrice / 10;
                     break;
-                case 10:
+                case 5:
                     Tip = table.groupInTable.TotalPrice / 5;
                     break;
             }

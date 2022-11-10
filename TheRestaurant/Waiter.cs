@@ -104,12 +104,12 @@ namespace TheRestaurant
             waiter.AtTable = false;
             waiter.AtEntrance = false;
         }
-        internal void CleaningTable(Table table)
-        {
-            table.GroupHasGotFood = false;
-            table.GroupHasOrderedFood = false;
-            table.groupInTable.TotalPrice = 0;
-            table.groupInTable.FoodIsReady = false;
-        }
+        //internal void CleaningTable(Table table)
+        //{
+        //    table.GroupHasGotFood = false;
+        //    table.GroupHasOrderedFood = false;
+        //    table.groupInTable.TotalPrice = 0;
+        //    table.groupInTable.FoodIsReady = false;
+        //}
     }
 }

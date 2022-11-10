@@ -11,7 +11,7 @@ namespace TheRestaurant
         readonly Random random = new();
         internal int MaxNumberOfGuestsAtTable { get; set; }
         internal bool Occupied { get; set; }
-        private int QualityLevel { get; set; }
+        internal int QualityLevel { get; set; }
 
         internal Group groupInTable = new();
         internal bool GroupHasOrderedFood { get; set; }
@@ -22,7 +22,7 @@ namespace TheRestaurant
         {
             MaxNumberOfGuestsAtTable = 0;
             Occupied = false;
-            QualityLevel = 0;
+            QualityLevel = random.Next(1, 6);
         }
     }
 

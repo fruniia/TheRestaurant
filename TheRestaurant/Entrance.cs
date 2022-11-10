@@ -18,7 +18,7 @@ namespace TheRestaurant
         }
         internal void CheckWaitingList(List<Group> waitingList)
         {
-            if (waitingList.Count < 2 && IsOpened == true)
+            if (waitingList.Count < 6 && IsOpened == true)
             {
                 CreateGroup(waitingList);
             }
@@ -55,6 +55,7 @@ namespace TheRestaurant
                     {
                           CheckForEmptyTable(tables, waitingList, waiter);
                     }
+
                 }
                 else if (waiter.AtTable == true)
                 {
@@ -107,6 +108,7 @@ namespace TheRestaurant
             tables[tIndex].Occupied = true;
             tables[tIndex].groupInTable.guests = waitingList[wIndex].guests;
             TotalGuests += tables[tIndex].groupInTable.guests.Count;
+            tables[tIndex].groupInTable.GroupExperience += tables[tIndex].QualityLevel;
 
             Console.WriteLine($"Table number {tIndex + 1} is served by {waiter.Name}");
 
