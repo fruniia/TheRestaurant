@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +12,24 @@ namespace TheRestaurant
         internal Dictionary<int, Waiter> WaiterAtTable = new();
         public bool IsOpened { get; set; }
         public int TotalGuests { get; set; }
+        public int GuestsLeaveCount { get; set; }
+        public bool EveryOneHasLeft { get; set; }
         internal Entrance() : base()
+
         {
             IsOpened = true;
             TotalGuests = 0;
+        }
+        internal void WentToMcDonalds()
+        {
+            if (EveryOneHasLeft == true)
+            {
+                Console.SetCursorPosition(0, 35);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"The guests went to McDonalds instead.");
+                Console.ResetColor();
+                Console.ReadKey();
+            }
         }
         internal void CheckWaitingList(List<Group> waitingList)
         {
@@ -53,7 +68,7 @@ namespace TheRestaurant
                     }
                     else if (IsOpened == true)
                     {
-                          CheckForEmptyTable(tables, waitingList, waiter);
+                        CheckForEmptyTable(tables, waitingList, waiter);
                     }
 
                 }
@@ -97,7 +112,7 @@ namespace TheRestaurant
                         else if (tables[i] is TableForFour && waitingList[j].guests.Count <= tables[i].MaxNumberOfGuestsAtTable && tables[i].Occupied == false)
                         {
                             ShowGuestsToTable(tables, waitingList, i, j, waiter);
-                        }       
+                        }
                     }
                 }
             }
@@ -119,7 +134,7 @@ namespace TheRestaurant
         {
             waitingList.Remove(waitingList[index]);
         }
-        internal void CheckGuestCount()
+        internal void CheckGuestCount(List<Table> tables)
         {
             Console.SetCursorPosition(30, 18);
             if (TotalGuests < maxNumberOfGuests)
@@ -131,6 +146,24 @@ namespace TheRestaurant
                 IsOpened = false;
                 Console.WriteLine($"The restaurant has filled tonights seats");
             }
+            if (TotalGuests >= maxNumberOfGuests)
+            {
+                GuestsLeaveCount++;
+                if (GuestsLeaveCount == 40)
+                {
+                    foreach (var table in tables)
+                    {
+                        table.groupInTable.guests.Clear();
+                    }
+                    Console.SetCursorPosition(0, 35);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"The rest of the table/tables didn't get their food and became angry!!");
+                    Console.ReadKey();
+                    Console.ResetColor();
+                    EveryOneHasLeft = true;
+                }
+            }
+
 
         }
     }

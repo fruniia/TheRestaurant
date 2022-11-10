@@ -40,8 +40,9 @@ namespace TheRestaurant
                 Draw.Drawing<Group>("Waitinglist", 72, 0, waitingList);
                 Draw.Drawing("Menu", 5, 0, menu.menu);
                 CheckPosition(waiters);
-                entrance.CheckGuestCount();
                 DisplayResturantsRevenueAndTip(register);
+                entrance.WentToMcDonalds();
+                entrance.CheckGuestCount(tables);
                 //Console.ReadKey();
                 Thread.Sleep(200);
                 Console.Clear();
