@@ -13,7 +13,6 @@ namespace TheRestaurant
         internal Menu()
         {
             CreateMenu();
-            Food food = RandomFood();
         }
         internal Food RandomFood()
         {
