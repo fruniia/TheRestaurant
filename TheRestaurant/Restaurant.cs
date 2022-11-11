@@ -65,6 +65,19 @@ namespace TheRestaurant
             Console.WriteLine($"\tThe Restaurant is closed for the evening and we want to thank all of guests who has visited us. \n" +
                 $"\tTonight we served {totalguests} wonderful guests, who added {tip} SEK in tips to our total revenue of {revenue} SEK\n" +
                 $"\n\tPlease, come again.\n\n\n\n\n\n");
+            Console.WriteLine($@" ____o__ __o____   o                                   o                                                   o   
+  /   \   /   \   <|>                                 <|>                                                 <|>  
+       \o/        / >                                 / \                                                 / \  
+        |         \o__ __o       o__ __o/  \o__ __o   \o/  o/       o      o     o__ __o     o       o    \o/  
+       < >         |     v\     /v     |    |     |>   |  /v       <|>    <|>   /v     v\   <|>     <|>    |   
+        |         / \     <\   />     / \  / \   / \  / \/>        < >    < >  />       <\  < >     < >   < >  
+        o         \o/     o/   \      \o/  \o/   \o/  \o/\o         \o    o/   \         /   |       |         
+       <|          |     <|     o      |    |     |    |  v\         v\  /v     o       o    o       o     o   
+       / \        / \    / \    <\__  / \  / \   / \  / \  <\         <\/>      <\__ __/>    <\__ __/>   _<|>_ 
+                                                                       /                                       
+                                                                      o                                        
+                                                                   __/>                                        "
+                                                                   );
         }
 
         private static void DisplayResturantsRevenueAndTip(Register register)
